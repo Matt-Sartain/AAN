@@ -1,0 +1,76 @@
+#headerNetSgnup {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;			
+	border-bottom:none;
+}
+.headerNetSgnup {
+	width:100%;
+	height:23px;
+	margin:9px 0 0;
+	border-bottom:none;
+	overflow:hidden;
+}
+.headerNetSgnup .menu {
+	float:left;
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+.headerNetSgnup .menu li {
+	display:inline;
+	padding:0 10px 0 12px;
+}
+.headerWrapper a  {
+	font-size:15px;
+	/*font-family: Arial, Helvetica, sans-serif;*/
+	font-family: "Myriad Pro", Arial, Helvetica, Tahoma, sans-serif;
+	font-weight:300;
+	letter-spacing:normal;
+	color:#FFFFFF;
+	text-decoration:none;
+	
+}
+.headerWrapper li.selected a{
+	color:#ffd200;
+}
+.headerNetSgnup .menu li a:hover {text-decoration:none}
+.headerNetSgnup .nav {
+	float:right;
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+.headerNetSgnup .nav li {
+	display:inline;
+	padding:0 12px 0 17px;
+}
+.headerNetSgnup .nav li:first-child {background:none}
+
+.headerNetSgnup .nav li a.active {text-decoration:underline}
+
+.headerWrapper
+{
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	background-color:#5B5B5B;
+	height:35px;
+	width:100%;
+}
+a.checkmark, input.checkmark, button.checkmark /* same style repeated for buttons not in forms */
+{
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background: white url('/images/checkmark.jpg') no-repeat left; 
+	border:1px solid #8ad9f8;
+	color:#515151;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	margin: 5px 25px 10px 5px;
+	padding:4px 2px 4px 24px;
+	text-align:center;
+	text-decoration:none;
+	float:left;
+}

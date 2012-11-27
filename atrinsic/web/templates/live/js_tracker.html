@@ -1,0 +1,13 @@
+{% extends 'base/widgetui_moveable.html' %}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/> 
+{% endblock %}
+{% block static_widgets_zone3 %}
+{%if error%}
+<p><br>{{js_tracker}}.<br></p>
+{%else%}
+<p>Now all you have to do is put this tracker code at the bottom of all your pages to begin tracking your sites traffic.<br></p>
+<textarea>{{js_tracker}}</textarea>
+<a href="" class="checkmark" style="float:left;">Take me to the dashboard!</a>
+{%endif%}
+{%endblock%}

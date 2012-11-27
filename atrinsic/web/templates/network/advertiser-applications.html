@@ -1,0 +1,40 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block content %}
+<table>
+<thead>
+<tr>
+    <th>Organization</th>
+    <th>Contact</th>
+    <th>Address</th>
+    <th>Location</th>
+    <th>Phone</th>
+    <th>Fax</th>
+    <th>Email</th>
+    <th>Website URL</th>
+    <th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for o in object_list %}
+<tr class="{% cycle "odd" "even" %}">
+    <td><a href="{% url network_account_advertiser_applications_view o.id %}">{{ o.organization_name }}</a></td>
+    <td>{{ o.contact_firstname }} {{ o.contact_lastname }}</td>
+    <td>{{ o.address }}</td>
+    <td>{{ o.city }}, {{ o.state }} {{ o.zipcode }} {{ o.country }}</td>
+    <td>{{ o.contact_phone }}</td>
+    <td>{{ o.contact_fax }}</td>
+    <td>{{ o.contact_email }}</td>
+    <td><a href="{{ o.website_url }}">{{ o.website_url }}</a></td>
+    <td>
+        <a href="{% url network_account_advertiser_applications_view o.id %}" class="AddProgram2">View Application</a>
+        <a href="{% url network_account_advertiser_applications_create o.id %}" class="AddProgram2">Create Advertiser</a>
+	    <button onClick="window.location='mailto:{{ o.contact_email}}'" class="AddProgram2">Contact</button>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<title>Atrinsic Affiliate Network</title>
+		<link href="/css/widgetui.css" rel="stylesheet" type="text/css" media="all"/>
+		<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all"/>
+		{% block css %}{% endblock %}
+		<link rel="shortcut icon" href="/images/aan.ico">
+		<link rel="icon" type="image/ico" href="/images/aan.ico">
+		<!--[if lt IE 7]><style type="text/css" media="screen">@import "/css/ie.css";</style><![endif]-->
+		<!--[if gte IE 7]>	
+			<style type="text/css">
+				.headerWrapper > .bl, .headerWrapper > .br{ width: 5px;height: 5px;position: absolute; }			
+				.headerWrapper > .bl{ background: URL(/images/blheader.png) bottom left no-repeat;bottom: 0;left: 0; }
+				.headerWrapper > .br{ background: URL(/images/brheader.png) bottom right no-repeat;bottom: 0;right: 0; }	
+			</style>
+		<![endif]-->
+        
+		<script type="text/javascript" src="/js/tabs.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/widgets.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/jquery-ui-1.7.1.custom.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/date.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/atrinsic.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/swfobject.js"></script>
+        {% block javascript %}{% endblock %}
+        <script type="text/javascript">
+            $( function () {
+	            $("#organization_switch").change(function() {
+	                window.location = "{% url auth_choice %}/"+$(this).val()+"/";
+	            });
+	            
+				init_tooltips();
+				{% block document_ready %}{% endblock %}
+				if ($("#zone3").height() > $("#zone2").height() || $("#zone2").height() == 300){
+					$("#Full_Heigth").height($("#zone3").height()-4);
+				}
+				/*if ($("#holder3").children().size() == 0){
+					$("#holder3").hide();
+				}
+				if ($("#holder2").children().size() == 0){
+					$("#zone2").hide();
+				}
+				if ($("#holder1").children().size() == 0){
+					$("#zone1").hide();
+				}*/
+	
+				$('.deleteAjax').click(function() {
+			    	
+					
+					var type = $(this).attr("name");
+					var del = confirm("Are you sure you want to delete this " + type + "?");
+					if (del == false)
+				  	{
+						return false;
+					}
+	
+			    	var callUrl = $(this).attr("id");
+					var hdr = $(this).attr("name");
+			
+			    	$.ajax({
+						type: "GET",
+						url: callUrl,
+						dataType: "html",
+						async: false,
+						success: function(data){}
+					}); 
+					//if($(this).attr("href") == undefined){ return false; }
+			    });  
+
+            });
+        </script>
+	</head>
+	<body>
+		<div id="main">
+			<h1 class="logo"><a href="#">Atrinsic Affiliate Network-2</a></h1>					
+			<div class="leading" style="float:right;">
+			    <div class="text">
+			    	<h2>Real-time: {% now "P" %}</h2>	
+			        <div class="leads">
+			            <strong>{{ score_board.number_of_var1 }}</strong>
+			            <p>{{ score_board.var1_name}} </p>
+			        </div>
+			        <div class="description">
+			            <ul><li><span>Yesterday:</span><em>{{ score_board.yesterday }}</em></li>
+			                <li><span>Month High:</span><em>{{ score_board.month_high }}</em></li>
+			                <li><span>Month Low:</span><em>{{ score_board.month_low }}</em></li>
+			                <li><span>Total MTD:</span><em>{{ score_board.total_mtd }}</em></li>
+			            </ul>
+			            <ul><li><span>Total YTD:</span><em>{{ score_board.total_ytd }}</em></li>
+			                <li><span>YTD High:</span><em>{{ score_board.ytd_high }}</em></li>
+			                <li><span>YTD Low:</span><em>{{ score_board.ytd_low }}</em></li>
+			                <li><span>Daily Avg:</span><em>{{ score_board.daily_avg }}</em></li>
+			            </ul>
+			            <ul class="value">
+			                <li><span>AOV:</span><em>{{ score_board.aov }}</em></li>
+			                <li><span>EPC:</span><em>{{ score_board.epc }}</em></li>
+			                <li><span>CPC:</span><em>{{ score_board.cpc }}</em></li>
+			                <li><span>CPM:</span><em>{{ score_board.cpm }}</em></li>
+			            </ul>
+			        </div>
+			    </div>
+			</div>
+			<div class="clearfix"></div>
+			<div id="content">
+				{% ifequal current_tab 'Dashboard' %}
+				<h2><a href="" id="widget_add" class="widget_add widget_title">Add a widget...</a></h2>
+				{% endifequal %}
+				{%ifequal current_tab 'Live' %}
+				{%ifequal has_piwik 1%}
+				<h2><a href="" id="widget_add" class="widget_add widget_title">Add a widget...</a></h2>
+				{% endifequal %}
+				{% endifequal %}
+                <div class="dashboard_container">
+					<div class="main_block">
+						<div class="droppable" style="margin:0 22px;">
+							{% block static_widgets_zone3 %}{% endblock %}
+						</div>
+					</div>
+				</div>				
+			</div>
+           {% include 'base/widget_toolbar.html' %}
+            {% block header %}
+                {% include 'base/widgetuiheader.html' %}
+            {% endblock %}
+		</div>
+        
+        {% block footer %}
+        {% include 'base/widgetfooter.html' %}
+        {% endblock %}
+	</body>
+</html>

@@ -1,0 +1,95 @@
+.createGroupBtn {
+    background-image:url('/images/btn_blues_creategroup.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:117px;
+    background-color:#ffffff;
+}.createGroupBtn:hover { background-image: url('/images/btn_blues_creategroup_mo.gif'); }
+
+.addToGroupBtn {
+    background-image:url('/images/btn_blues_assigntogroup.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:151px;
+    background-color:#ffffff;
+}.addToGroupBtn:hover { background-image: url('/images/btn_blues_assigntogroup_mo.gif'); }
+
+.extendProgramBtn {
+    background-image:url('/images/btn_blues_extend.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    height:32px;
+    text-align:center;
+    width:81px;
+    background-color:#ffffff;
+}.extendProgramBtn:hover { background-image: url('/images/btn_blues_extend_mo.gif'); }
+
+
+.addToGroupBtn2 {
+    background-image:url('/images/btn_blues_addtogroup.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:151px;
+    background-color:#ffffff;
+}.addToGroupBtn2:hover { background-image: url('/images/btn_blues_addtogroup_mo.gif'); }
+
+.retractSelBtn {
+    background-image:url('/images/btn_blues_retractselected.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:151px;
+    background-color:#ffffff;
+}.retractSelBtn:hover { background-image: url('/images/btn_blues_retractselected_m.gif'); }
+
+.makeNewOfferBtn {
+    background-image:url('/images/btn_blues_makenewoffer.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:151px;
+    background-color:#ffffff;
+}.makeNewOfferBtn:hover { background-image: url('/images/btn_blues_makenewoffer_mo.gif'); }
+
+.removeSelBtn {
+    background-image:url('/images/btn_blues_removeselected.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:151px;
+    background-color:#ffffff;
+}.removeSelBtn:hover { background-image: url('/images/btn_blues_removeselected_mo.gif'); }

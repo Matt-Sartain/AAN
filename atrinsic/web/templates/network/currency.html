@@ -1,0 +1,19 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Currency</th>
+    <th>Exchange Rate in USD</th>
+    <th>Edit</th>
+</tr>
+{% for c in currencies %}
+<tr>
+    <td>{{ c.name }}</td>
+    <td>{{ c.rate }}</td>
+	<td><a href="{% url network_admin_currency_edit c.order %}" class="AddProgram2">Edit Currency</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

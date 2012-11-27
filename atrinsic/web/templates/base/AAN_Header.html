@@ -1,0 +1,163 @@
+<div id="AAN_header" class="headerContainer">
+    <div class="AAN_header">
+        <!-- tabs -->
+        <ul class="mainNav">
+            <li><a href="/{{org_live_type}}/">Dashboard</a></li>
+            {% ifequal org_live_type 'advertiser' %}
+                <li><a href="/{{org_live_type}}/publishers/">Manage Publishers</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/publishers/">Recruit Publishers</a></li>
+                        <li><a href="/{{org_live_type}}/publishers/my/">My Publishers</a></li>
+                        <li><a href="/{{org_live_type}}/publishers/applications/">Pending Apps</a></li>
+                        <li><a href="/{{org_live_type}}/publishers/offers/">Offer Status</a></li>
+                        <li><a href="/{{org_live_type}}/publishers/groups/">Groups</a></li>
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/links/">Manage Links</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/links/">Links</a></li>
+                        <li><a href="/{{org_live_type}}/links/bulk/">Upload Multiple</a></li>
+                        <li><a href="/{{org_live_type}}/links/creatives/">Upload Images</a></li>
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/messages/">Messages</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/messages/">Inbox</a></li>
+                        <li><a href="/{{org_live_type}}/messages/campaigns/">Campaigns</a></li>
+                        <li><a href="/{{org_live_type}}/messages/welcome_email/">Welcome Email</a></li>
+                        <li><a href="/{{org_live_type}}/messages/inquiries/">Inquiries</a></li>
+                        <li><a href="/{{org_live_type}}/messages/settings/">Settings</a></li>
+                    </ul>
+                </li>
+                 <li><a href="/{{org_live_type}}/reports/">Reports</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/reports/">Report</a></li>
+                        <li><a href="/{{org_live_type}}/reports/reporting_api/">Reporting API</a></li>
+                        {#<li><a name="Payment Status" class="PaymentStatusRpt" id="/{{org_live_type}}/reports/payment_status/" href="">Payment Status</a></li>#}
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/settings/">Settings</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/settings/">Settings</a></li>
+                        <li><a href="/{{org_live_type}}/settings/users/">Users</a></li>
+                        <li><a href="/{{org_live_type}}/settings/alerts/">Alerts</a></li>
+                        <li><a href="/{{org_live_type}}/settings/filters/">Filters</a></li>
+                        <li><a href="/{{org_live_type}}/settings/signup_page/">Signup Page</a></li>
+                        <li><a href="/{{org_live_type}}/settings/programs/">Program Settings</a></li>
+                        <li><a href="/{{org_live_type}}/settings/feeds/">Data Feeds</a></li>
+                        <li><a href="/{{org_live_type}}/settings/skulists/">Sku Lists</a></li>
+                        <li><a href="/{{org_live_type}}/settings/manage_orders/">Manage Orders</a></li>
+                        {#<li><a href="/{{org_live_type}}/settings/kenshoo/">Kenshoo</a></li>#}
+                    </ul>
+                </li>           
+                <li><a href="/{{org_live_type}}/analytics/">Analytics</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/analytics/accounts/">Account</a></li>
+                        <li><a href="/{{org_live_type}}/analytics/sites/">Sites</a></li>
+                        <li><a href="/{{org_live_type}}/analytics/report/">Reports</a></li>
+                    </ul>
+                </li>
+
+            	{% ifequal request.organization.brandlock 1 %}
+                <li><a href="/{{org_live_type}}/brandlock/">Brand Protection</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/brandlock/">Reports</a></li>
+                        <li><a href="/{{org_live_type}}/brandlock/edit/">Edit</a></li>
+                    </ul>
+                </li>
+                {% endifequal %}
+	        {% else %}
+                <li><a href="/{{org_live_type}}/advertisers/my/">Manage Advertiser</a>
+                    <ul class="subNav subNavWider">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/advertisers/my/">My Advertisers</a></li>
+                        <li><a href="/{{org_live_type}}/advertisers/find/">Find New Advertisers</a></li>
+                        <li><a href="/{{org_live_type}}/advertisers/offers/">Pending Offers</a></li>
+                        <li><a href="/{{org_live_type}}/advertisers/applications/">Pending Applications</a></li>
+                        <li><a href="/{{org_live_type}}/advertisers/expired/">Expired Advertisers</a></li>
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/links/text/">Manage Links</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/links/text/">Text</a></li>
+                        <li><a href="/{{org_live_type}}/links/banner/">Banner</a></li>
+                        <li><a href="/{{org_live_type}}/links/flash/">Flash</a></li>
+                        <li><a href="/{{org_live_type}}/links/keyword/">Keyword</a></li>
+                        <li><a href="/{{org_live_type}}/links/email/">Email</a></li>
+                        <li><a href="/{{org_live_type}}/links/html/">Html</a></li>
+                        <li><a href="/{{org_live_type}}/links/rss/">RSS</a></li>
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/messages/">Messages</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/messages/">Inbox</a></li>
+                        <li><a href="/{{org_live_type}}/messages/inquiries/">Inquiries</a></li>
+                        <li><a href="/{{org_live_type}}/messages/settings/">Setting</a></li>
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/reports/">Reports</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/reports/">Report</a></li>
+                        <li><a href="/{{org_live_type}}/reports/reporting_api/">Reporting API</a></li>
+                    </ul>
+                </li>
+                <li><a href="/{{org_live_type}}/settings/">Settings</a>
+                    <ul class="subNav subNavWider">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/settings/">Settings</a></li>
+                        <li><a href="/{{org_live_type}}/settings/users/">Users</a></li>
+                        <li><a href="/{{org_live_type}}/settings/payment/">Payment Info</a></li>
+                        <li><a href="/{{org_live_type}}/settings/alerts/">Alerts</a></li>
+                        <li><a href="/{{org_live_type}}/settings/websites/">Web Sites</a></li>
+                        <li><a href="/{{org_live_type}}/settings/incentive/">Incentive Site Settings</a></li>
+                        <li><a href="/{{org_live_type}}/settings/feeds/">Data Feeds</a></li>
+                        <li><a href="/{{org_live_type}}/settings/pixel/">Piggyback Pixels</a></li>
+                        {#<li><a href="/{{org_live_type}}/settings/kenshoo/">Kenshoo</a></li>#}
+                    </ul>
+                </li>    
+                <li><a href="/{{org_live_type}}/analytics/">Analytics</a>
+                    <ul class="subNav">
+                        <li></li>
+                        <li><a href="/{{org_live_type}}/analytics/accounts/">Account</a></li>
+                        <li><a href="/{{org_live_type}}/analytics/sites/">Sites</a></li>
+                        <li><a href="/{{org_live_type}}/analytics/report/">Reports</a></li>
+                    </ul>
+                </li>
+
+	        {% endifequal %}
+        </ul>
+        <!-- /tabs -->
+
+
+        <ul class="additionalNav">
+        {% if user.is_authenticated %}
+	        <li>
+	            <a href="/{{org_live_type}}/messages/" class="Inbox">Inbox</a>
+        	{% ifequal org_live_type 'advertiser' %}
+        	{{advertiser_help}}
+	            <li class="li_fl"><a href="" id="{% url advertiser_help %}" class="displayHelp">Help</a></li>
+	        {% else %}
+	            <li class="li_fl"><a href="" id="{% url publisher_help %}" class="displayHelp">Help</a></li>
+	        {% endifequal %}
+	        </li>
+	        <li><a href="{% url auth_logout %}">Logout</a></li>
+        {% else %}
+	        <li><a href="{% url auth_login %}">login</a></li>
+	        <li><a href="/signup/advertiser/">signup advertiser</a></li>
+	        <li><a href="/signup/publisher/">signup publisher</a></li>
+        {% endif %}
+        </ul>
+        
+
+    </div>
+</div>

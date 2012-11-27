@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Created</th>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Events</th>
+    <th>location</th>
+    <th>Action</th>
+</tr>
+{% for o in object_list %}
+<tr>
+    <td>{{ o.created }}</td>
+    <td>{{ o.events_name }}</td>
+    <td>{{ o.location }}</td>
+    <td>{{ o.get_events_status_display }}</td>
+    <td>{{ o.data|safe }}</td>
+    <td>
+        <a href="{% url network_dashboard_events_edit o.id %}" class="AddProgram2">Edit</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="4" class="bottom">
+        <a href="{% url network_dashboard_events_add %}" class="AddProgram2">Add Events</a>
+        {{ total_results }} results
+    </td>
+</table>
+{% endblock %}

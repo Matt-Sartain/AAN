@@ -1,0 +1,53 @@
+{% extends 'base/widgetui.html' %}
+
+{% block javascript %}
+    <script type="text/javascript">
+    function hide_assignments() {
+            $('#id_assigned_to_commission_level').parent().parent().hide();
+            $('#id_assigned_to_group').parent().parent().hide();
+            $('#id_assigned_to_individual').parent().parent().hide();
+            $('#id_assigned_to_minimum_rating').parent().parent().hide();
+            $('#id_assigned_to_promotion_method').parent().parent().hide();
+            $('#id_assigned_to_publisher_vertical').parent().parent().hide();
+    }
+    </script>
+{% endblock %}
+
+{% block document_ready %}
+    hide_assignments();
+
+    $('#id_assigned_to').change(function() {
+        if ($(this).val() == '1') {
+            hide_assignments();
+        } else if ($(this).val() == '2') {
+            hide_assignments();
+            $('#id_assigned_to_commission_level').parent().parent().show();
+        } else if ($(this).val() == '3') {
+            hide_assignments();
+            $('#id_assigned_to_group').parent().parent().show();
+        } else if ($(this).val() == '4') {
+            hide_assignments();
+            $('#id_assigned_to_individual').parent().parent().show();
+        } else if ($(this).val() == '5') {
+            hide_assignments();
+            $('#id_assigned_to_minimum_rating').parent().parent().show();
+        } else if ($(this).val() == '6') {
+            hide_assignments();
+            $('#id_assigned_to_promotion_method').parent().parent().show();
+        } else if ($(this).val() == '7') {
+            hide_assignments();
+            $('#id_assigned_to_publisher_vertical').parent().parent().show();
+        }
+    });
+
+{% endblock %}
+
+{% block content %}
+    
+    <h2>Add Text Link</h2>
+
+    <form action="{% url advertiser_links_add_textlink %}" method="post">
+        {{ form }}
+        <input type="submit" value="Create Link"/>
+    </form>
+{% endblock %}

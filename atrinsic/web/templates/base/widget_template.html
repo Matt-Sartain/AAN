@@ -1,0 +1,56 @@
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+	<style>
+		.widget_settings_content .widget_edit_style .field{ width:97%;	}
+		.widget_settings_content .widget_edit_style fieldset legend { padding-left:25%; }
+	</style>
+{%endblock%}
+
+<li class="widget">
+    <input type="hidden" value="{{widget.widget_id}}" name="widget_id" class="widget_id">
+    <input type="hidden" value="{{current_page}}" name="widget_page" class="widget_page">
+    <input type="hidden" value="{{group_by}}" name="hidden_group_by" id="hidden_group_by" >
+    <textarea style="display:none; width:100%;height:0;" class="hidden_flash_content" ><div style="width:100%;">{{widget.html|safe}}</div></textarea>
+    
+    <div class="widget_headerCtn">
+        <div class="widget_header">{{widget.header}}</div>
+        <a href='' class='widget_close'></a>
+        <a href='' class='widget_collapse'></a>
+    </div>
+    <div class="widget_content">{{widget.html|safe}}</div>
+    
+    <div class="widget_settings_content" style="display:none;">
+    	<form action="/api/settings/" method="post" class="widget_edit_style widgetFrm{{widget.widget_id}}" style="width:100%;margin:0 auto;">
+    		<input type="hidden" value="{{widget.widget_id}}" name="wid" class="wid">
+    		
+			<div class="widget_form_holder">{{ widget.form|safe }}</div>
+			<div class="input"><input type="submit" value="SAVE SETTINGS" class="edit_buttonv2" /></div>
+			<div class="clearfix"></div>
+		</form>
+    </div>
+
+    <div class="widget_footer">
+        <div class="widget_buttons">
+			<div class="actionButt action_buttons">
+				<div class="report_action_tip"></div>
+	            <a href="" class="chart_style_lines report_btns" name="Line Graph" id="lines">lines</a>
+	            <a href="" class="chart_style_lines report_btns" name="Bar Graph" id="columns">columns</a>
+	            <a href="" class="chart_style_lines report_btns" name="Table View" id="table">table</a>
+	            {%ifequal reporting 1%}
+	            <a href="" class="download_it report_btns" name="Download">download</a>{%endifequal%}
+	            <a href="" class="lightbox_it report_btns" name="Zoom">lbit!</a>
+	            {%if settings%}<a href="" class="widget_settings report_btns" name="Settings">Settings</a>{%endif%}
+	        </div>
+        </div>
+        <a href="" class="show_buttons">show</a>
+        <div style="clear:both;"></div>
+    </div>
+</li>
+
+
+<script>
+	$(".widgetFrm{{widget.widget_id}} input[type=text]").each(function (i) {
+		if($(this).attr("id") == "id_start_date"){ this.value="{{ widget.start_date }}" }
+		if($(this).attr("id") == "id_end_date"){ this.value="{{ widget.end_date }}" }
+	});
+</script>

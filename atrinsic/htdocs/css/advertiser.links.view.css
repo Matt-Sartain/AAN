@@ -1,0 +1,19 @@
+.manageLinksHdr{ margin:0px 0px 0px 50px; }
+.manageLinksCtn{ height:auto;margin:0px 0px 0px 25px;padding:0 0 0 12px;width:625px; }
+.manageLinksCtn th {color:#0c467e;font-weight:normal;font-size:14px;white-space:nowrap;}
+.manageLinksCtn table td {text-align:center;}
+.addNewCtn{ border-bottom:1px solid #CDCDCD;width:600px;height:55px; }
+.addNew{ margin: 25px 0 0 0; }
+.vSpacer{ clear:both;height:10px; }
+.hdrsCtn { color:#2D71BC;font-size:14px;height:30px;margin:0;width:600px; }
+.imageCol{ text-align:center;width:210px; }
+.sizeCol{ text-align:center;width:110px; }
+.assignedCol{ text-align:center;width:120px; }
+.actionCol{ text-align:center;width:140px; }
+.rowsCtn{ border-bottom:1px solid #CDCDCD;font-size:12px;margin:0;width:600px;}
+.rowSpecific { margin:20px 0 0 0;}
+a.deleteBtn{ background-image: url('/images/bttn_deletelrg.png');display:block;float:left;height:50px;width:59px; }
+a.deleteBtn:hover{background-image: url('/images/bttn_deletelrg_over.png');}
+a.editBtn{ background-image: url('/images/bttn_editcrayon.png');display:block;float:left;height:50px;width:60px; }
+a.editBtn:hover{background-image: url('/images/bttn_editcrayon_over.png');}
+div.actionButt{width:119px;margin:auto;}

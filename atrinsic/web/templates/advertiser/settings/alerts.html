@@ -1,0 +1,55 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+    initConfirmationBox("Are you sure you want to delete this Alert?");
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Alerts</div>
+    <div class="contentCtn whiteBG">  
+        <div class="ajaxLoading"></div>
+        <table class="primaryDisplayTable" cellspacing="0">
+            <tr>
+                <th>Details</th>
+                <th>Alert</th>
+                <th>Time Period</th>
+                <th>Change</th>
+                <th>Action</th>
+            </tr>
+            {% for o in object_list %}
+                <tr class="rowSpacer"><td colspan="7"></td></tr>
+        	    <tr class="highlightRow">
+        	        <td class="Details">{{ o }}</td>
+        	        <td>{{ o.get_alert_field_display }}</td>
+        	        <td>{{ o.get_time_period_display }}</td>
+        	        <td>{{ o.change }}%</td>
+        	        <td>
+        	            <a href="#" id="{% url advertiser_settings_alerts_edit o.id %}" class="AjaxLightBox dSmallWide" name="Edit Alert">Edit</a>
+				        <a href="#" id="{% url advertiser_settings_alerts_delete o.id %}" class="confirmDelete" name="Delete Alert">Delete</a>
+			        </td>
+			    </tr>
+            {% endfor %}  
+            {% if not object_list %}
+                <tr class="rowSpacer"><td colspan="5"></td></tr>
+        	    <tr class="highlightRow">
+                    <td class="noResults" colspan="5">You have no Alerts.</td>
+                </tr>
+            {% endif %}
+        </table>   
+        <a href="#" id="{% url advertiser_settings_alerts_add %}" class="addAlertBtn AjaxLightBox dSmallWide" name="Add Alert"></a>
+    </div>    
+      
+<div id="ajaxLightbox"></div>
+{% endblock %}

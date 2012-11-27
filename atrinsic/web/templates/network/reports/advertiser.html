@@ -1,0 +1,25 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<table>
+<tr>
+    <th>#</th>
+    <th>Advertiser</th>
+    <th>Action</th>
+</tr>
+{% for o in user.get_profile.admin_assigned_advertisers %}
+<tr>
+    <td>{{ forloop.counter }}.</td>
+    <td>{{ o.name }}</td>
+    <td>
+        <a href="{% url auth_impersonate o.id "/advertiser/" %}" class="AddProgram2">Work as this Advertiser</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="4" class="bottom">
+        {{ user.get_profile.admin_assigned_advertisers.all|length }} results
+    </td>
+</table>
+{% endblock %}

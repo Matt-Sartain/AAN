@@ -1,0 +1,18 @@
+<table border="1">	
+    <tr>
+        <th>Image</th>
+        <th>Size</th>
+        <th>Assigned</th>
+    </tr>
+    {% for row in banners %}
+	<tr>
+		
+		<td>{{row.banner.image}}</td>
+		<td>{{row.banner.banner_size.name}}</td>
+		<td>{{row.assignment}}</td>
+		
+	</tr>
+	{%endfor%}
+</table>
+
+

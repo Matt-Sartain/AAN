@@ -1,0 +1,111 @@
+{% extends 'base/piwik.html' %}
+{% block document_ready %}
+	ActivateTheLazers();
+{% endblock %}
+{% block content %}
+<style>
+.dashboard_container{ width:100%; }
+.dashboard_footer{
+	background-color:#cedff3;
+	width:100%;
+	position:absolute;
+	bottom:0;
+	height:30px;
+}
+.dashboard_footer hr{
+	width:100%;
+	color:#c6c6c6;
+	clear:both;
+	height:3px;
+}
+.dashboard_footer .middle{width:75%; float:left; height:30px;}
+.dashboard_footer .left_btn_container{ width:10%; border-right:1px solid #c6c6c6; float:left; height:30px;}
+.dashboard_footer .right_btn_container{ width:10%; border-left:1px solid #c6c6c6; float:left; height:30px;}
+.droppable{margin:0.5%; padding:0px; }
+
+.widget_holder{list-style:none; padding:0; margin:0; min-height:300px; border: 1px dotted black; width:100%; }
+.widget_header{ margin:0px; color:#0c477f; background-color:#f0f0fa; padding:8px; font-size:14px; font-weight:bold; }
+.widget_header span{ margin-left:25px; }
+.widget{ width:100%; display:block; min-height:40px; padding:0; margin:0 0 12px 0; border:1px solid black; z-order:9999; }
+#holder1{min-height:1000px;}
+#zone1{ width:65%; float:right; min-height:300px;}
+#zone2{ width:32%; float:right; min-height:1000px;}
+#zone3{ width:32%; float:right; min-height:300px;}
+#zone4{ width:32%; float:right; min-height:300px;}
+</style>
+
+<h2>Analytics Dashboard</h2>
+<div class="dashboard_container">
+	<div class="main_block">
+		<div class="droppable" id="zone2">
+			<ul id="holder2" class="widget_holder">
+				{%for widget in widgets.zone2%}
+				<li class="widget">
+					<input type="hidden" value="{{widget.widget_id}}" name="widget_id" class="widget_id">
+					<input type="hidden" value="dashboard" name="widget_page" class="widget_page">
+					
+					<div class="widget_header">{{widget.header}}</div>
+					<div class="widget_content">{{widget.html|safe}}</div>
+					<div class="widget_footer">
+						<a href="" class="chart_style_lines">lines</a>
+						<a href="" class="chart_style_lines">pie</a>
+						<a href="" class="chart_style_lines">columns</a>
+						<a href="" class="chart_style_lines">table</a>
+						<a href="" class="lightbox_it">lbit!</a>
+					</div>
+				</li>
+				{%endfor%}
+			<ul>
+		</div>
+		<div class="droppable" id="zone1">
+			<ul id="holder1" class="widget_holder">
+				{%for widget in widgets.zone1%}
+				<li class="widget">
+					<input type="hidden" value="{{widget.widget_id}}" name="widget_id" class="widget_id">
+					<input type="hidden" value="dashboard" name="widget_page" class="widget_page">
+					<div class="widget_header">{{widget.header}}</div>
+					<div class="widget_content">{{widget.html|safe}}</div>
+					<div class="widget_footer">
+						<a href="" class="chart_style_lines">lines</a>
+						<a href="" class="chart_style_lines">pie</a>
+						<a href="" class="chart_style_lines">columns</a>
+						<a href="" class="chart_style_lines">table</a>
+						<a href="" class="lightbox_it">lbit!</a>
+					</div>
+				</li>
+				{%endfor%}
+			<ul>
+		</div>
+		<div class="droppable" id="zone3">
+			<ul id="holder3" class="widget_holder">
+				{%for widget in widgets.zone3%}
+				<li class="widget">
+					<div class="widget_header">{{widget.header}}</div>
+					<div class="widget_content">{{widget.html|safe}}</div>
+				</li>
+				{%endfor%}
+			</ul>
+		</div>
+		<div class="droppable" id="zone4">
+			<ul id="holder4" class="widget_holder">
+				{%for widget in widgets.zone4%}
+				<li class="widget">
+					<div class="widget_header">{{widget.header}}</div>
+					<div class="widget_content">{{widget.html|safe}}</div>
+				</li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div>
+	<div class="dashboard_footer">
+		<div class="left_btn_container">
+			btn - btn
+		</div>
+		<div class="middle"></div>
+		<div class="right_btn_container">
+			btn - btn
+		</div>
+		<hr />
+	</div>
+</div>
+{% endblock %}

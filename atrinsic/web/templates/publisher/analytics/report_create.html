@@ -1,0 +1,143 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<style>
+    #id_dimension,#id_metric { height: 100px; width:150px;}
+    .errorlist {list-style-type: none; padding:0px;margin:0px;float:left;}
+    .innerTbl tr { height:35px;}
+</style>
+
+{%endblock%}
+
+{% block javascript %} 
+<script language="javascript" type="text/javascript" src="/js/zones.js"></script>
+<script>
+    function AddOption(drop, name, value) {
+        var option = new Option(name, value);
+        
+        if ($.browser.msie) {
+            drop[0].add(option);
+        }
+        else {
+            drop[0].add(option, null);
+        }
+    };
+    function ClearOption(drop){
+        drop.children().remove();
+        AddOption(drop, "------", "0");
+    };
+</script>
+{% endblock %}
+
+{% block document_ready %}	   
+    $('#id_category').change(function() {
+        var category_id = $('#id_category').val();
+    
+        $.getJSON('/publisher/analytics/report/metrics/' + category_id + '/', function(data) {
+            var drop = $("#id_metric");
+            ClearOption(drop);
+    
+            $(data).each(function(index) { 
+                AddOption(drop, data[index].name,  data[index].id);
+            });
+        });
+        $.getJSON('/publisher/analytics/report/dimensions/' + category_id + '/', function(data) {
+            var drop = $("#id_dimension");
+            ClearOption(drop);
+    
+            $(data).each(function(index) { 
+                AddOption(drop, data[index].name,  data[index].id);
+            });
+        });                    
+    });  
+    ClearOption($("#id_dimension"));
+    ClearOption($("#id_metric"));
+{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block pageContent %}
+
+
+<div class="pageContentHdr">Add Report</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <form id="formPost" action="{%url publisher_ga_report_create%}" method="post">
+    	<table class="innerTbl" style="margin:0 auto;">
+            <tr><th>{{form.name.label}}</th> 
+                <td>{{form.name}}<span>{{form.name.errors}}</span></td></tr>
+            <tr><th>{{form.description.label}}</th> 
+                <td>{{form.description}}{{form.description.errors}}</td></tr>
+            <tr><th>{{form.site.label}}</th> 
+                <td>{{form.site}}{{form.site.errors}}</td></tr>
+            <tr><th>{{form.category.label}}</th> 
+                <td>{{form.category}}{{form.category.errors}}</td></tr>
+            {%comment%}
+            <tr><th>{{form.metric.label}}</th> 
+                <td>{{form.metric}}{{form.metric.errors}}</td></tr>
+            <tr><th>{{form.dimension.label}}</th> 
+                <td>{{form.dimension}}{{form.dimension.errors}}</td></tr>
+            {%endcomment%}
+            <tr><th>Metrics</th> 
+                <td><select multiple="multiple" height="5" name="metric" id="id_metric"></select></td></tr>
+            <tr><th>Dimensions</th> 
+                <td><select multiple="multiple" height="5" name="dimension" id="id_dimension"></td></tr>
+            
+    		<tr><td></td><td><input type="submit" value="Save Report" class="styled_anchor_button plus_add"></td></tr>
+    	</table>
+    </form>
+</div>
+
+    
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
+
+                <div class="fieldWrapper">
+                    
+                    <label for="id_category">Category</label>: <select name="category" id="id_category">
+<option value="" selected="selected">---------</option>
+<option value="1">Visitor</option>
+
+<option value="2">Campaign</option>
+<option value="3">Content</option>
+<option value="4">Ecommerce</option>
+<option value="5">Internal Search</option>
+<option value="6">Goals</option>
+<option value="7">Events</option>
+</select>
+                </div>
+
+
+{% endcomment %}

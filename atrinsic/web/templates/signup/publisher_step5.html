@@ -1,0 +1,47 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.signup.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initStep5FormManipulation();
+{% endblock %}
+
+{% block pageContent %}
+    <div class="appType">
+        <h2>Publisher Application</h2>
+        Please continue your application by completing the information below.
+    </div>
+    
+    <div class="stepCtn">
+        <div class="steps">
+            <div class="step1Current"></div>      
+            <div class="step2Disabled"></div>              
+        </div>
+        <div class="clearfix"></div>
+        <div class="pubSignupStepHdr">Account Information</div>
+        <form action="" method="POST" class="MooseHead widerLabels">
+            <div class="contentCtn formsCtn formsCtnWider">
+                <div class="primaryDisplayTableHdr">Organization Information</div>
+                <table class="DisplayTableAsForm" cellspacing="0">
+                    {{ form }}
+                </table>
+            </div>
+            <div class="contentCtn formsCtn formsCtnWider">
+                <div class="primaryDisplayTableHdr">Website Information</div>
+                <table class="DisplayTableAsForm" cellspacing="0">
+                    {{ website_form }}
+                    <br>
+                </table>
+            </div>
+            <input type="submit" class="nextStepBtn" value="">
+        </form>
+    </div>
+
+{% endblock %}
+

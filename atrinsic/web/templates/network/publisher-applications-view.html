@@ -1,0 +1,66 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+    <table>
+    <tr>
+        <th>Date Created:</th>
+        <td>{{ publisher.date_created }}</td>
+    </tr>
+    <tr>
+        <th>Name:</th>
+        <td>{{ publisher.name }}</td>
+    </tr>
+    <tr>
+        <th>Address:</th>
+        <td>{{ publisher.address }}</td>
+    </tr>
+    <tr>
+        <th>Location:</th>
+        <td>{{ publisher.city }}, {{ publisher.state }} {{ publisher.zipcode }} {{ publisher.country }}</td>
+    </tr>
+    <tr>
+        <th>Phone:</th>
+        <td>{{ publisher.organizationcontacts_set.all.0.phone }}</td>
+    </tr>
+    <tr>
+        <th>Fax:</th>
+        <td>{{ publisher.organizationcontacts_set.all.0.fax }}</td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td><a href="mailto:{{ publisher.contact_email }}">{{ publisher.organizationcontacts_set.all.0.email }}</a></td>
+    </tr>
+    <tr>
+        <th>Contact:</th>
+        <td>{{ publisher.organizationcontacts_set.all.0.firstname }} {{ publisher.organizationcontacts_set.all.0.lastname }}</td>
+    </tr>
+    <tr>
+        <th>Currency:</th>
+        <td>{{ publisher.currency }}</td>
+    </tr>
+    <tr>
+        <th>Vertical:</th>
+        <td>{{ publisher.vertical }}</td>
+    </tr>
+    <tr>
+        <th>Promotion Method:</th>
+        <td>{{ publisher.promotion_method }}</td>
+    </tr>
+    <tr>
+        <th>Website:</th>
+        <td><a target="blank" href="{{ publisher.website_set.all.0 }}">{{ publisher.website_set.all.0 }}</a></td>
+    </tr>
+    <tr>
+        <th>Website Description:</th>
+        <td>{{ publisher.website_set.all.0.desc }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <a href="{% url network_account_publisher_applications_approve publisher.id %}" class="AddProgram2">Approve</a>
+            <a href="{% url network_account_publisher_applications_deny publisher.id %}" class="AddProgram2">Deny</a>
+            <a href="mailto:{{ publisher.contact_email }}" class="AddProgram2">Contact</a>
+        </td>
+    </tr>
+</table>
+{% endblock %}

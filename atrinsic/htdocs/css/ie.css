@@ -1,0 +1,7 @@
+body{width:expression(document.documentElement.clientWidth < 965 ? "965px" : "auto");}
+logo{
+	background-position: -9999px -9999px;
+	filter:progid:dximagetransform.microsoft.alphaimageloader(src='images/logo.png', sizingmethod='crop');
+	cursor: pointer;
+}
+.header .nav li, .item-list li {background-image: expression( (this===this.parentNode.childNodes[0]) ? "none" : "auto")}

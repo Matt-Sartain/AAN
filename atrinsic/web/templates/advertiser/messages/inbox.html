@@ -1,0 +1,95 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}	
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.messages.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initMessages();
+    initAjaxLightBox();
+{% endblock %}
+
+{% block pageContent %}
+<form id="deleteMsgForm" action="{% url advertiser_messages_delete %}" method="post">
+<div class="pageContentHdr">Folders - {{ folder|title }}</div>
+    <a href="{% url advertiser_messages %}" class="msgInboxBtn"><div>({{ inbox.count }})</div></a>
+    <a href="{% url advertiser_messages "sent" %}" class="msgSentBtn"><div>({{ sent.count }})</div></a>
+    <a href="{% url advertiser_messages "trash" %}" class="msgTrashBtn"><div>({{ trash.count }})</div></a>
+    <div class="clearfix"></div>
+    <div class="contentCtn whiteBG">  
+        <div class="ajaxLoading"></div>
+		<input type="hidden" id="folder" name="folder" value="{{folder}}">
+        <table class="primaryDisplayTable" cellspacing="0">
+    		<tr><th>Select</th>
+    			<th>
+    			    {% ifequal folder "sent" %}To
+    			    {% else %}From
+    			    {% endifequal %}
+			    </th>
+    			{% ifequal folder "trash" %}
+    			    <th>To</th>
+    			{% endifequal %}
+    			<th>Subject</th>
+    			<th>Date</th>
+    			<th>Action</th>
+    		</tr>
+            {% for m in object_list %}        
+                <tr class="rowSpacer"><td colspan="6"></td></tr>
+        	    <tr class="highlightRow">
+        			<td class="Select"><input type="checkbox" name="m_id" value="{{ m.id }}"></td>
+        			    {% ifequal folder "sent" %}
+        					<td class="From">{{ m.receiver.name }}</td>
+        				{% else %}	
+        				    {% ifequal folder "trash" %}
+        					    <td class="FromTrash">{{ m.sender.name }}</td>
+        					{% else %}	
+        					    <td class="From">{{ m.sender.name }}</td>
+        					{% endifequal %}
+        				{% endifequal %}
+        				{% ifequal folder "trash" %}
+        				<td>{{ m.receiver.name }}</td>
+        				{% endifequal %}
+        			<td class="Subject"><a href="#" id="/advertiser/messages/{{ m.id }}/" class="AjaxLightBox"  name="View Message">
+        				{% if m.read %}
+        					{{ m.subject }}
+        				{% else %}
+        					<strong>{{ m.subject }}</strong>
+        				{% endif %}			
+        			</a></td>
+        			<td>{{ m.date_sent }}</td>	
+        			<td class="Action">
+    					{% ifequal folder 'inbox' %}
+    					<a href="#" id="{% url advertiser_messages_compose m.id %}" class="AjaxLightBox" name="Reply">Reply</a>
+    					{% endifequal %}
+    					{% ifequal folder 'trash' %}
+    					<a href="{% url advertiser_messages_delete_trash m.id %}">Delete</a>
+    					{% else %}
+    					<a href="{% url advertiser_messages_delete m.id %}">Delete</a>
+    					{% endifequal %}
+        			</td>	
+        		</tr>	
+    		{% endfor %}
+    		{% if not object_list %}
+                <tr class="rowSpacer"><td colspan="6"></td></tr>
+    		    <tr class="highlightRow"><td colspan="6" class="noResults">There are no messages in {{ folder|title }}.</td></tr>
+    	    {% endif %}
+        </table>
+    </div>    
+    <div class="outsideTableFooter">
+        <a href="" class="primaryDisplayTableSelectAll">Select All</a>
+        <a href="" class="deleteAllMsgs">Delete Selected</a>
+    	{% ifequal folder "inbox" %}
+    		<a href="" id="{% url advertiser_messages_compose %}" class="msgComposeBtn AjaxLightBox" name="Compose"></a>
+    	{% endifequal %}
+    </div>    	
+</form>    		
+<div id="ajaxLightbox"></div>
+{% endblock %}

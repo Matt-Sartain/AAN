@@ -1,0 +1,17 @@
+<script type="text/javascript">
+    initComposeReplyFormManipulation();
+    initAjaxFormPost();
+    $("#id_transaction_date").datepicker({showOn: "both", clickInput:true, dateFormat: "mm/dd/yy", buttonImage: "/images/blankdatepicker.png",buttonImageOnly: true});
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+<form action="{% url publisher_messages_new_order_inquiry %}" method="post" class="MooseHead">
+	{{ form }}
+	{% for id in publisher_id %}
+	<input type="hidden" name="publisher_id" value="{{ id }}"/>
+	{% endfor %}
+	<input type="submit" class="submitPlusWBGBtn pushRight" value="">
+	<div class="clearfix"></div>
+
+</form>
+</div>

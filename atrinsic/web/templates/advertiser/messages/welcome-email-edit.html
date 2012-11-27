@@ -1,0 +1,95 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% load thumbnail_tag %}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<style type="text/css">
+.embed-banner-box {
+    float: left;
+    width: 40%;
+    height: 345px;
+    overflow: auto;
+    background: #fff; 
+    border: 1px solid #666;
+    margin: 0.25em 1.5em 0 0;
+}
+.embed-tag-box {
+    float: left;
+    width: 15%;
+    padding-top: 0.5em;
+    background: #fff; 
+    border: 1px solid #666;
+    margin: 0.25em 1.5em 0 0;
+}
+
+.embed-tag-box h4, .embed-banner-box h4 {
+    margin: 0 0 0 0.25em;
+    font-size: 0.95em;
+    font-weight: bld;
+}
+#id_body { height:350px;width:350px; }
+#id_html_body { height:350px;width:350px; }
+</style>
+{% endblock  %}
+
+{% block document_ready %}
+    banner_markup = '<div class="embed-banner-box"><h4>Embed Banners</h4><ul>' +
+            {% for l in organization.link_set.all %}
+            '<li><a class="html_add" value="link_{{ l.name|slugify }}">{{ l.name }}{% if l.banner.image %}: <img src="{{ l.banner.image|thumbnail }}"/>{% endif %}</a></li>' +
+            {% endfor %}
+            '</ul></div>';
+
+    markup = '<div class="embed-tag-box"><h4>Embed Labels</h4><ul>' +
+            '<li><a class="html_add" value="first_name">First Name</a></li>' +
+            '<li><a class="html_add" value="website_url">Website URL</a></li>' +
+            '<li><a class="html_add" value="clicks_mtd">Clicks: MTD</a></li>' +
+            '<li><a class="html_add" value="orders_mtd">Orders: MTD</a></li>' +
+            '<li><a class="html_add" value="leads_mtd">Leads: MTD</a></li>' +
+            '<li><a class="html_add" value="sales_mtd">Sales: MTD</a></li>' +
+            '<li><a class="html_add" value="clicks_ytd">Clicks: YTD</a></li>' +
+            '<li><a class="html_add" value="orders_ytd">Orders: YTD</a></li>' +
+            '<li><a class="html_add" value="leads_ytd">Leads: YTD</a></li>' +
+            '<li><a class="html_add" value="sales_ytd">Sales: YTD</a></li>' +
+            '</ul></div>';
+   
+    $('#id_html_body').parent().prepend(markup + banner_markup);
+
+    $('#id_body').parent().prepend(markup.replace(/html_/g, 'text_') + banner_markup.replace(/html_/g, 'text_'));
+	$('#id_body').attr("cols",35);
+	$('#id_html_body').attr("cols",35);
+    $(".html_add").click(function() {
+        $("#id_html_body").val($("#id_html_body").val() + '{'+$(this).attr('value')+'}'); 
+    });
+
+    $(".text_add").click(function() {
+        $("#id_body").val($("#id_body").val() + '{'+$(this).attr('value')+'}'); 
+    });
+
+{% endblock %}
+
+{% block pageContent %}
+
+
+<div class="pageContentHdr">Edit Welcome Email</div>
+<div class="contentCtn whiteBG">     
+    <div style="margin:20px 0 0 20px;">
+        <form action="{% url advertiser_messages_welcome_email_edit %}" method="post" style="margin:0px;">
+        	
+            <div style="color:#2F528A;height:20px;font-size:14px;">{{ form.subject.label }}</div>
+            <div>{{ form.subject }}{{ form.subject.errors }}</div>
+            <div class="clearfix" style="height:20px;"></div>
+            <div style="color:#2F528A;height:20px;font-size:14px;">{{ form.body.label }}</div>
+            <div style="width:100%;">{{ form.body }}{{ form.body.errors }}</div>
+            <div style="clear:both;height:20px;border-bottom: 1px solid #B5B1B0;width:98%;"></div>      
+            <div class="clearfix" style="height:20px;"></div>  
+            <div style="color:#2F528A;height:20px;font-size:14px;">{{ form.html_body.label }}</div>
+            <div style="width:100%;">{{ form.html_body }}{{ form.html_body.errors }}</div>        
+            <div class="clearfix" style="height:10px;"></div>                                    
+            <input type="Submit" value="" class="saveBtn"  /><br>  
+            <div class="clearfix" style="height:10px;"></div>                   
+            
+        </form>   
+    </div> 
+</div>
+{% endblock %}
+

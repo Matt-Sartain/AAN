@@ -1,0 +1,198 @@
+{% load compare %}
+<div class="alert-box">
+    <div class="heading">
+        <h2><span>Alerts</span></h2>
+    </div>
+    <div class="text">
+        <ul class="list">
+            <li><a href="/publisher/settings/alerts/add/" class="add">Add Alerts</a></li>
+            <li><a href="/publisher/settings/alerts/" class="edit">Edit Alerts</a></li>
+        </ul>
+        <div class="description top">
+            <div class="type">
+                {% if organization.alert_set.all %}
+                <h2>Alert Type</h2>
+                {% else %}\
+                No Alerts
+                {% endif %}
+            </div>
+            {% if organization.alert_set.all %}
+            <div class="time">
+                <h2>Time Period</h2>
+            </div>
+            <div class="change">
+                <h2>% Change</h2>
+            </div>
+            {% endif %}
+        </div>
+        {% for alert in organization.alert_set.all %}
+        <div class="description {% cycle "dark" "" %}">
+            <div class="type">
+                <p>{{ alert.get_alert_field_display }}</p>
+            </div>
+            <div class="time">
+                <p>{{ alert.get_time_period_display }}</p>
+            </div>
+            <div class="change">
+                {% if alert.check_alert|lt:"0" %}
+                <p class="sale">
+                {% endif %}
+                {% if alert.check_alert|gt:"0" %}
+                <p style="color: #090;">
+                {% endif %}
+                {% ifequal alert.check_alert 0 %}
+                <p>
+                {% endifequal %}
+                    {{ alert.check_alert }}%
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if organization.has_violations %}
+        <div class="notice">
+            <h3>Infrigment notices:</h3>
+            <ul>
+                {% if organization.trademark_violation %}
+                <li><a href="#" class="trade">Trademarks</a></li>
+                {% endif %}
+                {% if organization.keyword_violation %}
+                <li><a href="#" class="protect">Protected Keywords</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="oddt-box">
+    <div class="heading">
+        <div>
+            <ul class="tabset">
+                <li><a href="#tab1" class="tab active"><span>Tasks</span></a></li>
+                <li><a href="#tab2" class="tab"><span>Events</span></a></li>
+                <li><a href="#tab3" class="tab"><span>News</span></a></li>
+                <li><a href="#tab4" class="tab"><span>New Advertisers</span></a></li>
+                <li><a href="#tab5" class="tab"><span>Promotions</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="tab" id="tab1">
+        <div class="scroll">
+            <div class="scroll-info">
+                <ul class="item-list">
+                    <li>
+                        <div class="item">
+                            <div class="data">
+                                <em>Inbox</em>
+                            </div>
+                            <div class="text">
+                                {% ifnotequal organization.unread_messages 0 %}
+                                <p>You have {{ organization.unread_messages }} new messages.</p>
+                                <h4><a href="{% url advertiser_messages %}">View &rarr</a></h4>
+                                {% else %}
+                                <p>You have no unread messages.</p>
+                                {% endifnotequal %}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab" id="tab2">
+        <div class="scroll">
+            <div class="scroll-info">
+                <ul class="item-list">
+                    <li>
+                        <div class="item">
+                            <em></em>
+                        </div>
+                        <div class="text">
+                            No new Events
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab" id="tab3">
+        <div class="scroll">
+            <div class="scroll-info">
+                <ul class="item-list">
+                    {% for n in news %}
+                    <li>
+                        <div class="item">
+                            <div class="data">
+                                <em>{{ n.created|date:"m/d/y" }}</em>
+                            </div>
+                            <div class="text">
+                                <p>{{ n.data }}</p>
+                                <!-- <h4><a href="#">more &rarr;</a></h4> -->
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% if not news %}
+                    <li>
+                        <div class="item">
+                            <div class="data">
+                                <em><!-- 05/01/09 --></em>
+                            </div>
+                            <div class="text">
+                                <p>No News.</p>
+                                <!-- <h4><a href="#">more &rarr;</a></h4> -->
+                            </div>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab" id="tab4">
+        <div class="scroll">
+            <div class="scroll-info">
+                <ul class="item-list">
+                    {% for p in new_advertisers %}
+                    <li>
+                        <div class="item">
+                            <div class="data">
+                                <em>{{ p.date_created|date:"m/d/y" }}</em>
+                            </div>
+                            <div class="text">
+                                <p>New Advertisers: {{ p.company_name }}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% if not new_advertisers %}
+                    <li>
+                        <div class="item">
+                            <div class="data"><em></em></div>
+                            <div class="text">
+                                No new Advertisers
+                            </div>
+                        </div>
+                    </li> 
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab" id="tab5">
+        <div class="scroll">
+            <div class="scroll-info">
+                <ul class="item-list">
+                    <li>
+                        <div class="item">
+                            <em></em>
+                        </div>
+                        <div class="text">
+                            No new Promotions
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

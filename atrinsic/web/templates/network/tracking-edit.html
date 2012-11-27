@@ -1,0 +1,41 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_advertiser_tracking advertiser.id %}';
+    });
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_advertiser_tracking_edit advertiser.id action.id %}" method="post">
+{{ form }}
+<fieldset>
+<br/>
+Secure Pixel: {{ action.secure_url }}
+<br/>
+Regular Pixel: {{ action.unsecure_url }}
+<br/>
+</fieldset>
+
+{% ifnotequal apeRedirect 0 %}
+<fieldset>
+<br>
+<div style="float:left;padding-top:2px;width:160px;">
+APE Secure Pixel:</div>
+<textarea cols=100 rows=2 border=0 style="float:left;font-family:arial,sans-serif;font-size:14px;" readonly="readonly">
+ <script type="text/javascript" src="{{securePixel}}"></script>
+</textarea>
+
+<div class="clearfix"></div>
+<br><br>
+<div style="float:left;padding-top:2px;width:160px;">
+APE Non-Secure Pixel:</div>
+<textarea cols=100 rows=2 border=0 style="float:left;font-family:arial,sans-serif;font-size:14px;" readonly="readonly">
+ <script type="text/javascript" src="{{nonSecurePixel}}"></script>
+</textarea>
+</fieldset>
+{% endifnotequal %}
+<input type="submit" value="Update Action"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

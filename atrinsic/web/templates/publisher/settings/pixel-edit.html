@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    initAjaxFormPost();    
+    $("#id_content").parent().parent().prepend("<div class='pixelDesc'></div>");
+    var imgPixeldesc = "Please enter the path to your image pixel. Ex: http://somedomain.com/images/pixel.gif"
+    var scriptPixeldesc = "Please enter the path to Javascript source file. Ex: http://somedomain.com/js/example.js"
+    var desc = ""
+    if($("input[name='pixel_type']:checked").val() == 1){
+        $("#id_jsinclude").parent().parent().hide()    
+        var desc = imgPixeldesc
+    }else{    
+        var desc = scriptPixeldesc
+    }
+    
+    $(".pixelDesc").text(desc)
+    $("input[name='pixel_type']").live("click", function(event){        
+        $(".pixelDesc").text("")
+        if($(this).val() == 3){ // Script Pixel
+            $("#id_jsinclude").parent().parent().show()   
+            $(".pixelDesc").text(scriptPixeldesc)
+        }else{
+            $("#id_jsinclude").parent().parent().hide() 
+            $(".pixelDesc").text(imgPixeldesc)            
+        }
+    });
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url publisher_settings_pixel_edit pixel.id %}" method="POST" class="MooseHead">
+    	{{ form }}
+    	<div class="clearfix"></div>
+        <input type="submit" class="saveBtn" value=""/>
+    </form>
+</div>

@@ -1,0 +1,71 @@
+<script>
+	$("legend").remove()
+	$("#extendPTSubmit").insertAfter($("#id_effective_date").parent())
+
+	$("#id_effective_date").datepicker('destroy');
+    var bolEffectiveDate = "{{minEffectiveDate}}"
+    var today = new Date()
+    if(bolEffectiveDate == "True"){
+        var curYear = "{{effectiveYear}}"
+        var curMonth = "{{effectiveMonth}}"
+        if(curMonth != 0) { curMonth -= 1 } 
+        var curDay = "{{effectiveDay}}"
+        var today = new Date(curYear, curMonth,curDay);
+
+    }else{
+    	
+        var curYear = "{{effectiveYear}}"
+        var curMonth = "{{effectiveMonth}}"
+        var curDay = parseInt("{{effectiveDay}}") + 1
+		var today = curMonth + "/" + curDay + "/" +curYear        
+    }
+
+	if("{{view}}" == "find"){
+		$("#id_effective_date").val(today);
+		$("#id_effective_date").attr("readOnly", true); 
+	}else{
+	    $("#id_effective_date").datepicker({showOn: "both", clickInput:true, dateFormat: "mm/dd/yy", buttonImage: "/images/blankdatepicker.png",buttonImageOnly: true, minDate: today}); 
+	}
+    function showResponse(responseText, statusText)  { 
+		if(responseText.indexOf("errorlist") > 0){	
+		    $("#ajaxLightbox").html(responseText);
+		}else{	
+            $("#ajaxLightbox").dialog("destroy");
+            location.reload();
+        }
+	}
+        
+         
+    function errorOut(){ 
+        $("#ajaxLightbox").dialog("destroy");
+        
+    }
+    var opts = {
+        //target:        '#AjaxContent',
+    	success:       showResponse,  // post-submit callback
+    	error:         errorOut
+    };
+    $('form').bind('submit', function() {
+        $("#extendPT").attr("disabled", "disabled")
+    	$(this).ajaxSubmit(opts);
+    	return false; // <-- important!
+    });	
+
+    $("input[name$='o_id']:checked").each(function (i) {
+        $("#frmRecruit").append('<input type="hidden" name="publisher_id" value="' + $(this).val() + '"/>')
+	});
+</script>
+
+<form action="{% url advertiser_publishers_recruit %}" method="post" class="MooseHead" id="frmRecruit">
+    {{ form }}
+    {% for id in publisher_ids %}
+        <input type="hidden" name="publisher_id" value="{{ id }}"/>
+    {% endfor %}
+
+    {% if redir %}
+        <input type="hidden" name="redir" value="{{ redir }}"/>
+    {% endif %}
+    <div id="extendPTSubmit" style="width:100%;float:right;margin-right:50px;">
+    	<input type="submit" value="" id="extendPT" class="extendProgramBtn"  style="float:right"/>
+    </div>
+</form>

@@ -1,0 +1,79 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+{%endblock%}
+
+{% block javascript %} 
+<script language="javascript" type="text/javascript" src="/js/zones.js"></script>
+<script>
+	$(".viewAccount").live("click",function(event){
+		event.preventDefault();
+		var callUrl = $(this).attr("id");
+		var dWidth = 450 
+		var dHeight = 300
+				
+    	$.ajax({
+			type: "GET",
+			url: callUrl,
+			dataType: "html",
+			async: false,
+			success: function(data){
+				$("#dialog").html(data);				
+				$("#dialog").dialog({bgiframe: true,	height: dHeight, width: dWidth,modal: true,draggable: false,resizable: false});
+             	$("#dialog").bind('dialogclose', function(event, ui) {
+					$("#dialog").dialog("destroy");
+				});	
+			}
+		}); 
+	
+	});
+</script>
+{% endblock %}
+
+{% block document_ready %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Account</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+	{% if ga_user %}   
+	    <table cellpadding="0" cellspacing="0" class="linkTbl" style="width:55%;margin:1em auto;">
+	        <tr>
+	            <th>Email</th>
+	            <th>Password</td>
+	            <th>Status</td>
+	        </tr>
+	    	<tr class="graybar"><td colspan="5"><hr size="1"></td></tr>
+	        <tr{% cycle ' class="odd"' '' %}>
+	            <td><a href="" class="viewAccount" id="{%url publisher_ga_accounts_view %}">{{ ga_user.email }}</a></td>
+	            <td>{{ ga_user.password }}</td>
+	            <td>
+	                {% if ga_user.is_active %}
+	                    <strong>Active</strong>
+	                {% else %}
+	                    In-Active
+	                {% endif %}
+	            </td>
+	        </tr>
+	    </table>    
+	{%else%}
+	    <div style="color:#83A201;font-size:16px;width:50%;margin-left:30%;padding:10px 0px">Please Enter your Google Analytics Account information below:</div>
+	    <form id="formPost" action="{%url publisher_ga_account_create %}" method="post">
+	    	<table class="innerTbl" style="margin:0 auto;">
+	    		<tr><th>{{ form.email.label }}</th>
+	    			<td>{{ form.email }}{{ form.email.errors }}</td></tr>
+	    		<tr><th>{{ form.password.label }}</th>
+	    			<td>{{ form.password }}{{ form.password.errors }}</td></tr>
+	
+	    		<tr><td></td><td><input type="submit" value="Configure New Account" class="styled_anchor_button plus_add"></td></tr>
+	    	</table>
+	    </form>
+	{% endif %}
+</div>
+<div class="clearfix"></div>
+<div style="display:none;" id="dialog">I'm in a dialog</div>
+{% endblock %}

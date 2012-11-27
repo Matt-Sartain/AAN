@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+    if ($('#id_payment_method').val() == '1') {
+        $('#id_paypal_email').parent().parent().hide();
+        $('#id_account_name').parent().parent().parent().hide();
+    } else if ($('#id_payment_method').val() == '2') {
+        $('#id_paypal_email').parent().parent().hide();
+        $('#id_payeename').parent().parent().parent().hide();
+    } else if ($('#id_payment_method').val() == '3') {
+        $('#id_payeename').parent().parent().parent().hide();
+        $('#id_account_name').parent().parent().parent().hide();
+    }
+
+    $('#id_payment_method').change(function() {
+        if ($(this).val() == '1') {
+            $('#id_payeename').parent().parent().parent().show();
+            $('#id_account_name').parent().parent().parent().hide();
+            $('#id_paypal_email').parent().parent().hide();
+        } else if ($(this).val() == '2') {
+            $('#id_paypal_email').parent().parent().hide();
+            $('#id_payeename').parent().parent().parent().hide();
+            $('#id_account_name').parent().parent().parent().show();
+        } else if ($(this).val() == '3') {
+            $('#id_payeename').parent().parent().parent().hide();
+            $('#id_account_name').parent().parent().parent().hide();
+            $('#id_paypal_email').parent().parent().show();
+        }
+    });
+    $('#id_payeename').parent().parent().parent().insertAfter($('#id_account_name').parent().parent().parent())
+    
+	function enableThem(){
+		$("#id_phone").attr("disabled", "")
+		$("#id_email").attr("disabled", "")	
+		return true
+	}
+	$(".field").each(function (i) {
+        if($(this).parents("fieldset").length == 0){ $(this).addClass("marginsNoFieldset"); }
+	});
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div> 
+    <form action="{% url publisher_settings_payment_edit %}" method="post" name="form" enctype="multipart/form-data" class="MooseHead">
+    	{{ formPI }}
+    	{{ formCI }}
+        <input type="submit" class="saveBtn" value="" onclick="enableThem()"/>
+    	<div class="clearfix"></div><br>
+    </form>
+</div>

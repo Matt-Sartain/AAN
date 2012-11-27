@@ -1,0 +1,23 @@
+
+<div class="contentCtn profileView">
+    <div class="primaryDisplayTableHdr">General Information</div>
+    <table class="DisplayTableAsForm" cellspacing="0">
+		<tr><th>Advertiser:</th><td>{{adv.name}} ({{adv.ticker}})</td></tr>        
+		<tr><th>Country:</th><td>{{ adv.country }}</td></tr>        
+		<tr><th>Currency:</th><td>{{ adv.organizationpaymentinfo_set.all.0.currency }}</td></tr>        
+		<tr><th>Joined Network:</th><td>{{ adv.date_joined }}</td></tr>        
+		<tr><th>Category:</th><td>{{adv.vertical.name}}</td></tr>    
+		<tr><th style="vertical-align:top;">Details:</th><td style="vertical-align:top;">{{ adv.advertiser_profile_detail_page|safe }}</td></tr>   
+		{% ifnotequal program_term None%}
+    	<tr><th>Program Term</th>
+    	    <td>
+				<b>{{ program_term.name}}</b><br/>
+				{% for pta in program_term.programtermaction_set.all %}
+				Offer Detail: {{ pta.action.name }}<br/>
+				Cookie Duration: {{pta.action_referral_period}} day(s)<br/>
+				{% endfor %}
+			</td>
+		</tr>
+        {% endifnotequal %}     
+    </table>
+</div>

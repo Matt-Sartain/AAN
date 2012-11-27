@@ -1,0 +1,47 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.signup.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+{% endblock %}
+
+{% block pageContent %}
+    <br>
+    <div class="pubSignupStepHdr">Thank You</div>
+
+    <div class="bBoundingBox">
+        <div class="thankYouTxt">
+		<p>
+		    Thank you for submitting your email for verification and taking the first step to joining the Atrinsic Affiliate Network.</p>
+		    
+        <p><strong>
+    		We have sent an e-mail to the address that you provided with a link to the application. Please check 
+    		your inbox for our message: if you do not find an e-mail there, look in your spam or junk mail folder. 		
+	    </strong></p>
+		
+		<p>
+		    Once you click the link in the e-mail, an application will open in a new window.  Please complete all the questions and submit for further review. 
+	    </p>
+	    
+		<p>
+		    Once your application has been received, an Atrinsic Affiliate Network Publisher Team Member will be in touch to confirm your application details and welcome you to our network.		    
+	    </p>
+	    
+		<p>We look forward to working with you!</p>
+		<p>
+		    For questions about the status of your application, please email
+		    <a href="mailto:publisherapplication@network.atrinsic.com">publisherapplication@network.atrinsic.com</a>.
+		</p>
+		<p>
+		Regards,<br>
+		The Atrinsic Affiliate Network Team
+		</p>
+	</div>
+
+{% endblock %}

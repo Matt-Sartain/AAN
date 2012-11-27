@@ -1,0 +1,182 @@
+{% extends 'base/widgetui_moveable.html' %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/css/jquery.jcarousel.css" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery.jcarousel.skin.css" />
+	<style>
+	.staticWidget
+	{
+		border: 2px solid #DFDFDF;
+		height:auto;
+		width:100%;
+	}
+		
+	.btntabsCtn
+	{
+		background-color:#F0F0FC;
+		height:35px;
+		text-align:center;
+		width:100%;
+	}
+	a.buttonTabs
+	{		
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border:1px solid #DFDFDF;
+		background-color:#FFFFFF;
+		color:#1F5C95;
+		font-size:12px;
+		font-weight:bold;
+		line-height:35px;
+		margin:30px 0px 0px 10px;
+		padding: 4px 35px;
+		text-decoration:none;
+	}	
+	a.buttonTabs:hover
+	{
+		background-color:#7AB6F2;
+		color:#FFFFFF;		
+		font-weight:bold;
+		text-decoration:none;
+	}
+	a.selectedBtnTab
+	{
+		background-color:#7AB6F2;
+		color:#FFFFFF;		
+		font-weight:bold;
+		text-decoration:none;
+	}
+	.loadingFilter { height: 300px; width: 100%; background-image:URL(/images/ajax-loader.gif); background-position:center center;background-repeat:no-repeat;}
+	
+	a.vertCategory
+	{ 		
+		display:block;
+		height:53px;
+		padding: 5px;
+		width:53px;		
+	}
+	.noResults 
+	{
+		font-size:14px;
+		height:40px;
+		padding: 20px 0px 0px 0px;
+		text-align:center;	
+	}
+</style>
+	
+<!--[if gte IE 7]>
+	<link href="/css/iecorners.css" rel="stylesheet" type="text/css"/>
+<![endif]-->
+
+{% endblock %}
+
+{% block document_ready %}
+
+$(".buttonTabs").click(function(){		
+	$("#btnTabContent").html("<div class='loadingFilter'></div>");
+	var curButton = $(this).attr("id");
+	
+	$(".buttonTabs").removeClass("selectedBtnTab");
+	$(".btnTabContent").hide();
+	
+	$("#buttonTab" + curButton).addClass("selectedBtnTab");
+	if(curButton == "category")
+	{
+		$("#btnTabContent").html($("#categoryContent").html())
+		init_tooltips();
+		$(".vertCategory").bind("click", function(e){
+			$("#btnTabContent").html("<div class='loadingFilter'></div>");
+			var verticalID = $(this).attr("id");
+			var getVerticals = "category/" + verticalID;
+			loadFilterType(getVerticals);
+			
+			return false;
+		});
+
+	}else{
+		loadFilterType(curButton);
+	}
+	
+	return false;
+});
+
+$("#btnTabContent").show();
+$("#buttonTab1").addClass("selectedBtnTab");
+
+function loadFilterType(strPageType){
+	$.ajax({
+		type: "GET",
+		url: "/publisher/dashboardAjax/" + strPageType + "/",
+		dataType: "html",
+		success: function(data){		
+			$("#btnTabContent").html(data);	
+			$(".apply_button").bind("click", function(e){
+				e.preventDefault();
+				$(this).parent().load($(this).attr("href"));
+				$(this).parent().css("text-align","center");
+			});
+			init_tooltips();
+			var $fieldSet = $("#mycarousel");
+			var chldCount = $fieldSet.children().size();
+			var resPerPane = 8;
+			var numPanes = Math.ceil(chldCount / resPerPane)
+			// Wrap First Pane
+			var $kids = $fieldSet.children(":lt(" + resPerPane + ")")
+			$kids.wrapAll(document.createElement("li"));
+			
+			// Wrap all remaining panes, in groups of $resPerPane
+			var lt, gt;
+			for(x=0;x <= numPanes - 2; x++)
+			{
+				lt = resPerPane + x+1;	
+				gt = x;
+				$kids = $fieldSet.children(":lt(" + lt + "):gt(" + gt + ")");
+				$kids.wrapAll(document.createElement("li"));				
+			}
+			if(chldCount > 0){
+				jQuery('#mycarousel').jcarousel({
+			    	start: 1,
+			    	offset: 1,
+			        scroll: 1,
+			        visible: true
+			    });
+			    
+			if(jQuery.browser.msie) {
+				var zIndexNumber = 1000;
+				$("div").each(function() {
+				$(this).css("zIndex", zIndexNumber);
+				zIndexNumber -= 1;
+				});
+			}
+			}else{
+				$("#mycarousel").html("<div class='noResults'>Your search returned 0 results.</div>")
+			}
+		}	
+	});	
+}
+loadFilterType("featured");
+
+
+	
+
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/js/jquery.jcarousel.js"></script>
+
+{% endblock %}
+
+{% block dynamic_widgets_zone1 %}
+	{%for widget in widgets.zone1%}
+		{%include 'base/widget_template.html'%}									
+	{%endfor%}	
+{% endblock %}
+{% block dynamic_widgets_zone2 %}
+	{%for widget in widgets.zone2%}
+		{%include 'base/widget_template.html'%}									
+	{%endfor%}	
+{% endblock %}
+{% block static_widgets_zone3 %}
+
+{% endblock %}

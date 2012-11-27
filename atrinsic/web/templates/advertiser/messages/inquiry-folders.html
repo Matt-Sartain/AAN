@@ -1,0 +1,6 @@
+<div class="mailbox_submenu">
+    <a href="{% url advertiser_messages_inquiries %}" class="inbox{% ifequal folder 'unresolved' %}_selected{% endifequal %}">Unresolved ({{ unresolved.count }})</a>
+    <a href="{% url advertiser_messages_inquiries "resolved" %}" class="sent{% ifequal folder 'resolved' %}_selected{% endifequal %}">Resolved({{ resolved.count }})</a> 					
+    <a href="{% url advertiser_messages_inquiries "closed" %}" class="trash{% ifequal folder 'closed' %}_selected{% endifequal %}">Archived({{ closed.count }})</a> 
+</div>
+<div style="clear:both;"></div>

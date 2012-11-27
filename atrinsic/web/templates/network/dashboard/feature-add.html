@@ -1,0 +1,10 @@
+{% extends 'base/main.html' %}
+
+
+{% block content %}
+<form action="{% url network_dashboard_feature_add %}" method="post">
+{{ form }}
+<input type="submit" value="Add Feature"/>
+<input type="reset" value="Cancel" id="cancel" onclick="window.location='{% url network_dashboard_events  %}'"/>
+</form>
+{% endblock %}

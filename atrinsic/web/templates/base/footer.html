@@ -1,0 +1,19 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<div id="footer">
+    <div>
+        <p>&copy; 2010 Atrinsic. All Rights Reserved</p>
+    </div>
+</div>
+
+{% if queries %}
+<div style="display: none">
+{% for query in queries %}
+{{query|safe}}
+{% endfor %}
+</div>
+{% endif %}
+

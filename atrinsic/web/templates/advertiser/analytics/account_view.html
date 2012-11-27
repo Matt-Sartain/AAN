@@ -1,0 +1,50 @@
+<html>
+<head>
+<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+    <table cellpadding="0" cellspacing="0" class="linkTbl" style="margin:1em auto;">
+        <tr><td colspan=3 style="text-align:left;height:45px;">
+            <div style="color:#0C467E;font-size:14px;width:100%;margin:0 auto;"> Sites Configured under this Account:</div>
+        </td></tr>
+        {% if sites %}
+            {% for site in sites %}
+                <tr><td>&nbsp;</td>
+                    <td colspan="2" style="text-align:left;">{{ site.name }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}                
+            <tr><td>&nbsp;</td>
+                    <td colspan="2" style="text-align:left;">
+                        No sites have been configured.
+                    </td>
+            </tr>            
+        {% endif %}       
+        <tr><td colspan=3 style="text-align:left;height:45px;">
+            <div style="color:#0C467E;font-size:14px;width:100%;margin:0 auto;"> Sites detected:</div>
+        </td></tr>    
+        {% if ga_sites %}
+            {% for ga_site in ga_sites %}
+                <tr><td>&nbsp;</td>
+                    <td colspan="2" style="text-align:left;">
+                        <div style="float:left;">
+                            <a href="{%url advertiser_ga_user_site_add ga_user.id ga_site.profile_id %}" class="ButtAdd"></a>
+                        </div>
+                        <div style="float:left;">&nbsp;&nbsp;{{ ga_site.title }}</div>                     
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <h3>No sites found</h3>
+        {% endif %}
+    </table>
+
+</body></html>
+
+
+
+
+

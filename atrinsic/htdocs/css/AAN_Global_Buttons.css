@@ -1,0 +1,206 @@
+a.dataTableSelectAll {
+    background-image:url('/images/btn_blues_selectall.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:33px;
+    padding:0 4px;
+    width:81px;
+}a.dataTableSelectAll:hover { background-image: url('/images/btn_blues_selectall_mo.gif'); }
+
+input.joinBtn {
+    background-image: url('/images/1blues_join.gif');
+    display:block;
+    outline: none;  
+    border: none;
+    margin:5px auto;
+    vertical-align:middle;
+    height:19px;
+    width:81px;
+}
+input.joinBtn:hover { background-image: url('/images/1blues_join_mo.gif'); }
+
+a.yesBtnBlueBG {
+    background-image:url('/images/btn_blues_yes_bluebg.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:90px;
+}a.yesBtnBlueBG:hover { background-image: url('/images/btn_blues_yes_bluebg_mo.gif'); }
+
+a.noBtnBlueBG {
+    background-image:url('/images/btn_blues_no_bluebg.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:90px;
+}a.noBtnBlueBG:hover { background-image: url('/images/btn_blues_no_bluebg_mo.gif'); }
+
+/* Submit Button */
+.saveBtn {
+	background: url('/images/btn_blue_save.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:right;
+	height:42px;
+	margin:15px 15px;
+	width:90px;
+}.saveBtn:hover { background-image: url('/images/btn_blue_save_mo.gif'); }
+/* anchor Button */
+a.saveBtn {
+	background: url('/images/btn_blue_save.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:right;
+	height:42px;
+	margin:15px 15px;
+	width:90px;
+}a.saveBtn:hover { background-image: url('/images/btn_blue_save_mo.gif'); }
+
+/* Anchor Button */
+a.updateBtn {
+    background-image:url('/images/btn_blues_update.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:90px;
+    background-color:#ffffff;
+}a.updateBtn:hover { background-image: url('/images/btn_blues_update_mo.gif'); }
+/* Submit Button */
+.updateBtn {
+    background-image:url('/images/btn_blues_update.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:right;
+    height:42px;
+    margin:10px 70px 0 0;
+    padding:0 4px;
+    width:90px;
+    background-color:#ffffff;
+}.updateBtn:hover { background-image: url('/images/btn_blues_update_mo.gif'); }
+.addBtn {
+	background: url('/images/btn_blues_add.gif') no-repeat;
+	outline: none;  
+	border: none;
+	height:33px;
+	margin:8px 0px 0px 0px;
+	width:81px;
+	background-color:#ffffff;
+}
+.addBtn:hover { background-image: url('/images/btn_blues_add_mo.gif'); }
+.cancelBtn, .cancelBtn2{
+	background-image:url('/images/btn_blue_cancel2.gif');
+    background-repeat:no-repeat;
+    float:left;
+    border:none;
+    display:block;
+    height:33px;
+    margin:5px 0 0 5px;
+    padding:0 4px;
+    width:81px;
+    background-color:#ffffff;
+}.cancelBtn:hover, .cancelBtn2:hover { background-image: url('/images/btn_blue_cancel_mo2.gif'); text-decoration:none; }
+
+.cancelBtn[type='button'] {
+	background-image:url('/images/btn_blue_cancel_large.gif');
+    background-repeat:no-repeat;
+    float:right;
+    border:none;
+    display:block;
+    height:42px;
+    margin:15px 0 0 0;
+    padding:0 4px;
+    width:90px;
+    background-color:#ffffff;	
+}
+.cancelBtn[type='button']:hover { background-image: url('/images/btn_blue_cancel_large_mo.gif'); text-decoration:none; }
+
+
+.cancelBtnLarge {
+	background-image:url('/images/btn_blue_cancel_large.gif');
+    background-repeat:no-repeat;
+    float:right;
+    border:none;
+    display:block;
+    height:42px;
+    margin:15px 0 0 0;
+    padding:0 4px;
+    width:90px;
+    background-color:#ffffff;	
+}
+.cancelBtnLarge:hover { background-image: url('/images/btn_blue_cancel_large_mo.gif'); text-decoration:none; }
+
+.nextStepBtn {
+    background-image:url('/images/btn_blue_next.gif');
+    background-repeat:no-repeat;
+    border:0;
+    display:block;
+    float:right;
+    height:42px;
+    margin-right:48%;
+    padding:0 4px;
+    width:90px;
+}.nextStepBtn:hover { background-image: url('/images/btn_blue_next_mo.gif'); }
+a.nextBtn {
+    background-image:url('/images/btn_blue_next.gif');
+    background-repeat:no-repeat;
+    border:0;
+    display:block;
+    float:right;
+    height:42px;
+    margin-right:48%;
+    padding:0 4px;
+    width:90px;
+}.nextBtn:hover { background-image: url('/images/btn_blue_next_mo.gif'); }
+.alterMargin {  margin-right:52% !important;}
+
+/* Anchor Button */
+a.editBtn {
+    background-image:url('/images/btn_blues_edit.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:81px;
+}a.editBtn:hover { background-image: url('/images/btn_blues_edit_mo.gif'); }
+
+/* Anchor Button */
+a.updateStatusBtn {
+    background-image:url('/images/btn_blues_updatemystatus.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    margin-top:15px;
+    padding:0 4px;
+    width:151px;
+}a.updateStatusBtn:hover { background-image: url('/images/btn_blues_updatemystatus_mo.gif'); }
+.loseTheMargins { margin:0 !important; }
+
+/* Anchor Button */
+a.approveSelectedBtn {
+    background-image:url('/images/btn_blues_appselected.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:33px;
+    padding:0 4px;
+    width:151px;
+}a.approveSelectedBtn:hover { background-image: url('/images/btn_blues_appselected_mo.gif'); }
+a.declineSelectedBtn {
+    background-image:url('/images/btn_blues_decselected.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:33px;
+    padding:0 4px;
+    width:151px;
+}a.declineSelectedBtn:hover { background-image: url('/images/btn_blues_decselected_mo.gif'); }

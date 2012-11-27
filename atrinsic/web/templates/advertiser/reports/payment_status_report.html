@@ -1,0 +1,16 @@
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <br>
+    <table class="PaymentStatus" cellspacing="0" cellpadding="0" style="width:90%;margin:0px auto;" >
+        {% for p in byPublisher %}
+            <tr class="{% cycle '' 'byPublisherStatsOdd' %}">
+                <td class="showMonthlyStats expand" style="width:5%;"><a href="{%url reporting_payment_status_by_publisher p.id%}" style="text-decoration:none;">+</a></td>
+                <td style="text-align:left!important;width:48%;" align="left">{{p.company_name}}</td>
+                <td>{{ p.organizationpaymentinfo_set.all.0.get_payment_method_display }}</td>
+                <td><a href="" id="{%url reporting_payment_status_approve_bypub p.id%}" class="approveByPub {% cycle '' 'chngLinkColor' %}">Approve All</a></td>
+            </tr>
+        {% endfor %}    
+    </table>
+</div>
+
+    

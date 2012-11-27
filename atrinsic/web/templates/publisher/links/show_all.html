@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    initGetLinks();
+</script>
+
+<div class="showAllLinksCtn">
+    <div class="ajaxLoading"></div>
+    <table class="dataTableSearchResults showAllLinks" cellspacing="0">
+    	<tr>
+    	    <th>Advertiser</th>
+    	    <th>Vertical</th>
+    	    <th>Link Name</th>
+    	    <th>Link Type</th>
+    	    <th>Action</th>
+    	</tr>
+    	{% for o in object_list %}
+        	<tr class="highlightRow">
+        	    <td>{{ o.advertiser.name }}</td>
+        	    <td>{{ o.advertiser.vertical }}</td>
+        	    <td class="alignLeft">{{ o.name }}</td>
+        	    <td class="alignLeft">{{ o.get_link_type }} {{ o.banner.size}}</td>
+        	    <td>
+        	        {% if o.suppression_list %}
+        				<a href="" id="{% url publisher_links_view o.id %}" class="getLink" name="Get Link">Get Link</a>
+        				<a href= "" onclick="window.location = '{% url publisher_links_download_suppression o.id %}'; $('#links_{{ o.id }}').show(); return false;">Download suppression list</a>
+        			{% else %}
+        				<a href="" id="{% url publisher_links_view o.id %}?view={{view}}" class="getLink" name="Get Link">Get Link</a>
+        			{% endif %}
+        	    </td>
+            </tr>
+        {% endfor %}    
+    </table>
+</div>
+<div id="websiteForm" style="display:none;">
+    <form action="REPLACEACTION" method="post" class="MooseHead MooseHeadSmall" id="REPLACEID">
+        {{websiteform}}
+        <input type="submit" class="getLinksBtn inShowAll" value=" " />
+    </form>
+    </div>
+<div id="AjaxContentFromDialog"></div>

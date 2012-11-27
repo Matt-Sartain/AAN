@@ -1,0 +1,4 @@
+{% for field in report.RenderHeader %}{{field.0}}{% if not forloop.last %}	{%endif%}{%endfor%}
+{% for row in report.RenderContents %}{% for col in row %}{{col|safe}}{% if not forloop.last %}	{%endif%}{%endfor%}
+{% endfor %}
+{% for col in report.RenderFooter %}{{col.0|safe}}{% if not forloop.last %}	{%endif%}{%endfor%}

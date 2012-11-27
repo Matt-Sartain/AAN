@@ -1,0 +1,9 @@
+<div class="special_terms_header">Special Terms and Conditions</div>
+<div class="special_terms_blurb">To join this <span>Advertisers' program</span> you must first read and accept the terms of the program listed below.</div>
+<div class="special_terms_container">{{terms.0.special_action}}</div>
+{% ifequal print '0' %}<div class="special_terms_footer">
+    <input type="hidden" name="org_id" id="org_id" value="{{terms.0.organization_id}}">
+    <a href="/publisher/advertisers/terms/{{id}}/?print=1" class="styled_anchor_button print" id="lb_print">PRINT</a>
+    <a href="" class="styled_anchor_button redx_delete lb_cancel" id="lb_cancel">CANCEL</a>
+    <a href="" class="checkmark lb_accept" id="lb_accept">ACCEPT</a>
+</div>{%endifequal%}

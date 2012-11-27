@@ -1,0 +1,48 @@
+form{
+	border:1px solid black;
+	margin:1em 2em;
+	padding:2em ;
+}
+
+fieldset{
+	background-color:white;
+	border:0;
+	magin:1em;
+	padding:1em;
+}
+
+fieldset legend{
+	color:#2e72bb;
+	font-size:1.2em;
+	font-weight:normal;
+}
+fieldset label{
+	color:#2e72bb;
+}
+.fieldset1{
+	float: left;
+	width: 30%;
+}
+.fieldset2{
+	float: left;
+	width: 60%;
+}
+.fieldset1 ul label {
+	color:black;
+}
+.fieldset1 ul{ list-style: none;padding:0px; margin:0px; }
+
+.pushCont{float:left;margin-right:20px;}
+.AddProgram{
+	background-color:#dcfde0;
+	border:1px solid #85b989;
+	color:#516800;
+	font:11px/14px Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	margin-right:15px;
+	padding:4px;
+	text-align:center;
+	text-decoration:none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}

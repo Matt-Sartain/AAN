@@ -1,0 +1,42 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<h2>Tracking For {{ advertiser.name }}</h2>
+<table>
+<tr>
+    <th>Url ID</th>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Username</th>
+    <th>Password</th>
+    <th>Server</th>
+    <th>Action</th>
+</tr>
+{% for o in advertiser.datafeed_set.all%}
+<tr>
+    <td>{{ o.ape_url_id }}</td>
+    <td>{{ o.name }}</td>
+    <td><strong>{{ o.get_status_display }}</strong></td>
+    <td>{{ o.get_datafeed_type_display}}</td>
+    <td>{{ o.get_datafeed_format_display}}</td>
+    <td>{{ o.username }}</td>
+    <td>{{ o.password }}</td>
+    <td>{{ o.server }}</td>
+    <td>
+        <a href="{% url network_advertiser_datafeed_edit advertiser.id o.id %}" class="AddProgram2">Edit</a>
+        <a href="{% url network_advertiser_datafeed_delete advertiser.id o.id %}" class="AddProgram2">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="9" class="bottom" style="border-right:none;">
+        {{ advertiser.datafeed_set.all|length }} results
+        <span class="pages">
+            <a href="{% url network_advertiser_datafeed_add advertiser.id %}" class="AddProgram2">Add Data Feed</a>
+        </span>
+    </td>
+</table>
+{% endblock %}

@@ -1,0 +1,1 @@
+alter table base_action add column     `invite_client_goal_id` integer;

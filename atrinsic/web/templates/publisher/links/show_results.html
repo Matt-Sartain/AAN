@@ -1,0 +1,56 @@
+{% load pagination_tags %}
+{% load thumbnail_tag %}
+
+    <div class="contentCtn profileView" id="textResults">
+    <div class="ajaxLoading"></div>
+        <div class="primaryDisplayTableHdr">Results</div>
+    	<table class="dataTableSearchResults publisherLinksResults" cellspacing="0">
+    		<tr>
+    		    <th>Advertiser</th>
+    		    <th>Vertical</th>
+    		    <th>{% ifequal link_type 'banner' %}Banner Preview{% else %}Link Name{% endifequal %}</th>
+    	        <th>{% ifequal link_type 'banner' %}Banner Size{% else %}Link Type{% endifequal %}</th>
+    		    <th>Action</th>
+    		</tr>
+    		{% for o in object_list %}
+            	<tr class="highlightRow">
+            	    <td>{%ifequal o.advertiser.ticker_symbol ''%}
+    				    {{ o.advertiser.name }}
+    				{%else%}
+    				    <img src="{{o.advertiser.ticker_symbol|thumbnail}}" alt="{{o.advertiser.name}}" title="{{o.advertiser.name}}" border="0">
+    				{%endifequal%}</td>
+            	    <td>{{ o.advertiser.vertical }}</td>
+            	    <td>
+            	    	{% ifequal link_type 'banner' %}
+            	    	    {% if o.banner.image %}
+            	    		    <img src="{{ o.banner.image|thumbnail }}" />
+            	    		{% else %}
+            	    		    <img src="{{ o.banner_url|thumbnail }}" width="104" />
+            	    		{% endif %}
+            	    	{% else %}
+            	    	    {{o.name}}	
+            	    	{% endifequal %}
+            	    </td>
+        	        <td>{% ifequal link_type 'banner' %}{{ o.banner.size}}{% else %}
+        	        		{% ifequal o.get_link_type 'Adbuilder' %}
+        	        			Flash
+        	        		{% else %}
+        	        			{{ o.get_link_type }}
+        	        		{% endifequal %}
+        	        	{% endifequal %}</td>
+            	    <td>
+            	        {% if o.suppression_list %}
+            				<a href="" id="{% url publisher_links_view o.id %}" class="getLink" name="Get Link">Get Link</a>
+            				<a href= "" onclick="window.location = '{% url publisher_links_download_suppression o.id %}'; $('#links_{{ o.id }}').show(); return false;">Download suppression list</a>
+            			{% else %}
+            				<a href="" id="{% url publisher_links_view o.id %}" class="getLink" name="Get Link">Get Link</a>
+            			{% endif %}
+            	    </td>
+                </tr>
+            {% endfor %}
+            {% if not object_list %}
+            <tr class="rowSpacer"><td colspan="4"></td></tr>
+		    <tr class="highlightRow"><td colspan="4" class="noResults">There are no {{ link_type|title }} links.</td></tr>
+            {% endif %}
+        </table>
+    </div>

@@ -1,0 +1,261 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block css %}
+<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+<style>
+a {text-decoration:underline;}
+.dataTables_info{color:#ffffff;}
+
+.btn{
+    font-size:x-small;
+    margin:5px;
+    border:2px solid;
+    border-color:#7AB6F2;
+}
+.adbuilder{
+    margin-left:20px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+      
+.dataTables_length {
+	width: 40%;
+	float: left;
+}
+
+.dataTables_filter {
+	width: 50%;
+	float: right;
+	text-align: right;
+	margin-right:5px;
+}
+.widget_table{width:100%;}
+.dataTables_wrapper{font-size:x-small;}
+.over{cursor: pointer;}
+
+</style>
+      
+{% endblock %}
+
+{% block document_ready %}
+loadLinks();
+function loadLinks(){
+	$.ajax({
+	   type: "POST",
+	   url: "{% url publisher_adbuilder_links %}",
+	   success: function(result){
+
+	   	html = "<table class='widget_table' id='myLinks'><thead><tr><th><div class='widget_table_headers'>URL ID</div></th><th><div class='widget_table_headers'>Name</div></th><th><div class='widget_table_headers'>Content</div></th><th><div class='widget_table_headers'>Action</div></th></tr></thead><tbody id='linkbod'>";
+	   	
+	   	var jsonObject = eval( "(" + result + ")" );
+      	var links = jsonObject['fields'];
+		
+      	for(var i in jsonObject){
+      		link = jsonObject[i]['fields'];
+      		linkid = jsonObject[i]['pk'];
+
+      		html+="<tr><td>" + link['ape_url_id'] + "</td><td>" + link['name'] + "</td><td>" + link['link_content'] + "</td>"
+      		
+      		html+= '<td><a href="' + linkid + '">edit</a> &nbsp;<a name="' + linkid + '" href="#" class="getLink">get</a> &nbsp;<a name="' + linkid + '" href="#" class="delLink">delete</a></td></tr>';
+      	}
+    	
+      	html += "</tbody></table>";
+      	$("#yourLinks").html(html);
+	             
+      	$('#myLinks').dataTable({'bFilter':true,
+	 	                       'bJQueryUI': true,
+	                           'bLengthChange':true,
+	                           'iDisplayLength':25});
+      	
+      	$("#ajaxLoader").hide();              
+	   }
+
+	 });
+	 
+	
+}
+
+$("#tracking").dialog({title: 'Link Tracking', autoOpen: false })    
+
+$('#create').click(function () {
+	if($("#id_name").val() == "" ){
+		$("#status").html("Please add a name to your link.");
+	}else{
+		if(validation($("#id_destination").val())){
+			createLink();	
+		}else{
+			$("#status").html("Please make sure your destination URL is valid.");
+		}
+		
+	}	
+       
+    
+});
+
+if ( $('#id_advertisers option').length == 0 ){
+    
+    $("#adbuilder").hide();
+    $("#noadv").show();
+}
+
+//AJAX Create
+function createLink(){
+	$("#status").html("");
+	$.ajax({
+	   type: "POST",
+	   url: "{% url publisher_links_build %}",
+	   data: $("#linkForm").serialize(),
+	   success: function(msg){
+	    
+		   	$("#ltrkid").val(msg);
+		   	$("#linktrk").val("");
+			$("#id_websites").val("0");
+		   	$("#tracking").dialog('open');
+		   	
+		   	loadLinks();
+	   }
+	 });
+ 
+}
+$("#return").click(function () {
+	$("#tracking").dialog('close');
+});
+
+
+if($("#linkId").val() != "0"){
+	$("#options").hide();
+    $("#quickLink").show();
+    $("#getcode").show();
+}
+
+//CLEAR FORM
+$("#new").click(function () {
+	$("#getcode").hide();
+	$("#status").html("");
+	$("#linkId").val("0");
+	$("#id_advertisers").val("0");
+	$("#id_name").val("");
+	$("#id_destination").val("");
+	$("#id_content").val("");
+});
+
+
+$(".getLink").live('click', function () {
+  
+	$("#linktrk").val("");
+	$("#id_websites").val("0");
+	$("#ltrkid").val($(this).attr('name'));
+	$("#tracking").dialog('open');
+	return false;
+	
+});
+
+$(".delLink").live('click',function () {
+  
+	$.ajax({
+	   type: "POST",
+	   url: "{% url publisher_delete_custom %}",
+	   data: {id:$(this).attr('name')},
+	   success: function(result){
+	   	loadLinks();
+	   }
+	 });
+	return false;
+});
+
+$("#codeConfirm").click(function () {
+	
+	$.ajax({
+	   type: "POST",
+	   url: "{% url publisher_links_getCustom %}",
+	   data: {id:$("#ltrkid").val(),wsid:$("#id_websites").val()},
+	   success: function(msg){
+	     
+	   	$("#linktrk").val(msg);
+	   	$("#confirm").dialog('open');
+	   	
+	   }
+	 });	
+});
+
+$(".btn").mouseover(function () { userOver($(this))});
+$(".btn").mouseout(function () { userOver($(this))});
+function userOver(object){
+    if($(object).hasClass("over")){
+        $(object).removeClass("over");
+    }else{
+        $(object).addClass("over");
+    }
+}
+
+//Validation
+function validation(input) {
+  var re = /https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?/;
+  var value = input;
+  
+  if (value.match(re)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
+{% endblock %}
+{% block pageContent %}
+<div id="adbuilder" class="adbuilder">
+	<h3>Deep Linking</h3>
+    <div id="quickLink">
+        <h4>Create or Update Deep Link</h4>
+        <form id="linkForm" action="{% url publisher_links_build %}" method="post">
+        	<table>
+        		<tr>
+        			<td>{{ form.name.label }}: </td>
+        			<td>{{ form.name }}</td>
+        		</tr>
+        		<tr>
+        			<td>{{ form.advertisers.label }}: </td>
+        			<td>{{ form.advertisers }}</td>
+        		</tr>
+        		
+        		<tr>
+        			<td>{{ form.destination.label }}: </td>
+        			<td>{{ form.destination }}</td>
+        		</tr>
+        		<tr>
+        			<td>{{ form.content.label }}: </td>
+        			<td>{{ form.content }}</td>
+        		</tr>
+			</table>
+			<div id="status"></div>
+			<div id="getcode" style="display:none;"><button name="{{link_id}}" id="getcodebtn" type="button" class='btn getLink'>Get Code</button></div>
+			<input id="linkId" name="linkId" type="hidden" value="{{link_id}}">
+        	<button id="create" type="button" class='btn'>Create/Update Link</button>
+        	<button id="new" type="button" class='btn'>Create New Link</button>
+        </form>
+    </div>
+    
+    <div id="tracking">
+		{{ form.websites.label }}: 
+		{{ form.websites }}
+        <br /><br />	
+        <textarea id="linktrk" rows="3" cols="42"></textarea>
+        <input id="ltrkid" type="hidden" value="0">
+        <br />
+        <button id="codeConfirm" type="button" class="btn">Get Code</button>
+        <button id="return" type="button" class="btn">Close</button>
+    </div>
+    
+    <h3>My Custom Links</h3>
+    <div id="ajaxLoader"><img src="/images/ajax-loader2.gif" />Retrieving links...</div>
+    <div id="yourLinks" class="small" style="width:600px;margin-top:25px;"></div>	
+    
+</div>
+<div id="noadv" style="display:none;">
+    None of your advertisers have this options available    
+</div>        
+{% endblock %}

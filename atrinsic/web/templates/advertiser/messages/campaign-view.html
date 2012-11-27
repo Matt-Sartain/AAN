@@ -1,0 +1,418 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+	<style>
+	hr { color:#ccc;}
+	.emailHide { display: none; }
+	.emailBody { display: none; }
+	.htmlHide { display: none; }
+	.htmlBody { display: none; }
+	.allOptionsCtn, .allActiveOptions { float:left; }
+	.addremCtn { float:left;height:200px;width:150px; }
+	.addrem { margin:100px 0 0 30px; }
+	
+	#addVertical, #addTerm, #addGroup, #addMethod { display:none;width:500px; }
+	#selAllVerticals,#selAllTerms,#selAllGroups,#selAllMethods,
+	#active_Verts,#active_Terms,#active_Groups,#active_Methods  { display:none; }
+	#frmAddActive_Verts, #frmAddActive_Terms, #frmAddActive_Groups, #frmAddActive_Methods { margin:40px 0 0 40px; }
+	#active_Verts,#active_Terms,#active_Groups,#active_Methods { float:right;height:200px;width:150px; }
+	#activeDisplay_Verts, #activeDisplay_Terms, #activeDisplay_Groups, #activeDisplay_Methods { float:right;height:200px;width:150px; }
+	#availableDisplay_Verts, #availableDisplay_Terms, #availableDisplay_Groups, #availableDisplay_Methods { height:200px;width:150px; }
+	
+	.addremTermsCtn { float:left;height:200px;width:150px; }
+	.addremTerms { margin:100px 0 0 30px; }
+
+	#availableDisplay_Terms { height:200px;width:150px; }
+	</style>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/advertiser.messages.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initCampaigns();
+	$('#addCriteria').submit( function() {
+	    var bolPass = true
+		if($("#id_field_is_less_than_threshold_0").attr("checked")==false && $("#id_field_is_less_than_threshold_1").attr("checked")==false){
+		    alert("You must choose a method.")
+		    bolPass = false
+		}		
+		if($("#id_threshold").val() == "" || isNaN($("#id_threshold").val()))
+		{
+		    alert("You must enter a numeric Threshold.")
+		    bolPass = false
+		}
+		return bolPass;
+	});
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Campaign - {{ campaign.name }}</div>
+
+<div class="contentCtn">        
+    <div class="primaryDisplayTableHdr">Publisher Criteria</div>
+    <table class="DisplayTableAsForm campaignView">
+		<tr><th>Name:</th>
+		    <td>{{ campaign.name }}</td>
+		</tr> 
+		<tr>
+		    <th>E-mail From:</th>
+		    <td>{{ campaign.email_from }}</td>
+		</tr>
+	    <tr>
+	        <th>Reply-To:</th>
+	        <td>{{ campaign.reply_to_address }}</td>
+	    </tr>
+	    <tr>
+	        <th valign="top">Email Body:</th>
+	        <td>
+	            <a href="" class="emailView">View</a>
+	            <a href="" class="emailHide">Hide</a>
+	            <div class="emailBody">
+	                <textarea readonly="true" cols="60" rows="15">{{ campaign.body }}</textarea>
+	                <a href="/advertiser/messages/campaigns/{{ campaign.id }}/edit/">Edit</a>
+	            </div>
+	        </td>
+	    </tr>
+	    <tr>
+	        <th valign="top">HTML Body:</th>
+	        <td>
+	            <a href="" class="htmlView">View</a>
+	            <a href="" class="htmlHide">Hide</a>
+	            <div class="htmlBody">
+	                <textarea readonly="true" cols="60" rows="15">{{ campaign.html_body }}</textarea>
+	                <a href="/advertiser/messages/campaigns/{{ campaign.id }}/edit/">Edit</a>
+	            </div>
+	        </td>
+	    </tr>
+		
+	    <tr class="graybar"><td colspan="2"><hr size="1"></td></tr>
+		
+        <tr>
+	        <th>Verticals:</th>
+	        <td nowrap>
+	            <table>
+	            {% for v in campaign.publisher_vertical.all %}
+	            <tr>
+	                <td>{{ v.name }}</td>
+	                <td>
+	                    <a href="" class="ButtDelete report_btns" onclick="window.location='{% url advertiser_messages_campaigns_delete_vertical campaign.id v.order %}';return false;">Delete</a>	                    
+                    </td>
+	            </tr>
+	            {% endfor %}
+	            <tr><td><a href="" class="updateFilters" name="Verticals">Update Verticals</a></td></tr>
+	            </table>
+	            
+	        </td>
+	    </tr>
+	    
+		<tr class="graybar"><td colspan="2"><hr size="1"></td></tr>
+		
+	    <tr>
+	        <th>Program Terms:</th>
+	        <td>
+	            <table>
+	            {% for t in campaign.program_term.all %}
+	            <tr>
+	                <td>{{ t.name }}</td>
+	                <td>
+	                    <a href="" onclick="window.location='{% url advertiser_messages_campaigns_delete_term campaign.id t.id %}';return false;">Delete</a></td>
+	            </tr>
+	            {% endfor %}
+	            <tr><td><a href="" class="updateFilters" name="Terms">Update Program Term</a></td></tr>
+	            </table>
+	            
+
+	        </td>
+	    </tr>
+	    
+		<tr class="graybar"><td colspan="2"><hr size="1"></td></tr>
+	
+	    <tr>
+	        <th>Publisher Groups:</th>
+	        <td>
+	            <table>
+	            {% for g in campaign.publisher_group.all %}
+	            <tr>
+	                <td>{{ g.name }}</td>
+	                <td><a href="" onclick="window.location='{% url advertiser_messages_campaigns_delete_group campaign.id g.id %}';return false;">Delete</a></td>
+	            </tr>
+	            {% endfor %}
+	            {% if groups %}
+	                <tr><td><a href="" class="updateFilters" name="Groups">Update Publisher Group</a></td></tr>
+	            {% endif %}
+	            </table>
+	            
+
+	        </td>
+	    </tr>
+	    
+		<tr class="graybar"><td colspan="2"><hr size="1"></td></tr>
+	
+	    <tr>
+	        <th>Promotion Methods:</th>
+	        <td>
+	            <table>
+	            {% for m in campaign.promotion_method.all %}
+	            <tr>
+	                <td>{{ m.name }}</td>
+	                <td><a href="" onclick="window.location='{% url advertiser_messages_campaigns_delete_method campaign.id m.order %}';return false;">Delete</a></td>
+	            </tr>
+	            {% endfor %}
+	            <tr><td><a href="" class="updateFilters" name="Methods">Update Promotion Method</a></td></tr>
+	            </table>
+	            
+
+	        </td>
+	    </tr>		
+	    <tr class="graybar"><td colspan="2"><hr size="1"></td></tr>		        
+		</table></td></tr>
+    </table>
+    <div class="clearfix"></div>        
+</div>
+<br>
+<a href="{% url advertiser_messages_campaigns_edit campaign.id %}" class="editBtn" style="float:left;"></a>
+<div class="clearfix"></div>  
+<br>
+<div class="contentCtn">
+    <div class="primaryDisplayTableHdr">Campaign Criteria</div>
+    <table class="DisplayTableAsForm campaignCriteria" cellspacing="0">
+		<tr><th>#</th>
+            <th>Time Period</th>
+            <th>Alert Field</th>
+            <th>Threshold</th>
+            <th>Action</th></tr>  
+        <tr class="graybar"><td colspan="5"><hr size="1"></td></tr>
+        {% for c in campaign.emailcampaigncriteria_set.all %}
+        <tr>
+            <td>{{ forloop.counter }}.</td>
+            <td>{{ c.get_time_period_display }}</td>
+            <td>{{ c.get_alert_field_display }}</td>
+            <td>
+                is <strong>{% if c.field_is_less_than_threshold %}less than{% else %}greater than or equal to{% endif %}
+                </strong> {{ c.threshold }}
+            </td>
+            <td><a href="{% url advertiser_messages_campaigns_delete_criteria campaign.id c.id %}" >Delete</a></td>
+        </tr>   
+        {% endfor %}  
+        <tr>
+            <td colspan="5" style="text-align:right;">
+                <a href="{% url advertiser_messages_campaigns %}" class="saveCampaign"></a>
+                <a href="" class="showAddCriteria"></a>
+            </td>
+        </tr>                        
+    </table>
+    <br>
+</div>
+<div id="add_criteria" style="display:none;">
+    <table class="DisplayTableAsForm">
+        <form action="{% url advertiser_messages_campaigns_view campaign.id %}" method="post" id="addCriteria">
+    		<tr><th>{{form.time_period.label}}</th>
+    			<td>{{form.time_period}}
+    				{{form.time_period.errors}}</td></tr>
+    		<tr><th>{{form.alert_field.label}}</th>
+    			<td>{{form.alert_field}}
+    				{{form.alert_field.errors}}</td></tr>
+    		<tr class="odd"><th>{{form.field_is_less_than_threshold.label}}</th>
+    			<td>{{form.field_is_less_than_threshold}}
+    				{{form.field_is_less_than_threshold.errors}}</td></tr>
+    		<tr><th>{{form.threshold.label}}</th>
+    			<td>{{form.threshold}}
+    				{{form.threshold.errors}}</td></tr>
+    		<tr><th></th><td>
+    	        <input type="submit" class="saveBtn" value="" style="float:left;"/>
+    		</td></tr>
+        </form>
+    </table>
+</div>
+<div id="addVertical">
+    <form action="{% url advertiser_messages_campaigns_view campaign.id %}" method="POST" id="frmAddActive_Verts">
+        <input type="hidden" value="updateVertical" name="updateVertical">
+        <select id="selAllVerticals">
+            {% for v in verticals %}
+                <option value="{{ v.order }}">{{ v.name }}</option>
+            {% endfor %}
+        </select>        
+        <select multiple="multiple" id="active_Verts" name="hiddenVerticals">
+            {% for v in campaign.publisher_vertical.all %}
+                <option value="{{ v.order }}">{{ v.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="allOptionsCtn">
+            All Verticals
+            <div>
+            <select name="vertical" multiple="multiple" id="availableDisplay_Verts">
+                <option value="-9999">Select...</option>
+                {% for v in verticals %}
+                    <option value="{{ v.order }}">{{ v.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="addremCtn">
+            <div class="addrem">
+                <a href="" id="" class="addFilterToList" name="Verts"></a>
+                <a href="" id="" class="remFilterFromList" name="Verts"></a></div>
+        </div>
+        <div class="allActiveOptions">
+            Active Verticals
+            <div>
+            <select name="chosenvertical" multiple="multiple" id="activeDisplay_Verts">
+                {% for v in campaign.publisher_vertical.all %}
+                    <option value="{{ v.order }}">{{ v.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <input type="submit" value="" class="updateBtn" name="Verts"/>
+    </form>
+</div>    
+<div id="addTerm">
+    <form action="{% url advertiser_messages_campaigns_view campaign.id %}" method="POST" id="frmAddActive_Terms">
+        <input type="hidden" value="updateTerm" name="updateTerm">
+        <select id="selAllTerms">
+            {% for t in terms %}
+                <option value="{{ t.id }}">{{ t.name }}</option> 
+            {% endfor %}
+        </select>        
+        <select multiple="multiple" id="active_Terms" name="hiddenTerms">
+           {% for t in campaign.program_term.all %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="allOptionsCtn">
+            All Program Terms
+            <div>
+            <select name="term" multiple="multiple" id="availableDisplay_Terms">
+                <option value="-9999">Select...</option>
+                    {% for t in terms %}
+                        <option value="{{ t.id }}">{{ t.name }}</option> 
+                    {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="addremCtn">
+            <div class="addrem">
+                <a href="" id="" class="addFilterToList" name="Terms"></a>
+                <a href="" id="" class="remFilterFromList" name="Terms"></a></div>
+        </div>
+        <div class="allActiveOptions">
+            Active Program Terms
+            <div>
+            <select name="chosenterm" multiple="multiple" id="activeDisplay_Terms">
+                {% for t in campaign.program_term.all %}
+                    <option value="{{ t.id }}">{{ t.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <input type="submit" value="" class="updateBtn" name="Terms"/>
+    </form>
+</div>    
+<div id="addGroup">
+    <form action="{% url advertiser_messages_campaigns_view campaign.id %}" method="POST" id="frmAddActive_Groups">
+        <input type="hidden" value="updateGroup" name="updateGroup">
+        <select id="selAllGroups">
+            {% for g in groups %}
+                <option value="{{ g.id }}">{{ g.name }}</option> 
+            {% endfor %}
+        </select>        
+        <select multiple="multiple" id="active_Groups" name="hiddenGroups">
+           {% for g in campaign.publisher_group.all %}
+                <option value="{{ g.id }}">{{ g.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="allOptionsCtn">
+            All Groups
+            <div>
+            <select name="group" multiple="multiple" id="availableDisplay_Groups">
+                <option value="-9999">Select...</option>
+                    {% for g in groups %}
+                        <option value="{{ g.id }}">{{ g.name }}</option> 
+                    {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="addremCtn">
+            <div class="addrem">
+                <a href="" id="" class="addFilterToList" name="Groups"></a>
+                <a href="" id="" class="remFilterFromList" name="Groups"></a></div>
+        </div>
+        <div class="allActiveOptions">
+            Active Groups
+            <div>
+            <select name="chosengroup" multiple="multiple" id="activeDisplay_Groups">
+                {% for g in campaign.publisher_group.all %}
+                    <option value="{{ g.id }}">{{ g.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <input type="submit" value="" class="updateBtn" name="Groups"/>
+    </form>
+</div>    
+<div id="addMethod">
+    <form action="{% url advertiser_messages_campaigns_view campaign.id %}" method="POST" id="frmAddActive_Methods">
+        <input type="hidden" value="updateMethod" name="updateMethod">
+        <select id="selAllMethods">
+            {% for m in methods %}
+                <option value="{{ m.order }}">{{ m.name }}</option> 
+            {% endfor %}
+        </select>        
+        <select multiple="multiple" id="active_Methods" name="hiddenMethods">
+           {% for m in campaign.promotion_method.all %}
+                <option value="{{ m.order }}">{{ m.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="allOptionsCtn">
+            All Promotion Methods
+            <div>
+            <select name="group" multiple="multiple" id="availableDisplay_Methods">
+                <option value="-9999">Select...</option>
+                    {% for m in methods %}
+                        <option value="{{ m.order }}">{{ m.name }}</option> 
+                    {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="addremCtn">
+            <div class="addrem">
+                <a href="" id="" class="addFilterToList" name="Methods"></a>
+                <a href="" id="" class="remFilterFromList" name="Methods"></a></div>
+        </div>
+        <div class="allActiveOptions">
+            Active Promotion Methods
+            <div>
+            <select name="chosenmethod" multiple="multiple" id="activeDisplay_Methods">
+                {% for m in campaign.promotion_method.all %}
+                    <option value="{{ m.order }}">{{ m.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <input type="submit" value="" class="updateBtn" name="Methods"/>
+    </form>
+</div>    
+
+{%comment%}
+
+<div id="addMethod">
+    <form action="{% url advertiser_messages_campaigns_view campaign.id %}" method="post">
+        <select name="method">
+        <option>Select...</option>
+        {% for m in methods %}
+        <option value="{{ m.order }}">{{ m.name }}</option>
+        {% endfor %}
+        </select>
+        <input type="submit" value="ADD" class="styled_anchor_button plus_add"/>
+    </form>
+</div>
+{%endcomment%}
+{% endblock %}

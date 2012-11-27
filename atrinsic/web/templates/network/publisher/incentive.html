@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<table>
+<tr>
+    <th>#</th>
+    <th>Publisher</th>
+    <th>Transfer Format</th>
+    <th>Transfer Type</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+{% for o in transfers %}
+<tr>
+    <td>{{ forloop.counter }}.</td>
+    <td>{{ o.publisher.name }}</td>
+    <td>{{ o.get_format_display }}</td>
+    <td>{{ o.get_datafeed_type_display }}</td>
+    <td><strong>{{ o.get_status_display }}</strong></td>
+    <td>
+        <a href="{% url network_publisher_incentive_status o.id %}" class="AddProgram2">Update Status</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="6" class="bottom">
+        {{ transfers|length }} results
+    </td>
+</table>
+{% endblock %}

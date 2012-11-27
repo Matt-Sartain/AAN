@@ -1,0 +1,63 @@
+{% extends 'base/main.html' %}
+{% block javascript %}
+<script language="javascript" type="text/javascript">
+    
+function useCompany(id){
+    
+    $("#company").val(id);
+    $("#matches").submit();
+    return false;
+}
+
+</script>
+
+{% endblock %}
+{% block document_ready %}
+{% endblock %}
+
+{% block content %}
+<div>
+{%if error%}
+<font color="red"><strong>{{error}}</strong><font>
+{%endif%}
+<form id="matches" action="{% url network_ace_match %}"  method="POST" >
+    Finance has found matches to this Organisation.
+<input name="company" id="company" type="hidden" value="0" />
+<input name="currentOrg" id="currentOrg" type="hidden" value="{{orgId}}" />
+<table>
+    <thead>
+        <tr>
+            <th>Company ID</th>
+            <th>Name</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+            <th>City</th>
+            <th>State/Prov</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th>Status</th>
+        </tr>
+    </thead>    
+    <tbody>
+    {% for id,info in matches.items %}
+        <tr>
+            <td>{{info.CompanyId}}</td>
+            <td>{{info.CompanyLongName}}</td>
+            <td>{{info.Address1}}</td>
+            <td>{{info.Address2}}</td>
+            <td>{{info.City}}</td>
+            <td>{{info.State}}</td>
+            <td>{{info.Country}}</td>
+            <td>{{info.Status}}</td>
+            <td><input type="button" value="use" onClick="useCompany({{info.CompanyId}});"/></td>        
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br/><br/>
+If you do not want to use one of the matches, click create.
+<br />
+<input type="submit" value="Create New" />
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Settings</div>
+    <div class="contentCtn whiteBG">          
+        <div class="ajaxLoading"></div>
+        <table class="DisplayTableAsForm OrganizationSettings" cellpadding="0" cellspacing="0">
+            <tr><th>Name:</th>
+                <td>{{ organization.name }}</td></tr>
+            <tr><th>Branded Signup Page Link:</th>
+                <td><a href="{{ organization.branded_signup_page_link }}" target="_blank">View Branded Signup Page</a></td></tr>
+            <tr><th>Tax ID:</th>
+                <td>{{ organization.tax_id }}</td></tr>
+            <tr><th>Address:</th>
+                <td>{{ organization.city }}, {{ organization.state }} {{ organization.zipcode }} {{ organization.country }}</td></tr>
+            <tr><th>Contact:</th>
+                <td>{{ contactInfo.firstname }} {{ contactInfo.lastname }}</td></tr>
+            <tr><th>Contact E-mail:</th>
+                <td>{{ contactInfo.email  }}</td></tr>
+            <tr><th>Phone:</th>
+                <td>{{ contactInfo.phone }}</td></tr>
+            <tr><th>Fax:</th>
+                <td>{{ contactInfo.fax }}</td></tr>
+            <tr><th>Allow Third Party Email Campaigns?:</th>
+                <td>{% if organization.allow_third_party_email_campaigns %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}</td></tr>
+            <tr><th>Allow Direct Linking Through PPC?:</th>
+                <td>{% if organization.allow_direct_linking_through_ppc %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}</td></tr>
+            <tr><th>Allow Trademark Bidding Through PPC?:</th>
+                <td>{% if organization.allow_trademark_bidding_through_ppc %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}</td></tr>
+            <tr><th>Primary Vertical:</th>
+                <td>{{ organization.vertical }}</td></tr>
+            <tr style="vertical-align:top;"><th>Secondary Verticals:</th>
+                <td>			
+                    {% for v in organization.secondary_vertical.all %}
+    	            <div class="secItemsCtn">
+    	            	<div class="secItemName">{{ forloop.counter }}. {{ v.name }}&nbsp;&nbsp;</div>
+                    	<div class="secItemRem">
+                    		<a href="" onclick="window.location='{% url advertiser_settings_vertical_remove v.order %}';return false;">Remove</a>            		
+                    	</div>
+                    	<div class="clearfix"></div>
+                    </div>                
+                    {% endfor %}
+        			<div id="add_vertical">
+        	            <form action="{% url advertiser_settings_vertical_add %}" method="POST">
+        	                <select name="vertical">
+        	                <option>Select...</option>
+        	                {% for v in verticals %}
+        	                <option value="{{ v.order }}">{{ v.name }}</option>
+        	                {% endfor %}
+        	                </select>
+        	                <div>
+        	                	<input type="submit" class="addSecVerticalBtn" value=""/></div>
+        	            </form>
+                    </div>                    
+                </td></tr>
+        </table>    
+        <div class="editCtn">
+            <a href="#" id="{% url advertiser_settings_edit %}" class="editSettingsBtn AjaxLightBox" name="Edit Settings"></a>              </div>
+		
+    </div>
+<div id="ajaxLightbox"></div>
+{% endblock %}

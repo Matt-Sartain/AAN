@@ -1,0 +1,98 @@
+<div id="AjaxContentFromDialog">
+    <div class="ajaxLoading"></div>
+    {% if form %}
+    <form action="{% url publisher_links_view link.id %}" method="POST" class="MooseHead" id="getLinkByWebsite">
+        {{ form }}
+        <input type="submit" class="getLinksBtn" value="" />
+    </form>
+    {% else %}
+        <div class="linkCtn">
+            <h2>{{ link.name }}</h2>
+        
+        	<textarea rows="10" cols="40" editable="false"readonly="true">{{ track_html|safe }}</textarea>
+        	<font id="apeLink">{{ track_html_ape|safe }}</font>
+        
+            {% ifequal link.link_type 3 %}
+                <h2>Protected Keyword List</h2>
+                <textarea rows="10" cols="40" editable="false"readonly="true">{{ link.protected_keyword_list }}</textarea>
+            
+                <h2>Usage Recommendations</h2>
+                <textarea rows="10" cols="40" editable="false"readonly="true">{{ link.usage_recommendations }}</textarea>
+            
+                <h2>Recommended Keywords</h2>
+                <textarea rows="10" cols="40" editable="false"readonly="true">{{ link.recommended_keywords }}</textarea>
+            
+                <h2>Noncompete Keywords</h2>
+                <textarea rows="10" cols="40" editable="false"readonly="true">{{ link.noncompete_keywords  }}</textarea>
+            {% endifequal %}
+        
+            <div class="clearfix"></div>
+            
+            <!-- Link Previews -->
+            {% ifequal link.link_type 1 %}
+            	<div style="float:left;margin-left:10px;color:#0c467e;font-weight:normal;font-size:14px;">
+            		<br /><br />
+            		<img src="{{bannerPreview}}"/>
+            	</div>
+            {% endifequal %}
+            {% ifequal link.link_type 2 %}
+            	{%comment%}{{ bannerPreview|safe }}{%endcomment%}
+            {% endifequal %}
+            {% ifequal link.link_type 4 %}
+            	{{bannerPreview|safe}}
+            {% endifequal %}
+            {% ifequal link.link_type 6 %}    
+            <div class="clearfix"></div>
+            <a href="" class="previewHTML">Preview HTML Link</a>.            
+            {% endifequal %}
+        </div>
+        <div class="clearfix"></div>
+        {% if multi_sites %}
+        <input type="button" id ="goBack" class="goBackBtn" value=""/>
+        {% endif %}
+        
+    {% endif %}
+</div>
+<div id="AjaxLightBoxFromLightbox"></div>
+
+<script type="text/javascript">
+    $(".error").remove();       
+    {% ifnotequal view 'all'%}
+        var goBack = "";
+        function showPreResponse(formData, jqForm, options) { 
+        	goBack = $("#ajaxLightbox").html();
+        } 
+        function showResponse(responseText, statusText)  { 
+            $("#ajaxLightbox").height(350)
+            $("#ajaxLightbox").width(550)
+        	$("#goBack").bind("click", function() {
+        	    $("#ajaxLightbox").dialog("destroy");
+                //$("#ajaxLightbox").height(250)
+                //$("#ajaxLightbox").width(540)
+        		//$("#ajaxLightbox").html(goBack);
+        		//initGetLinkForWebsite();
+        	});
+            
+        }     
+        function errorOut(){ 
+            alert("An unexpected error has occured. Please try again later.");
+            hideAjaxLoadingFromLightbox(); 
+            $("#AjaxLightBoxFromLightbox").dialog("destroy");
+            
+        }
+        var optGLW = {
+            target:        '#ajaxLightbox',
+        	success:       showResponse,  // post-submit callback
+        	beforeSubmit:  showPreResponse, 
+        	error:         errorOut
+        };
+        $('#getLinkByWebsite').bind('submit', function() {
+        	$(this).ajaxSubmit(optGLW);
+        	return false; // <-- important!
+        });	
+    {% endifnotequal %}
+    $(".previewHTML").click(function(event) {
+        event.preventDefault()
+        window.open('{%url publisher_links_preview link.id%}','uploadw9','width=450,height=400');
+    });
+</script>

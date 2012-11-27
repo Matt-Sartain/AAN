@@ -1,0 +1,10 @@
+Thank you for applying to {{advertiser.name}}.
+
+Unfortunately, your application did not meet one or more of the preset criteria set forth by {{advertiser.name}}.
+
+Should you have any questions, please contact {{contact_email}}.
+
+Regards,
+Your Atrinsic Affiliate Network Administrator
+admin@network.atrinsic.com
+

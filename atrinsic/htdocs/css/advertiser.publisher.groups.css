@@ -1,0 +1,32 @@
+.groupsCtn{ float:left;height:auto;margin:20px 0px 0px 50px;padding:0;width:620px; }
+.groupList { float:left;height:auto;margin:55px 0 0 0;text-align:right;width:160px; }
+.groupName { height:20px; }
+.groupName a { font-size:14px; }
+.groupName a:hover { text-decoration:underline; }
+.groupChosen { text-decoration:underline; }
+.hSpacer { float:left;height:100px;width:50px; }
+.vSpacer { clear:both;height:20px;width:100%; }
+.spacer60 { height:60px; }
+.groupActions { float:left;margin:40px 0 0 0; }
+.pubHdr { border-bottom:1px solid #CDCDCD;font-size:14px;height:20px;width:250px; }
+.viewGroupCtn, .editGroupCtn { float:left;height:28px;text-align:left;width:110px; }
+.contactGroupCtn, deleteGroupCtn { float:left;height:28px; }
+.showGroupInfo { display:inline; }
+.hideGroupInfo { display:none; }
+.confirmDeleteCtn { 
+	background-color:#EBEFFA;
+	border:1px solid #7CABD9;
+	display:none;
+	height:185px;
+	left:190px;
+	position:absolute;
+	text-align:center;
+	top:200px;
+	width:330px; 	
+}
+.confirmDelete { font-size:14px;height:40px;margin:30px 0 0 0; }
+.deleteYesNoCtn { height:auto;margin:0 auto;width:170px; }
+.lightBox { filter:alpha(opacity=25);-moz-opacity:.25;opacity:.25; }
+
+.deleteNo { cursor:pointer;float:left;width:85px;height:75px;text-align:center; }
+.deleteYes { cursor:pointer;float:left;width:85px;height:75px;text-align:center; }

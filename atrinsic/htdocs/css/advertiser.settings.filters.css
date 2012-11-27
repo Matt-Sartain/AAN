@@ -1,0 +1,58 @@
+.filtersCtn
+{
+	height:auto;
+	margin:20px auto;
+	width:630px;
+}
+.topDescription { 
+	background-color:#F8FAEC;
+	font-size:13px;
+	height:85px;
+	margin:20px 0px 0px 15px;
+	padding:15px 0 0 12px;
+	width:580px; 			
+}
+.filtersHdrCtn
+{
+	color:#0C467E;
+	height:25px;
+	font-size:14px;
+	margin:15px 0px 0px 15px;
+	width:590px;
+}
+.filterHdr { height:25px;float:left;padding:0px 0px 0px 10px;text-align:left;width:285px; }
+.valueHdr { height:25px;float:left;text-align:left;width:210px; }
+.actionHdr { height:25px;float:left;text-align:center;width:70px; }
+
+.filterRows { font-size:14px;height:45px;margin:0px 0px 0px 15px;width:590px; }
+.blueRow {	background-color:#E0EAF4; }
+.colFilter { float:left;font-size:13px;height:30px;padding:15px 0px 0px 10px;width:285px; }
+.colValue { float:left;font-size:13px;height:30px;padding:15px 0px 0px 0px;text-align:left;width:210px; }
+.colAction { float:left;font-size:13px;height:40px;padding:0;text-align:left;width:70px; }
+
+a.deleteBtn{
+	
+ 	background-image: url('/images/delBtn.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+	display:block;
+	float:left;
+	height:20px;
+	margin: 12px 0 0 0;
+	width:35px; 	
+}
+
+a.editBtn{
+ 	background-image: url('/images/editBtn.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+	display:block;
+	float:left;
+	height:20px;
+	margin: 12px 0 0 0;
+	width:34px; 		
+}
+.addFilter { text-align:right;width:585px;margin:25px auto; }
+
+.hrDivider { border-top:1px solid #CDCDCD;height:10px;margin:0px 0px 0px 15px;width:590px; }
+.spacer15 {	clear:both;height:15px; }

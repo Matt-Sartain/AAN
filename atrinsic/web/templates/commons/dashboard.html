@@ -1,0 +1,284 @@
+{% extends 'base/dashboard.html' %}
+{% load humanize %}
+{% load compare %}
+{% load forex %}
+{% block document_ready %}
+
+$('.graph_chooser').click(function(){
+	$('.multi_graph_placers').hide();
+	var holder_id = $(this).children().attr("alt");
+	$('#'+holder_id).show();
+	return false;
+});
+$(".resulttable").dataTable({'bFilter':false,
+                           'bLengthChange':false,
+                           'iDisplayLength':15});
+$(".reportbutton").click(function(event){
+	event.preventDefault();
+	$(this).parent().parent().submit();
+});
+$(".datepicker").datepicker({ dateFormat: 'mm/dd/yy' });
+{%endblock%}
+
+{% block sidebar %}
+{%ifequal org 'publisher'%}
+	{% include 'commons/dashboard_side_publisher.html' %}
+{%else%}
+	{% include 'commons/dashboard_side_advertiser.html' %}
+{%endifequal%}    
+{% endblock %}
+{% block content %}
+<style>
+.multi_graph_placers{ display:none; }
+</style>
+<div class="leading">
+    <h2>Real-time: {% now "P" %}</h2>
+    <div class="text">
+        <div class="leads">
+            <strong>{{ number_of_var1 }}</strong>
+            <p>{{ var1_name}} </p>
+        </div>
+        <div class="description">
+            <ul>
+                <li>
+                    <span>Yesterday:</span>
+                    <em>{{ yesterday|intcomma }}</em>
+                </li>
+                <li>
+                    <span>Month High:</span>
+                    <em>{{ month_high|intcomma }}</em>
+                </li>
+                <li>
+                    <span>Month Low:</span>
+                    <em>{{ month_low|intcomma }}</em>
+                </li>
+                <li>
+                    <span>Total MTD:</span>
+                    <em>{{ total_mtd|intcomma }}</em>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <span>Total YTD:</span>
+                    <em>{{ total_ytd|intcomma }}</em>
+                </li>
+                <li>
+                    <span>YTD High:</span>
+                    <em>{{ ytd_high|intcomma }}</em>
+                </li>
+                <li>
+                    <span>YTD Low:</span>
+                    <em>{{ ytd_low|intcomma }}</em>
+                </li>
+                <li>
+                    <span>Daily Avg:</span>
+                    <em>{{ daily_avg|intcomma }}</em>
+                </li>
+            </ul>
+            <ul class="value">
+                <li>
+                    <span>AOV:</span>
+                    <em>{{ aov }}</em>
+                </li>
+                <li>
+                    <span>EPC:</span>
+                    <em>{{ epc }}</em>
+                </li>
+                <li>
+                    <span>CPC:</span>
+                    <em>{{ cpc }}</em>
+                </li>
+                <li>
+                    <span>CPM:</span>
+                    <em>{{ cpm }}</em>
+                </li>
+            </ul>
+        </div>
+        <div>{{chart_links.main_graph|safe}}</div>
+    </div>
+    <div class="reports">
+        <h2>Quick Reports</h2>
+        <div class="head">
+            <div class="head-info">
+                <div>
+                    <ul class="tabset">
+                        <li><a href="#tab6" class="tab active"><span>Sales</span></a></li>
+                        <li><a href="#tab7" class="tab"><span>Link Type</span></a></li>
+                        <li><a href="#tab8" class="tab"><span>Top {%ifequal org 'publisher'%}Advertiser{%else%}Publishers{%endifequal%}</span></a></li>
+                    </ul>
+                    <ul class="icons">
+                        <li><a href="" class="graph_chooser"><img src="/images/icon01.gif" width="25" height="25" alt="chart_table" /></a></li>
+                        <li><a href="" class="graph_chooser"><img src="/images/icon02.gif" width="25" height="25" alt="columns" /></a></li>
+                        {#<li><a href="" class="graph_chooser"><img src="/images/icon03.gif" width="25" height="25" alt="bars" /></a></li>#}
+                        <li><a href="" class="graph_chooser"><img src="/images/icon04.gif" width="25" height="25" alt="lines" /></a></li>
+                        <li><a href="" class="graph_chooser"><img src="/images/icon05.gif" width="25" height="25" alt="pie" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab" id="tab6">
+            <div class="tab-info">
+                <div class="tab-head">
+                    <ul class="links">
+                        {%ifequal org 'publisher'%}
+                        <li><a href="{% url publisher_set_dashboard_timeframe 9 %}">Today</a></li>
+                        <li><a href="{% url publisher_set_dashboard_timeframe 2 %}">Month To Date</a></li>
+                        <li><a href="{% url publisher_set_dashboard_timeframe 5 %}">Last Month</a></li>
+                        <li><a href="{% url publisher_set_dashboard_timeframe 10 %}">Year to Date</a></li>
+                        <li><a href="{% url publisher_set_dashboard_timeframe 8 %}">Last Year</a></li>
+                        {%else%}
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 9 %}">Today</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 2 %}">Month To Date</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 5 %}">Last Month</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 10 %}">Year to Date</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 8 %}">Last Year</a></li>
+                        {%endifequal%}
+                    </ul>
+                    <ul class="dates"><form id="custom_dates">
+                        <li><input class="datepicker" value="{{date_start}}" style="width:70px;" name="custom_date_range_start"></li>
+                        <li><input class="datepicker" value="{{date_end}}" style="width:70px;" name="custom_date_range_end"></li>
+                        <li><a href="" class="reportbutton" style="margin-top:3px; border-color:#4d89f9; background-color:#c6d9fd">APPLY</a></li>
+                    </form></ul>
+                </div>
+                <div class="scrollable">
+                	<div class="multi_graph_placers" id="chart_table" style="display:block">
+						<table class="resulttable">
+						     <thead>
+						      <tr>
+							{% for field in sales_report.RenderHeader %}
+							<th>{{field.0}}</th>
+							{% endfor %}
+						      </tr>
+						    </thead>
+						    <tbody>
+						      {% for row in sales_report.RenderContents %}
+							<tr class="{% cycle 'odd' 'even' %}">
+							  {% for col in row %}
+							    <td>{{col.1|safe}}</td>
+							  {% endfor %}
+							</tr>
+						      {% endfor %}
+						    </tbody>
+						      <tfoot>
+						      <tr class="total">
+						          {% for col in sales_report.RenderFooter %}
+						   	    <td>{{col.1|safe}}</td>
+						          {% endfor %}
+						      </tr>
+						     </tfoot>
+						</table>
+					</div>
+					<div class="multi_graph_placers" id="pie">
+						{{chart_links.pie|safe}}
+					</div>
+					<div class="multi_graph_placers" id="bars">
+						{{chart_links.bars|safe}}
+					</div>
+					<div class="multi_graph_placers" id="columns">
+						{{chart_links.columns|safe}}
+					</div>
+					<div class="multi_graph_placers" id="lines">
+						{{chart_links.lines|safe}}
+					</div>
+                </div>
+                <div class="curently">
+                    <h3>Currently Viewing: <strong>{{date_range_name}}</strong></h3>
+                </div>
+            </div>
+        </div>
+        <div class="tab" id="tab7">
+            <div class="tab-info">
+                <div class="tab-head">
+                    <ul class="links">
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 9 %}">Today</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 2 %}">Month To Date</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 5 %}">Last Month</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 10 %}">Year to Date</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 8 %}">Last Year</a></li>
+                    </ul>
+                    <ul class="dates">
+                        <li><a href="">{{date_start}}</a></li>
+                        <li><a href="">{{date_end}}</a></li>
+                    </ul>
+                </div>
+				<table class="resulttable" width="100%">
+				     <thead>
+				      <tr>
+					{% for field in link_report.RenderHeader %}
+					<th>{{field.0}}</th>
+					{% endfor %}
+				      </tr>
+				    </thead>
+				    <tbody>
+				      {% for row in link_report.RenderContents %}
+					<tr class="{% cycle 'odd' 'even' %}">
+					  {% for col in row %}
+					    <td>{{col.1|safe}}</td>
+					  {% endfor %}
+					</tr>
+				      {% endfor %}
+				    </tbody>
+				      <tfoot>
+				      <tr class="total">
+				          {% for col in link_report.RenderFooter %}
+				   	    <td>{{col.1|safe}}</td>
+				          {% endfor %}
+				      </tr>
+				     </tfoot>
+				</table>
+            </div>
+            <div class="curently">
+                <h3>Currently Viewing: <strong>{{date_range_name}}</strong></h3>
+            </div>
+
+        </div>
+        <div class="tab" id="tab8">
+            <div class="tab-info">
+                <div class="tab-head">
+                    <ul class="links">
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 9 %}">Today</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 2 %}">Month To Date</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 5 %}">Last Month</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 10 %}">Year to Date</a></li>
+                        <li><a href="{% url advertiser_set_dashboard_timeframe 8 %}">Last Year</a></li>
+                    </ul>
+                    <ul class="dates">
+                        <li><a href="">{{date_start}}</a></li>
+                        <li><a href="">{{date_end}}</a></li>
+                    </ul>
+                </div>
+				<table class="resulttable" width="100%">
+				     <thead>
+				      <tr>
+					{% for field in publisher_report.RenderHeader %}
+					<th>{{field.0}}</th>
+					{% endfor %}
+				      </tr>
+				    </thead>
+				    <tbody>
+				      {% for row in publisher_report.RenderContents %}
+					<tr class="{% cycle 'odd' 'even' %}">
+					  {% for col in row %}
+					    <td>{{col.1|safe}}</td>
+					  {% endfor %}
+					</tr>
+				      {% endfor %}
+				    </tbody>
+				      <tfoot>
+				      <tr class="total">
+				          {% for col in publisher_report.RenderFooter %}
+				   	    <td>{{col.1|safe}}</td>
+				          {% endfor %}
+				      </tr>
+				     </tfoot>
+				</table>
+                <div class="curently">
+                    <h3>Currently Viewing: <strong>{{date_range_name}}</strong></h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

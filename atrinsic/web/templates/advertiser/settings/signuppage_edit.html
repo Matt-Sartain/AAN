@@ -1,0 +1,39 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block document_ready %}
+  $('#editSettingsCancel').click(function(e){
+	    e.preventDefault();
+	    location.href = "/advertiser/settings/signup_page/";
+	    return false;
+    });	
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Publisher Page Settings</div>
+<div class="contentCtn2">  
+    <div class="ajaxLoading"></div>
+        <form action="{% url advertiser_settings_signup_page %}" enctype="multipart/form-data" method="post" class="MooseHead widerLabels">
+            <div id="ImagePreview">
+                <label for="">Current Image</label>
+                <div class="input">
+                    <img src="{{ organization.branded_signup_page_header_url|escape }}" alt="" style="margin: 10px 15px 10px 15px;">                    
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        	{{ form }}        	
+            <div class="clearfix"></div>
+            <input type="submit" class="saveBtn" style="clear:left;" value=""/>
+            <a name="Cancel" class="cancelBtnLarge" id="editSettingsCancel" href="#"></a>
+            <div class="clearfix"></div>
+        </form>
+	</table>
+</div>     
+{% endblock %}

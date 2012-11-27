@@ -1,0 +1,32 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">SID Request</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <div style="margin:10px 20px;height:100px;">
+    <h2>SID Request Sent</h2>
+    You have submitted your request.
+    <br><br>
+    <div><input class="back" type="button" style="float:left;" onclick="javascript:history.back(-1);"/></div>
+    </div>
+</div>    
+      
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

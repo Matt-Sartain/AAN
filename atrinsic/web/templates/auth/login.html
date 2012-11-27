@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% block css %}
+	<link href="/css/loginPage.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/css/login.css" rel="stylesheet" type="text/css" media="all"/>
+ <style>
+	input
+		{
+		border:1px black solid;
+		-moz-border-radius:7px;
+		-webkit-border-radius:7px;
+		margin-bottom:5px;
+		margin-top:4px;
+		}
+</style>
+{%endblock%}
+<script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+<title>Atrinsic Affiliate Network - Login Page</title>
+</head>
+<body>
+{% block content %}
+<div id="theHeader">
+  <div id="headerButtons">
+    	<a href="/signup/advertiser/"><img src="/images/AQ_LoginAdvertiserSignup.jpg" width="125" border="0" height="30" /></a>
+    	<a href="/signup/publisher/"><img src="/images/AQ_LoginPublisherSignup.jpg" width="118" border="0" height="30" /></a>
+     </div>
+</div>
+<div id="main_burb"><img src="/images/AQ_Login023_b.jpg" width="960" height="335" /></div>
+<div id="bottomText">
+   <div id="leftFloatedDiv">
+        <div id="clmHeader">For Our Advertisers</div>
+     <div id="clmBody">
+                The Atrinsic Affiliate Network features everything an Advertiser needs to ensure a successful online marketing campaign with its Publishers.<BR /><BR />From brand protection and compliance to recruitment and mobile widgets, the Atrinsic Affiliate Network enables its users to run their programs more effectively utilizing state of the art intelligence.<BR /><BR />
+       <a href="/signup/advertiser/"><img  border="0" src="/images/AQ_Login_SignupAdvertiser.jpg" width="165" height="55" /></a>
+       </div>
+  </div>
+<div id="leftFloatedDiv">
+        <div id="clmHeader">For Our Publishers </div>
+            <div id="clmBody">
+            The Atrinsic Affiliate Network offers the tools you need to promote our Advertisers and optimize your campaigns based on network performance.<BR /><BR />
+            Experience the difference with a feature set allowing you to measure yourself against your peers, customize your dashboards and view live site statistics! <BR /><BR /><BR />
+            <a href="/signup/publisher/"><img src="/images/AQ_Login_SignupPublisher.jpg" border="0" width="165" height="55" /></a>
+        </div>
+  </div>
+    <div id="leftFloatedDiv">
+        <div id="clmHeader">Brand Protection</div>
+            <div id="clmBody">
+				Brand equity--one of the global advertiser's greatest assets--directly impacts revenue, reputation and customer relationships.  As business moves online, an advertiser's greatest challenge is defending its brand from ever-evolving online risks.<BR /><BR />
+              <a onclick="window.open('/bp_readmore/','win','width=300,height=400');return false;" href="">Read more</a><BR /><BR />
+		    </div> 
+    </div>
+    <div id="leftFloatedDiv">
+        <div id="clmHeader">Login</div>
+            <div id="clmBody">
+                <form action="#" method="post">
+                    {{ form }}
+                    {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+                   {% if error %}
+                    <label class="error">{{ error }}</label>
+                    {% endif %}
+                   <input type="submit" name="submit" value="LOGIN" class="login_btn"/>
+                   <div id="forgotbox">
+                        <h5>Forgot your username or password?</h5>
+                        {{ forgotform }}
+                        <input type="submit" name="submit" value="RESET PASSWORD" class="reset_btn"/>
+                    </div>
+                </form>
+		    </div> 
+    </div>
+</div>
+{% endblock %}
+<div id="theFooter">
+   {% block footer %}
+        {% include 'base/footer.html' %}
+   {% endblock %}
+</div>
+</body>
+</html>

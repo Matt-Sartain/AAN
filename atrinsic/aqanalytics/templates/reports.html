@@ -1,0 +1,29 @@
+{% extends 'base/widgetui.html' %}
+{% block javascript %}
+{% endblock %}
+{% block document_ready %} 
+$(".widget_table").dataTable({'bFilter':false,
+ 	                       'bJQueryUI': true,
+                           'bLengthChange':false,
+                           'iDisplayLength':25});
+                           
+$("#id_start_date, #id_end_date").datepicker({showOn: 'both', buttonImage: '/images/blankdatepicker.png', buttonImageOnly: true, dateFormat: 'mm/dd/yy'});
+{% endblock %}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block content %}
+
+<form class="loginForm" action"/analytics/login/" method="POST">
+{%for error in error_list%}
+{{error|safe}}
+{%endfor%}
+{{form.as_p}}
+<input type="submit" value="RUN REPORT">
+</form>
+
+<hr>
+
+{{report|safe}}
+{% endblock %}

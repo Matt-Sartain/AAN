@@ -1,0 +1,214 @@
+@charset "utf-8";
+/* CSS Document */
+
+	/*RESET BASE STYLES*/
+/**************************************** */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+}
+img{
+	display:inline-block;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need cellspacing="0" (for ie6) */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+/*----- PAGE STYLES BEGIN -----*/
+
+/*----- GENERIC STYLES -----*/
+.clearfloat { 
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
+body{
+	text-align:center;
+	/*overflow:hidden;*/
+}
+.wrapper{
+	margin:auto;
+	width:100%;
+	height:auto;
+	margin-top:1px;
+	min-width:500px;
+}
+/*----- HEADER STYLES -----*/
+.header{
+	background:#fff url(/images/header_bg.jpg) no-repeat center top;
+	width:auto;
+	height:38px;
+	text-align:center;
+	border-right:1px8 solid #000;
+}
+.nav_main{
+	margin:auto;
+	text-align:left;
+	position:relative;
+	width:850px;
+	top:10px;
+}
+.nav_box{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color:#4575b7;
+	float:left;
+	padding-left:5px;
+}
+.nav_box .error{
+	color:red;
+	font-weight:bold;
+}
+.nav_box span{
+	padding-left:15px;
+}
+.login{
+	position:relative;
+	bottom:5px;
+}
+.nav_box a{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#999;
+	text-decoration:underline;
+}
+/*----- OFFER BODY STYLES -----*/
+.offer_body{
+	background:#fff url(/images/offer_body_bg_3.jpg) no-repeat center top;
+	width:auto;
+	height:646px;
+	text-align:left;
+
+}
+.body_nav{
+	width:auto;
+	text-align:left;
+	padding-top:23px;
+	margin-right:60px;
+}
+.body_nav_box{
+    border:0px;
+    border-top:1px;
+    border-bottom:1px;
+    border-style:solid;
+    border-color:#5379A6;
+    padding:6px 0px;
+	width:120px;
+	float:right;
+}
+.body_nav_box_2{
+    border-top:1px;
+    border-bottom:1px;
+    border-style:solid;
+    border-color:#5379A6;
+    padding:6px 0px;
+	width:60px;
+	float:right;
+}
+
+.body_nav span{
+	margin-right:0px;
+}
+.body_nav a{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#FFF;
+	text-decoration:none;
+}
+.body_nav a:hover{
+	font-weight:bold;
+}
+/*----- FOOTER STYLES -----*/
+.footer{
+	background:#fff url(/images/footer_bg.jpg) repeat center top;	
+	width:auto;
+	height:auto;
+}
+.footer_text{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#000;
+	padding-bottom:5px;
+	text-align:center;
+}
+/*----- INPUT/SELECT FIELD STYLES -----*/
+input{
+	border:1px solid #999;
+	font-size:14px;
+	color:#666;
+	position:relative;
+	bottom:3px;
+}
+.top_nav{
+	width:162px;
+}
+.pop_email{
+	width:160px;
+}
+/*---- pop up ----*/
+.popup{
+	position: absolute; 
+	width: 435px; 
+	height: 200px; 
+	display: none; 
+	background: #fff; 
+	border: 1px solid #666;
+	left: 250px;
+	top: 40px
+}
+.pop_body{
+	padding:40px;
+	text-align:left;
+}
+.pop_close{
+	float:right;
+	padding:5px;
+}
+.pop_title{
+	color:#444;
+	font-family: Verdana;
+	font-size:24px;
+	padding-bottom:15px;
+}
+.pop_inst{
+	color: #666;
+	font-family: Verdana;
+	font-size:14px;
+	padding-bottom:15px;
+}
+.pop_input{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#4575b7;
+}
+.pop_email_text{
+	position:relative;
+	bottom:3px;
+}
+.go_button{
+	position:relative;
+	top:3px;
+}

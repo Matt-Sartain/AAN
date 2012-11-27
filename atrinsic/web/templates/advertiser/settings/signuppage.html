@@ -1,0 +1,47 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block document_ready %}
+
+    $('#editSettingsBtnClick').click(function(e){
+	    e.preventDefault();
+	    location.href = "/advertiser/settings/signup_page/edit/";
+	    return false;
+    });	
+
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Publisher Page Settings</div>
+<div class="contentCtn2">  
+    <div class="ajaxLoading"></div>
+        <div style="color: rgb(47, 82, 138); line-height:30px; height: 30px; font-size: 14px;">Header Image URL</div>
+        <div style="border:1px solid black;">
+            {{ organization.branded_signup_page_header_url|escape }}
+            <br>
+            <img src="{{ organization.branded_signup_page_header_url|escape }}" alt="">
+        </div>
+        <div style="color: rgb(47, 82, 138); line-height:30px; height: 30px; font-size: 14px;">Branded Signup Page Copy</div>
+        <div style="margin:auto; text-align:center;">
+    	    <iframe style="background-color:white;" width="95%" height="250" src="{% url advertiser_settings_signup_page_preview "branded" %}?content={{ organization.branded_signup_page_copy|escape }} "></iframe>
+        </div>
+    	<div style="color: rgb(47, 82, 138); line-height:30px; height: 30px; font-size: 14px;">Advertiser Custom Program Page</div>
+    	<div style="margin:auto; text-align:center;">
+            <iframe style="background-color:white;" width="95%" height="250" src="{% url advertiser_settings_signup_page_preview "branded" %}?content={{ organization.advertiser_custom_program_page|escape }}"></iframe>
+        </div>
+        <div style="color: rgb(47, 82, 138); line-height:30px; height: 30px; font-size: 14px;">Advertiser Profile Detail Page</div>
+        <div style="margin:auto; text-align:center;">
+            <iframe style="background-color:white;" width="95%" height="250" src="{% url advertiser_settings_signup_page_preview "branded" %}?content={{ organization.advertiser_profile_detail_page|escape }}"></iframe>
+        </div>
+        <a name="Edit Settings" class="editSettingsBtn" style="float:right; margin-top:10;" id="editSettingsBtnClick" href="#"></a>
+</div>     
+
+{% endblock %}

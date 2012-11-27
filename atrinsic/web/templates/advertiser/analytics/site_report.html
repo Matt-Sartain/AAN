@@ -1,0 +1,103 @@
+<style>		
+	#rptResultsCtn
+	{
+	    margin:10px 0px;
+	}
+	.widget_table th {
+	background-color:#F6F6F6;
+	color:#959595;
+	padding:2px 2px 2px 0px;
+	text-align:left;
+	}
+	
+	th {    
+	    background:#E5E5E5 none repeat scroll 0 0;
+	    border:1px solid #BBBBBB;
+	    font-size:14px;
+	    font-weight:normal;
+	    padding:0.6em;
+	}
+	td { border:1px solid #DDDDDD; 
+	    background:#F9F9F9 none repeat scroll 0 0;
+	    padding:0.6em;
+	}
+	.nextDimension{
+	    text-decoration:underline;
+	}
+	a.reportHome {
+	    color:#6597CC;
+	    font;size:12px;
+	}
+</style>
+<script>
+    $(".nextDimension").live("click",function(event){
+        
+        callUrl = "/advertiser/analytics/site/{{siteid}}/{{reportid}}/" 
+        
+        callUrl +=  $("input[name=nexttier]").val() + "/"
+        
+        if( $("input[name=filters]").val() == "None" ){
+            applyFilters = "?filters="
+        }else{
+            applyFilters += "|"
+        }
+        applyFilters += $("input[name=currentDimension]").val() + ":" + $(this).text()
+        callUrl += applyFilters
+
+    	$.ajax({
+			type: "GET",
+			url: callUrl,
+			dataType: "html",
+			async: false,
+			success: function(data){			    
+				$("#rptResultsCtn").html(data);		
+			}
+		}); 
+        return false;
+        
+    });
+    $(".endofDimensions").live("click",function(event){
+        return false;
+    });
+    $(".reportHome").live("click",function(event){
+        callUrl = "/advertiser/analytics/site/{{siteid}}/{{reportid}}/" 
+    	$.ajax({
+			type: "GET",
+			url: callUrl,
+			dataType: "html",
+			async: false,
+			success: function(data){			    
+				$("#rptResultsCtn").html(data);		
+			}
+		}); 
+        return false;
+    });
+</script>
+<div id="rptResultsCtn">
+    <div style="padding:0px 10px 10px;"><a href="" class="reportHome">&lt;&nbsp;Home</div>
+<table class="widget_table" border="0" cellspacing="0" cellpading="0" style="border-collapse:collapse;">
+    <input type="hidden" name="filters" value="{{filters}}">
+    <input type="hidden" name="currentDimension" value="{{currentDimension}}">
+    <input type="hidden" name="nexttier" value="{{nexttier}}">
+    <thead>
+        <tr>
+    		<th>
+    		    <div class="widget_table_headers" style="width:350px;text-align:left;padding-left:10px;">{{currentDimension}}</div>	
+    		</th>
+		{% for column in hdrMetrics %}
+		    <th ><div class="widget_table_headers" style="width:150px;text-align:right;padding-right:10px;">{{column}}</div></th>
+		{% endfor %}
+		</tr>
+		{% for dimensions,metrics in data %}
+    		<tr{% cycle ' style="background-color:#F9F9F9;"' ' style="background-color:#FFFFFF;"' %}>
+                <td style="text-align:left;padding-left:10px;">
+                    
+                    <a href="" class="{%if gotoNextTier%}nextDimension{%else%}endofDimensions{%endif%}" style="color:#6597CC;">{% for dimension in dimensions %}{{ dimension }}{% endfor %}</a></td>
+                {% for metric in metrics %}
+                    <td style="text-align:right;padding-right:10px;">{{ metric }}</td>
+    		    {% endfor %}
+    		</tr>
+    	{% endfor %}
+    </thead>
+</table>
+

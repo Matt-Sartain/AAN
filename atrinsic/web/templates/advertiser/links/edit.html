@@ -1,0 +1,111 @@
+{% extends 'base/widgetui.html' %}
+
+{% block javascript %}
+<script language="javascript" type="text/javascript" src="/js/jquery.field.js"></script>
+
+    <script type="text/javascript">
+        {% include 'advertiser/links/add-assignto.js' %}
+    </script>
+
+<script language="JavaScript">
+
+ function updateimagead(new_value) {
+    $("input[name='ad_image_id']").setValue(new_value);
+    $("#notify").html("Selected image ID: " + new_value);
+ }
+
+ function setimagead() {
+    new_value = $("input[name='ad_image_id']").getValue();
+    int_value = parseInt(new_value);
+    if (int_value > 0) updateimagead(new_value);
+ }
+
+</script>
+{% endblock %}
+
+{% block document_ready %}
+    {% include 'advertiser/links/add-documentready.js' %}
+
+
+    {% ifequal link.link_type 1 %}
+    $("#id_banner_url").after('{{ form.ad_image_id }}<a href="#" id="ad_image_link">Click to select image</a><div id="notify"></div>');
+
+    setimagead();
+
+
+    $("#ad_image_link").click(function(event) {
+        event.preventDefault();
+        childWindow = open('{% url advertiser_links_banner_list %}', 'win2', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,width=800,height=600');
+        if (childWindow.opener == null) childWindow.opener = self;
+    });
+    {% endifequal %}
+    $("#id_start_date, #id_end_date").datepicker({showOn: 'button', buttonImage: '/images/blankdatepicker.png', buttonImageOnly: true, dateFormat: 'mm/dd/yy'});
+{% endblock %}
+
+{% block content %}
+    
+    <h2 style="margin:35px 0px 3px 15px;">Edit Banner Link</h2>
+
+    <form action="{% url advertiser_links_edit link.link_id %}" method="post" enctype="multipart/form-data">
+   		<div class="link_container">
+    		<div style="float:left; width:50%">
+	    		<div class="headers">Link Name</div>
+	    		<div>{{form.name}}{{form.name.errors}}</div>
+	    		<div>
+	    			<label>Promotion Type:</label>
+	    			<p>{{form.link_promotion_type}}{{form.link_promotion_type.errors}}</p>
+	    		</div>
+	    	</div>
+	    	<div style="float:left; width:50%">
+    			<div>
+    				<label>Start Date:</label>
+    				<p>{{form.start_date}}{{form.start_date.errors}}</p>
+    			</div>
+    			<div>
+    				<label>End Date:</label>
+    				<p>{{form.end_date}}{{form.end_date.errors}}</p>
+				</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<label>Assigned To</label>
+    			<div class="input">{{form.assigned_to}}{{form.assigned_to.errors}}</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<div class="input">{{form.assigned_to_program_term}}{{form.assigned_to_program_term.errors}}</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<div class="input">{{form.assigned_to_group}}{{form.assigned_to_group.errors}}</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<div class="input">{{form.assigned_to_individual}}{{form.assigned_to_individual.errors}}</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<div class="input">{{form.assigned_to_minimum_rating}}{{form.assigned_to_minimum_rating.errors}}</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<div class="input">{{form.assigned_to_promotion_method}}{{form.assigned_to_promotion_method.errors}}</div>
+    		</div>
+    		<div class="field ChoiceField Select">
+    			<div class="input">{{form.assigned_to_publisher_vertical}}{{form.assigned_to_publisher_vertical.errors}}</div>
+    		</div>
+    		<div style="float:left; width:50%">
+	    		<div>
+	    			<label>Upload Banner Image:</label>
+	    			<p>{{form.image}}{{form.image.errors}}</p>
+	    		</div>
+	    		<div>
+	    			<label>Select Hosted Image:</label>
+	    			<p>{{form.banner_url}}{{form.banner_url.errors}}</p>
+	    		</div>
+	    	</div>
+	    	<div style="float:left; width:50%">
+    			<div>
+    				<label>Landing Page URL:</label>
+    				<p>{{form.landing_page_url}}{{form.landing_page_url.errors}}</p>
+    			</div>
+    		</div>
+    		<div style="clear:both; width:100%;"><a href="" class="reportbutton" style="width:95px; margin-left:80%;">SUBMIT</a></div>
+    	</div>
+    </form>
+
+{% endblock %}

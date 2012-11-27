@@ -1,0 +1,15 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_advertiser_datafeed advertiser.id %}';
+    });
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_advertiser_datafeed_edit advertiser.id datafeed.id %}" method="post">
+{{ form }}
+<input type="submit" value="Update Data Feed"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

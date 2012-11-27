@@ -1,0 +1,33 @@
+.emailLinkHdr
+{
+	margin:50px 0px 0px 50px
+}
+.emailLinkCtn
+{
+	margin:0 auto;
+	width:80%;
+
+}
+.linkCtn { float:left;text-align:left;width:220px; }
+.colHdr{
+	border-bottom:1px solid #CDCDCD;
+	color:#2D71BC;
+	font-size:14px;
+	height:20px;
+	padding:0 0 0 0;
+	text-align:left;
+}
+.linkHdr { width:160px; }
+.timelineHdr { width:150px; }
+.assignmentHdr { width:180px; }
+.timelineCtn { float:left;width:260px; }
+.assignmentCtn { float:left;width:140px; }
+.fullWidth { width: 665px; }
+.frmLabelCtn { font-size:12px; height:10px; padding-top:15px; }		
+.frmElementCtn { font-size: 12px; height:auto;}
+.spacer15 { height:15px; }
+.spacer50 { clear:both; height:50px;width:100%; }
+/* Override default stylings found in atrinsic.css */
+#id_start_date, #id_end_date, #id_link_promotion_type, #id_assigned_to,textarea, input, select { font-size:12px;margin-top:10px; }
+#id_link_content, #id_html_content { width:665px; }
+.input_val { padding:0px; }

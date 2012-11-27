@@ -1,0 +1,42 @@
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>    
+    <form action="{% url advertiser_settings_skulists_edit skulist.id %}" method="post" enctype="multipart/form-data" class="MooseHead">
+        
+        <label class="skuListName">{{form.name.label}}:</label> <div class="input">{{ form.name }}</div>
+        <div class="clearfix"></div>
+        <table class="primaryDisplayTable shrinkWidth" cellspacing="0">
+        <tr>
+            <th align="left">SKU List Item</th>
+            <th align="left">External SKU</th>
+            <th align="left">Action</th>
+        </tr>
+        {% for i in skulist.skulistitem_set.all %}
+        <tr class="rowSpacer"><td colspan="5"></td></tr>
+        <tr class="highlightRow">
+            <td>{{ i.item }}</td>
+            <td>{{ i.external_sku }}</td>
+            <td>
+                <a href="{% url advertiser_settings_skulists_item_delete skulist.id i.id %}" class="delSkuItem">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not skulist.skulistitem_set.all %}
+            <tr class="rowSpacer"><td colspan="3"></td></tr>
+            <tr class="highlightRow">
+                <td class="noResults" colspan="3">No items in this SKU List.</td>
+            </tr>
+        {% endif %}
+        </table>
+    
+        <input type="submit" class="saveBtn" value=""/>   
+        {%comment%}
+        <a href="#" id="{% url advertiser_settings_skulists_add %}" class="addSkuListBtn AjaxLightBox dXtraSm" name="Add Sku List"></a>
+        {%endcomment%}
+    </form>
+</div>
+
+    
+    
+    
+
+

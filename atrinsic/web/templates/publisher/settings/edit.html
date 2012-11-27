@@ -1,0 +1,21 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+	$(document).ready(function() {
+        stateProvince();
+        $("#id_country").change(stateProvince);
+     });
+    function enableThem(){
+		$("#id_phone").attr("disabled", "")
+		$("#id_email").attr("disabled", "")	
+		return true
+	}
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url publisher_settings_edit %}" id="formPost" method="post" class="MooseHead">
+        {{ form }}
+    	{{ formCI }}
+        <input type="submit" class="saveBtn" value="" onclick="enableThem()"/>
+    	<div class="clearfix"></div><br>
+    </form>
+</div>

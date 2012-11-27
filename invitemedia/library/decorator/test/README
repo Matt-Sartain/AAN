@@ -1,0 +1,4 @@
+$Id: README 5755 2008-02-26 15:52:53Z brian $
+
+This directory contains Nose tests. To run the tests, run "nosetests -v" at
+the command line.

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<main 
+
+	stageWidth="1070"
+	stageHeight="383"
+	stageBgColor=""
+	stageBgTransparency=""
+	
+	imageWidth=""
+	imageHeight=""
+	imageTransitionType="diagonalfade"
+	imageResize="none"
+	imageAlign="TL"
+	imageRandomDisplay="no"
+	imageAutoPlay="yes"
+	
+	thumbnails="yes"
+	thumbnailWidth="0"
+	thumbnailHeight="0"
+	thumbnailToThumbnailSpacing="3"
+	thumbnailsArrangeHorizontal="yes"
+	thumbnailsAutoHide="no"
+	thumbnailsMaskSize="0"
+	thumbnailsScrollSpeed="95"
+	thumbnailsAlign="BR"
+	thumbnailsLeftSpace="0"
+	thumbnailsRightSpace="124"
+	thumbnailsTopSpace="0"
+	thumbnailsBottomSpace="18"
+
+	textEmbedFont="yes"
+	textShadowTransparency="20"
+	textShadowDistance="2"
+	
+	buttonAutoHide="no"
+	buttonBgColor="ffffff"
+	buttonIconColor="24569f"
+	buttonAutoPosition="yes"
+	
+>
+
+
+<!-- slide1  -->
+<slide 
+	image="/images/banner_asset/image1.jpg"
+	thumbnailText="1" 
+	textTransitionType="1"
+	textWidth="" 
+	textAlign="BL" 
+	textLeftSpace="80" 
+	textRightSpace="0" 
+	textTopSpace="" 
+	textBottomSpace="50" 
+	slideShowDelay="4"
+	url="http://www.anrdoezrs.net/click-3984586-10411687" target="http://www.anrdoezrs.net/click-3984586-10411687">
+</slide>
+
+<!-- slide2  -->	
+<slide 
+	image="/images/banner_asset/image2.jpg" 
+	thumbnailText="2" 
+	textTransitionType="1"
+	textWidth="" 
+	textAlign="BL" 
+	textLeftSpace="77" 
+	textRightSpace="" 
+	textTopSpace="" 
+	textBottomSpace="250" 
+	slideShowDelay="4"
+	url="http://www.dpbolvw.net/click-3984586-10691838" target="http://www.dpbolvw.net/click-3984586-10691838"> 
+	<text leftMargin="" ><![CDATA[<font size="12"><font color="#303030"></font></font>]]></text>   
+	<text leftMargin="" ><![CDATA[<font size="12"><font color="#303030"></font></font>]]></text>   
+  <text leftMargin="" ><![CDATA[<font size="12"><font color="#303030"></font></font>]]></text>            
+  <text leftMargin="" ><![CDATA[<font size="16"><font color="#303030"></font></font>]]></text>
+<text leftMargin="" ><![CDATA[<font size="15"><font color="#303030"></font></font>]]></text>
+<text leftMargin="" ><![CDATA[<font size="16"><font color="#303030"></font></font>]]></text>
+</slide>
+	
+<!-- slide3  -->	
+<slide 
+	image="/images/banner_asset/image3.jpg"
+	thumbnailText="3" 
+	textTransitionType="1"
+	textWidth="" 
+	textAlign="BL" 
+	textLeftSpace="70" 
+	textRightSpace="15" 
+	textTopSpace="" 
+	textBottomSpace="163" 
+	slideShowDelay="4"
+	url="http://www.regnow.com/softsell/nph-softsell.cgi?item=1788-21&affiliate=577468" target="http://www.regnow.com/softsell/nph-softsell.cgi?item=1788-21&affiliate=577468">
+	<text font="2" leftMargin="" ><![CDATA[<font size="25" color="#d2e2f7" ></font>]]></text>
+              <text font="2" leftMargin="" ><![CDATA[<font size="25" color="#2452a4" ></font>]]></text>           
+</slide>	
+	
+<!-- slide4  -->	
+<slide 
+	image="/images/banner_asset/image4.jpg"
+	thumbnailText="4" 
+	textTransitionType="1"
+	textWidth="" 
+	textAlign="BL" 
+	textLeftSpace="445" 
+	textRightSpace="15" 
+	textTopSpace="" 
+	textBottomSpace="218" 
+	slideShowDelay="4"
+	url="http://atrinsic.com/interactive" target="http://atrinsic.com/interactive">
+<text font="2" leftMargin="" ><![CDATA[<b><font size="16" color="#d9def1" ></font></b>]]></text>
+<text font="2" leftMargin="" ><![CDATA[<b><font size="16" color="#d9def1" ></font></b>]]></text>
+<text font="2" leftMargin="" ><![CDATA[<b><font size="16" color="#d9def1" ></font></b>]]></text>
+</slide>
+
+	
+</main>

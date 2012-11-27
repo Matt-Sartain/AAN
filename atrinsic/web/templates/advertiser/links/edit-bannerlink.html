@@ -1,0 +1,39 @@
+
+
+<script language="javascript" type="text/javascript" src="/js/jquery.field.js"></script>
+
+<script type="text/javascript">
+    initAjaxFormPostFromLightbox();
+    hideAssignedTo();
+    initAssignedTo();
+	$("#id_banner_url").after('{{ form.ad_image_id }}<input type="button" id="ad_image_link" value="Select Image"><div id="notify"></div>');
+	
+	$("#ad_image_link").click(function(event) {        
+		var ajaxUrl = "{% url advertiser_links_edit_banner_list link.link_id %}"		
+		
+    	$.ajax({    		
+			type: "GET",
+			url: ajaxUrl,
+			dataType: "html",
+			async: true,
+			success: function(data){
+				$("#BannerSelector").html(data);						               
+			},
+            error:function (xhr, ajaxOptions, thrownError){
+                alert("Status Code: " + xhr.status + ". Further error details should go here." + thrownError.text);            
+            }    
+		}); 		    
+	});
+</script>
+
+<div id="AjaxContentFromDialog">
+    <div class="ajaxLoading"></div>    
+    <form action="{% url advertiser_links_edit link.link_id %}" method="post" enctype="multipart/form-data" class="MooseHead noMargin">        
+        {{ form }}
+        <div id="BannerSelector">         
+        </div>
+        <input type="submit" class="submitPlusWBGBtn pushRight" value="">
+        <div class="clearfix"></div>
+    </form>
+</div>
+

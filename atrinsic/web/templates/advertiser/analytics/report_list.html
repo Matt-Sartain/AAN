@@ -1,0 +1,79 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+{%endblock%}
+
+
+{% block javascript %} 
+<script>
+	$(".viewAccount").live("click",function(event){
+		event.preventDefault();
+		var callUrl = $(this).attr("id");
+		var dWidth = 900 
+		var dHeight = 700
+				
+    	$.ajax({
+			type: "GET",
+			url: callUrl,
+			dataType: "html",
+			async: false,
+			success: function(data){
+				$("#dialog").html(data);				
+				$("#dialog").dialog({bgiframe: true,	height: dHeight, width: dWidth,modal: true,draggable: false,resizable: false});
+             	$("#dialog").bind('dialogclose', function(event, ui) {
+					$("#dialog").dialog("destroy");
+				});	
+			}
+		}); 
+	
+	});
+</script>
+{% endblock %}
+
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Reports</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div> 
+    <table cellpadding="0" cellspacing="0" class="linkTbl" style="width:75%;margin:1em auto;">
+        <tr>
+            <th>Report Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Status</th>
+        </tr>
+    	<tr class="graybar"><td colspan="5"><hr size="1"></td></tr>
+    	{% if reports %}  
+    	    {% for r in reports %}
+                <tr{% cycle ' class="odd"' '' %}>
+                    <td><a href="" class="viewAccount" id="{%url advertiser_ga_site_report r.site_id r.id %}">{{ r.name }}</a></td>
+                    <td>{{ r.description }}</td>
+                    <td>{{ r.category }}</td>
+                    <td>
+                        {% if r.is_active %}
+                            <strong>Active</strong>
+                        {% else %}
+                            In-Active
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr{% cycle ' class="odd"' '' %}><td colspan = 4></td></tr>
+            {% endfor %}
+        {%else%}            
+            <tr>
+                <td colspan = 4>
+                    <div style="width:100%;">No reports have been created.</div>
+                </td>
+            </tr>
+        {% endif %}                
+    </table>  
+    <a name="Create Report" href="{%url advertiser_ga_report_create%}" class="styled_anchor_button plus_add">CREATE REPORT</a>
+</div>
+<div class="clearfix"></div>
+<div style="display:none;" id="dialog">I'm in a dialog</div>
+{% endblock %}
+

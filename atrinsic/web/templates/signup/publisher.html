@@ -1,0 +1,63 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.signup.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initTermsFormManipulation();
+    
+    $("#nextStep").click(function(e){
+    	
+    	e.preventDefault();
+    	if($("#terms").val() == 0){
+    		$("#termsError").show();
+    	}else{
+    		$("#termsForm").submit();
+    	}
+    	
+    }); 
+    
+{% endblock %}
+
+{% block pageContent %}
+    <div style="margin-left:30px;">{{advertiser.branded_signup_page_copy|safe}}</div>
+    <div class="appType">
+        <h2>Publisher Application</h2>
+        Signing up as a publisher within our network is quick and easy.<br>
+        Get started by completing the 2 steps below.
+    </div>
+    
+    <div class="stepCtn">
+        <div class="steps">
+            <div class="step1Current"></div>
+            <div class="step2Disabled"></div>                    
+        </div>
+        <div class="clearfix"></div>
+        <div class="pubSignupStepHdr">Terms of Service</div>
+        <form id="termsForm" action="" method="POST" class="MooseHead">
+        <div class="pubSignupContentCtn">
+            <p>A full-service solution with quality, innovation and brand protection as its core competencies,
+                the Atrinsic Affiliate Network team takes a great pride in the quality of all its Advertisers and
+                Publishers.</p>
+            <p>Compliance is the key to success of the Atrinsic Affiliate Network and all out partners. We 
+                take the time to review every publisher application with detailed verification process.</p>
+            <div class="pubTofS">
+                <strong>Please read & accept the <a href="/publisher/terms/{{advertiser.id}}">Terms of Service</a></strong>
+                <div id="termsError" style="display:none;" class="errors">You must read the Terms of Service before you can continue</div> 
+                {{ form }}            
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <input type="hidden" id="terms" value="{{termsViewd}}">
+        <input id="nextStep" type="submit" class="nextStepBtn" value="">
+        </form>
+    </div>
+    
+{% endblock %}
+
+

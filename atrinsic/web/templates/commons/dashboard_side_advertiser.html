@@ -1,0 +1,92 @@
+{% load compare %}
+<div class="staticWidget">
+	<div class="widget_headerCtn">
+		<div class="widget_header">Alerts</div>
+		<a href='' class='widget_collapse'></a>
+	</div>
+	<div class="widget_content">
+		<div class="right_side_box">
+			<ul class="list">
+                <li><a href="/{{org}}/settings/alerts/add/" class="add">Add Alerts</a></li>
+                <li><a href="/{{org}}/settings/alerts/" class="edit">Edit Alerts</a></li>
+            </ul>
+            {% for alert in organization.alert_set.all %}
+            <div>
+                <div>
+                    <p>{{ alert.get_alert_field_display }}</p>
+                </div>
+                <div>
+                    <p>{{ alert.get_time_period_display }}</p>
+                </div>
+                <div>
+                    {% if alert.check_alert|lt:"0" %}
+                    <p>
+                    {% endif %}
+                    {% if alert.check_alert|gt:"0" %}
+                    <p>
+                    {% endif %}
+                    {% ifequal alert.check_alert 0 %}
+                    <p>
+                    {% endifequal %}
+                        {{ alert.check_alert }}%
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+            {% if organization.has_violations %}
+            <div>
+                <h3>Infrigment notices:</h3>
+                <ul>
+                    {% if organization.trademark_violation %}
+                    <li><a href="#">Trademarks</a></li>
+                    {% endif %}
+                    {% if organization.keyword_violation %}
+                    <li><a href="#">Protected Keywords</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+		</div>
+	</div>
+</div>
+<br>
+<div class="staticWidget">
+	<div class="widget_headerCtn">
+		<div class="widget_header">Inquiries</div>
+		<a href='' class='widget_collapse'></a>
+	</div>
+	<div class="widget_content">
+		<div class="right_side_box">
+			<div class="tab" id="tab5">
+			    <div class="scroll">
+			        <div class="scroll-info">
+			            <ul class="item-list">
+			                {% for i in inquiries %}
+			                <li>
+			                    <div class="item">
+			                        <div class="data">
+			                            <em>{{ i.date_created|date:"m/d/y" }}</em>
+			                        </div>
+			                        <div class="text">
+			                            <p>Publisher Inquiry from {{ i.publisher.company_name }}</p>
+			                        </div>
+			                    </div>
+			                </li>
+			                {% endfor %}
+			                {% if not inquiries %}
+			                <li>
+			                    <div class="item">
+			                        <div class="data"><em></em></div>
+			                        <div class="text">
+			                            No Publisher Inquiries
+			                        </div>
+			                    </div>
+			                </li> 
+			                {% endif %}
+			            </ul>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>

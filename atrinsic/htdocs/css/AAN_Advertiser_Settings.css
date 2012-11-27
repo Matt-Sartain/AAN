@@ -1,0 +1,167 @@
+@import url("jquery-ui-theme.css");
+/********** Main Settings Page **********/
+.addSecVerticalBtn {
+	background: url('/images/btn_blues_add.gif') no-repeat;
+	outline: none;  
+	border: none;
+	height:33px;
+	margin:8px 0px 0px 0px;
+	width:81px;
+}
+.addSecVerticalBtn:hover { background-image: url('/images/btn_blues_add_mo.gif'); }
+
+a.editSettingsBtn {
+    background-image:url('/images/btn_blue_editinfo.gif');
+    background-repeat:no-repeat;
+    display:block;
+    height:42px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:117px;
+}a.editSettingsBtn:hover { background-image: url('/images/btn_blue_editinfo_mo.gif'); }
+
+.saveSettingsBtn {
+    background-image:url('/images/btn_blue_savesettings.gif');
+    background-repeat:no-repeat;
+    border:0;
+    display:block;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:117px;
+}.saveSettingsBtn:hover { background-image: url('/images/btn_blue_savesettings_mo.gif'); }
+.editCtn { clear:both; width:100%; }
+.secItemName  { float:left; height:25px;}
+.secItemRem  { float:right;height:25px;}
+.secItemRem a { color:red;}
+/********** END Main Settings Page **********/
+
+/********** Users **********/
+a.addUserBtn {
+    background-image:url('/images/btn_blue_adduser.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.addUserBtn:hover { background-image: url('/images/btn_blue_adduser_mo.gif'); }
+/********** END Users **********/
+
+/********** Alerts **********/
+a.addAlertBtn {
+    background-image:url('/images/btn_blue_addalert.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.addAlertBtn:hover { background-image: url('/images/btn_blue_addalert_mo.gif'); }
+
+    /********** Table "Overrides" **********/
+    table.primaryDisplayTable td.Details { width:45%; }
+    /********** END Table "Overrides" **********/
+
+/********** END Alerts **********/
+
+/********** Filters **********/
+a.addFilterBtn {
+    background-image:url('/images/btn_blue_addfilter.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.addFilterBtn:hover { background-image: url('/images/btn_blue_addfilter_mo.gif'); }
+.filterDesc { font-size:14px; margin:15px auto; width:60%; }
+/********** END Filters **********/
+
+
+/********** Progams **********/
+a.addProgramBtn {
+    background-image:url('/images/btn_blue_addprog.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.addProgramBtn:hover { background-image: url('/images/btn_blue_addprog_mo.gif'); }
+a.viewArchivedBtn {
+    background-image:url('/images/btn_blues_ViewArchived.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.viewArchivedBtn:hover { background-image: url('/images/btn_blues_ViewArchived_mo.gif'); }
+a.viewActiveBtn {
+    background-image:url('/images/btn_blue_viewactive.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:111px;
+}a.viewActiveBtn:hover { background-image: url('/images/btn_blue_viewactive_mo.gif'); }
+a.addActionBtn, a.addActionBtn2 {
+    background-image:url('/images/btn_blues_addaction.gif');
+    background-repeat:no-repeat;
+    display:block;
+    height:33px;
+    float:right;
+    margin:0 auto;
+    padding:0 4px;
+    width:117px;
+}a.addActionBtn:hover, a.addActionBtn2:hover { background-image: url('/images/btn_blues_addaction_mo.gif'); }
+a.saveProgramBtn {
+    background-image:url('/images/btn_blues_saveprogram.gif');
+    background-repeat:no-repeat;
+    display:block;
+    height:33px;
+    float:right;
+    margin:0 auto;
+    padding:0 4px;
+    width:117px;
+}a.saveProgramBtn:hover { background-image: url('/images/btn_blues_saveprogram_mo.gif'); }
+/********** END Data Feeds **********/
+
+/********** Data Feeds **********/
+a.requestFeedBtn {
+    background-image:url('/images/btn_blue_requestfeed.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.requestFeedBtn:hover { background-image: url('/images/btn_blue_requestfeed_mo.gif'); }
+/********** END Data Feeds **********/
+
+/********** Sku Lists **********/
+a.addSkuListBtn {
+    background-image:url('/images/btn_blues_add.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:81px;
+}a.addSkuListBtn:hover { background-image: url('/images/btn_blues_add_mo.gif'); }
+
+form.MooseHead label.skuListName { min-width:60px !important; padding:0 0 20px; }
+
+div.detailText {
+    width:400px;
+    margin:auto;
+    padding-top:8px;
+    text-align:center;
+}
+/********** END Sku Lists **********/
+
+

@@ -1,0 +1,1 @@
+alter table base_link add column     `invite_smartad_targeting` varchar(255);

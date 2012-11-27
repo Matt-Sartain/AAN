@@ -1,0 +1,3 @@
+alter table base_datafeed add column     `invite_id` integer;
+alter table base_productlist add column `invite_id` integer;
+

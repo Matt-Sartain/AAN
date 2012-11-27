@@ -1,0 +1,47 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.signup.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initStep2FormManipulation();
+    $(".ReCaptchaField label").remove();
+{% endblock %}
+
+{% block pageContent %}
+    <div class="appType">
+        <h2>Publisher Application</h2>
+    </div>
+    
+    <div class="stepCtn">
+        <div class="steps">
+            <div class="step1Current"></div>       
+            <div class="step2Disabled"></div>             
+        </div>
+        <div class="clearfix"></div>
+        <div class="pubSignupStepHdr">Create Your Account</div>
+        <form action="" method="POST" class="MooseHead">
+            <div class="contentCtn formsCtn formsCtnWider">
+                <div class="primaryDisplayTableHdr">Login Information</div>
+                <table class="DisplayTableAsForm" cellspacing="0" style="width:100%;">
+                    {{ form }}
+                </table>
+            </div>
+            <div class="contentCtn formsCtn formsCtnWider">
+                <div class="primaryDisplayTableHdr">User Verification</div>
+                    {{captcha_form}}
+                    
+                    <div class="clearfix"></div>
+
+            </div>
+            <input type="submit" class="nextStepBtn alterMargin" value="">
+        </form>
+    </div>
+
+{% endblock %}
+

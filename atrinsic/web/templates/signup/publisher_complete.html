@@ -1,0 +1,43 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.signup.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+{% endblock %}
+
+{% block pageContent %}
+    <br>
+    <div class="steps">
+        <div class="step1Disabled"></div>      
+        <div class="step2Disabled"></div>              
+    </div>
+    <div class="clearfix"></div>
+    <div class="pubSignupStepHdr">Thank You</div>
+
+    <div class="bBoundingBox bShorter">
+        <div class="thankYouTxt">
+		<p>
+		    Your application has been submitted and will be reviewed.</p>		    
+        <p>
+    		An e-mail confirming the receipt of your application should be received within the next 5 minutes.
+	    </p>
+		
+		<p>
+		    Should you not receive this email, please check your junk folder. For further assistance, please contact <a href="mailto:help@network.atrinsic.com">help@network.atrinsic.com</a>.
+	    </p>
+	    
+		<p>
+		   You will also be receiving a phone call from an Atrinsic Affiliate Network Publisher Team Member in regard to  your application status to verify the details of your application.		    
+	    </p>
+	    
+		<p>Thank you again for choosing the Atrinsic Affiliate Network! </p>
+		
+	</div>
+
+{% endblock %}

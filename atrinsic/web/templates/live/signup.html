@@ -1,0 +1,143 @@
+{% extends 'base/widgetui_no_rightside.html' %}{#% extends 'base/widgetui_moveable.html' %#}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{% endblock %}
+
+{% block document_ready %} 	
+	var options1 = {
+		target:        '#dialog',   // target element to update
+		beforeSubmit:  showRequest,  // pre-submit callback
+		success:       showResponse  // post-submit callback
+	};
+	
+	$("#liveForm").bind("submit", function() {
+		$(this).ajaxSubmit(options1);
+		return false; // <-- important!
+	});
+
+	
+	function showRequest(formData, jqForm, options) { 	
+	    return true; 
+	} 
+	function showResponse(responseText, statusText)
+	{
+		$("#dialog").html(responseText)
+		var justZone3 = $("#dialog #zone3").html();
+		$("#dialog").html(justZone3)
+		$("#dialog").dialog({bgiframe: true,height: 250, width: 350, modal: true,draggable: false,resizable: false});
+	    $("#dialog").bind('dialogclose', function(event, ui) {
+			$("#dialog").dialog("destroy");
+		});
+		return true; 	
+	}
+	$("input[type='submit']").click(function(event){
+	    if (document.liveForm.sites.value == '' || document.liveForm.urls.value == ''){
+			alert('Please fill out both fields before submitting.');
+			return false;
+		}else{
+		    return true;
+		}
+	    
+	});
+{% endblock %}
+
+
+{% block static_widgets_zone3 %}
+
+<h2 style="font-family:	'Myriad Pro',Arial,Helvetica,Tahoma,sans-serif;font-size:15px">Live Section Activation</h2>
+
+<br>
+<table width="100%">
+	<tr>
+		<td width="50%" ><table><Tr><td><div style="text-align:center;"><img src="/images/AQ_Image01.jpg" width="376" heigth="260" /></div></td><td><div style="text-align:center;"><img src="/images/AQ_Image02.jpg" width="376" heigth="260" /></div></td></TR></table>
+		</td>
+		<td width="50%" style="text-align:center;" rowspan="2" valign="middle">
+			<div style="display:block;background-image:url('/images/AQ_Image04_bkg.jpg');background-repeat:no-repeat;width:421px;height:247px;margin:0 auto;">
+				<p style="padding:61px 24px 0 24px;margin:0px;text-align:left;">
+					Provide your website URL and email address. We will activate your live section and email you an Atrinsic Affiliate Network Live tracking URL
+				</p>
+				<div style="padding:24px;">
+				<form id="liveForm" name="liveForm" method="post" action="/{{org_live_type}}/live/">
+				<table width="100%">
+					<tr>
+						<td style="text-align:left;">Email</td>
+						<td style="text-align:left;">Url</td>
+					</tr>
+					<tr>
+						<td style="text-align:left;"><input type="text" name="sites" id="sites" value=""></td>
+						<td style="text-align:left;"><input type="text" name="urls" id="urls" value=""></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:right;"><input type="submit" class="checkmark" value="ACTIVATE LIVE PAGE"></td>
+					</tr>
+				</table>
+				</form>
+				</div>
+				
+			</div>
+		</td>
+		
+		
+	</tr>
+	<tr>
+	
+		<Td width=50% style="padding-right:200px; padding-left:40px;">
+			<p>Our live web analytics software program has been integrated into the Atrinsic Affiliate Network platform and made available to all Advertisers and Publishers as a value added service to you! It provides you with detailed reports on your website visitors: the search engines and keywords they used, the language they speak, your popular pages… and so much more. Our goal is to continue to enhance its capabilities and bring you additional widgets to strengthen your marketing initiatives and ultimately create higher conversions.</p>
+			<p>Submit your site URL and email address to the right and Activate Live Page.  You will then receive an email with a line of script to place on your site within your header which will enable this portion of the Atrinsic Affiliate Network interface.</p>
+		</TD>
+		
+	</tr>
+	
+	
+	<!-- <tr>
+		<td><div style="text-align:center;"><img src="/images/AQ_Image03.jpg" width="376" heigth="190" /></div>
+			</td>
+		
+	</tr> -->
+</table>
+
+<div style="clear:both;"></div>
+<br>
+<h3 style="color:#83a201;">Customize Your Page &amp; Data Visualisation</h3>
+<table width="99%">
+	<tr><td width="33%"><img src="/images/AQ_Image05a.jpg" width="301" heigth="171"></td>
+		<td width="33%"><img src="/images/AQ_Image05b.jpg" width="301" heigth="171"></td>
+		<td width="33%"><img src="/images/AQ_Image05c.jpg" width="301" heigth="171"></td>
+	</tr>
+</table>
+{% comment %}
+<br>
+<h3 style="color:#83a201;">More Info On Each sections</h3>
+<table>
+	<tr>
+		<td><img src="/images/AQ_Image06a.jpg" width="348" heigth="153"></td>
+		<td>Duis quis ornare enim. Aliquam erat volutpat. Cras sit amet nisi eros. Donec id purus diam, in ultricies nisl. Donec venenatis mi eu leo faucibus elementum. Nunc lacinia malesuada magna, sit amet feugiat odio elementum eu. Maecenas vitae neque nec est sollicitudin hendrerit. Pellentesque dui tellus, fringilla at laoreet tincidunt, vulputate vitae sem. Curabitur malesuada, leo ut tincidunt porta, odio metus sagittis odio, eu feugiat lorem elit id dolor. Morbi sed quam elit. Integer viverra est at tellus faucibus ultrices. In at est vitae leo sollicitudin auctor. Curabitur non augue non libero condimentum hendrerit. Etiam fermentum, risus vitae condimentum dapibus, justo urna ornare eros, varius aliquet lorem arcu scelerisque dolor. Nulla tempus dignissim elit, non volutpat risus ullamcorper at. Donec dui enim, euismod eu laoreet eu, cursus non nibh. Proin non tincidunt enim. Ut elementum viverra enim sit amet dignissim. Ut eget pellentesque nisi.</td>
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr>
+		<td><img src="/images/AQ_Image06a.jpg" width="348" heigth="153"></td>
+		<td>Vestibulum eget fermentum nulla. Proin vel velit sapien, nec facilisis risus. Nullam ultrices ultrices magna, at euismod mi lacinia ac. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris lectus turpis, dignissim et congue vel, ornare vitae ipsum. Nulla suscipit ipsum a odio lacinia nec blandit mi consequat. Nulla massa nulla, blandit id congue in, commodo eget risus. Sed diam urna, dictum eu consequat et, tincidunt vitae metus. Pellentesque odio lacus, venenatis eu elementum a, pretium eget est. Vivamus vitae lorem nisi. Pellentesque nec tellus at enim ultricies euismod. Nullam convallis urna ut massa posuere eu placerat est consequat.</td>
+	</tr>
+</table>
+<br><br>
+<table width="99%">
+	<tr>
+		<td width="33%" valign="top"><div style="text-align:center;"><img src="/images/AQ_Image07a.jpg" width="283" heigth="172" style="text-align:center"></div>
+			In hac habitasse platea dictumst. Cras at est et turpis convallis vehicula. Phasellus mollis euismod odio quis aliquet. Pellentesque ac lorem id velit facilisis pretium id in velit. Vestibulum id velit id magna lobortis gravida in eget elit.
+		</td>
+		<td width="33%" valign="top"><div style="text-align:center;"><img src="/images/AQ_Image07b.jpg" width="283" heigth="172" style="text-align:center"></div>
+			Cras in purus leo, sit amet venenatis eros. Duis eu risus nunc. Fusce dui metus, sagittis ac feugiat sit amet, sollicitudin id erat. Ut vel congue arcu. Fusce tristique tristique leo, at suscipit metus porta vitae.
+		</td>
+		<td width="33%" valign="top"><div style="text-align:center;"><img src="/images/AQ_Image07c.jpg" width="283" heigth="172" style="text-align:center"></div>
+			Etiam blandit quam non est interdum quis consequat diam hendrerit. Etiam commodo dapibus ipsum, ut porta massa imperdiet non. Vestibulum gravida, lorem a semper dapibus, leo turpis blandit justo, in fringilla mi turpis eu metus. Morbi rhoncus velit vel nulla cursus suscipit.
+		</td>
+	</tr>
+</table>
+{% endcomment %}
+<div class="clearfix"></div>
+<div style="display:none; " id="dialog">I'm in a dialog</div>
+{% endblock %}

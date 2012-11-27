@@ -1,0 +1,90 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div><br>
+        <table class="primaryDisplayTable shrinkWidth" id="program_list" cellspacing="0">
+            <tr>
+                <th>Type</th>
+                <th>Referral Period</th>
+                <th>Commission</th>
+                <th></th>
+                <th>Action</th>
+            </tr>
+            {% for a in program.programtermaction_set.all %}
+                <tr class="rowSpacer"><td colspan="5"></td></tr>
+        	    <tr class="highlightRow">
+                    <td>
+                        {{ a.action.name }}
+                    </td>
+                    <td>{{ a.action_referral_period }} days</td>
+                    <td>{% if a.is_fixed_commission %}Fixed: ${{ a.commission }}{% else %}{{ a.commission }}%{% endif %}
+                        {% for s in a.skulistprogramterm_set.all %}
+                            <br/><strong>SKU List:</strong> {{ s.skulist.name }}: 
+                            {% if s.is_fixed_commission %}Fixed: ${{ s.commission }}{% else %}{{ s.commission }}%{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{% if a.is_custom_action_lifecycle %}Custom: {{ a.custom_action_lifecycle }} days{% else %}Standard{% endif %}</td>
+                    <td>
+        	            <a href="#" id="{% url advertiser_settings_programs_actions_addtier a.id %}" class="AjaxLightBoxFromLightbox" name="Add Commission Tier">Add Commission Tier</a>
+        	            <a href="#" id="{% url advertiser_programs_skulist_add a.id %}" class="AjaxLightBoxFromLightbox dXtraSm" name="Add SKU List to Program">Add SKU list</a>
+        	            <a href="{% url advertiser_settings_programs_actions_delete a.id %}" class="DoNotReload">Delete</a>
+                    </td>
+                </tr>
+                {% for ct in a.commissiontier_set.all %}
+                    <tr class="rowSpacer"><td colspan="5"></td></tr>
+            	    <tr class="highlightRow">
+                        <td>Tier: {{ ct.get_incentive_type_display }}</td>
+                        <td>Threshold: {{ ct.get_threshold_display }}</td>
+                        <td>New Commission: {{ ct.get_new_commission_display }}</td>
+                        <td>Bonus: ${{ ct.bonus }}</td>
+                        <td>
+            				<a href="{% url advertiser_settings_programs_actions_deletetier a.id ct.id %}" class="delTier">Delete</a>
+                		</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        {% if not program.programtermaction_set.count %}
+            <tr class="rowSpacer"><td colspan="5"></td></tr>
+            <tr class="highlightRow">
+                <td class="noResults" colspan="5">You have no actions for this Program.</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td colspan="7">
+                {% comment %}{{ program.programtermaction_set.count }} results {% endcomment %}
+                <span class="pages">
+                    <a href="{% url advertiser_settings_programs %}" class="saveProgramBtn"></a>
+                    {% if actionsAvailable %}
+                    <a href="" class="addActionBtn"></a>
+                    {% endif %}
+                </span>
+            </td> 
+        </tr>
+    </table>
+    <form id="frmAddAction" action="{% url advertiser_settings_programs_edit program.id %}" method="post" class="DoNotReload">
+    	<table class="DisplayTableAsForm addactionView" id="add_form" {% if hide_form %}style="display: none;"{% endif %}>
+    		<tr><td colspan="2"><p>Program Actions</p></td></tr>
+    		<tr class="graybar"><td colspan="2"><hr size="1"></td></tr>
+    		<tr><th>{{ form.action.label }}</th>
+    			<td>{{ form.action }}{{ form.action.errors }}</td></tr>
+    		<tr><th>{{ form.action_referral_period.label }}</th>
+    			<td>{{ form.action_referral_period }}{{ form.action_referral_period.errors }}</td></tr>
+    		<tr><td>&nbsp;</td></tr>
+    		<tr><td colspan="2"><p>Commission</p></td></tr>
+    		<tr class="graybar"><td colspan="2"><hr size="1"></td></tr>
+    		<tr><th>{{ form.is_fixed_commission.label }}</th>
+    			<td>{{ form.is_fixed_commission }}{{ form.is_fixed_commission.errors }}</td></tr>
+    		<tr><th>{{ form.commission.label }}</th>
+    			<td>{{ form.commission }}{{ form.commission.errors }}</td></tr>
+    		
+    		                
+    		<tr><td>&nbsp;</td></tr>
+    		<tr><th></th><td><a class="addActionBtn2 checkmark" style="float:none; margin-left:0px; padding-left:0px;" href=""></a></td></tr>
+    		<tr><th></th><td><a class="cancelBtn2" href="" /></a></td></tr>
+    	</table>
+    </form>
+
+    
+</div>        

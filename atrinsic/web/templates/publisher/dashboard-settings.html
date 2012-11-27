@@ -1,0 +1,17 @@
+{% extends 'base/widgetui.html' %}
+
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+{% block document_ready %}
+	$(".pumpHouse legend").after('<hr size=1 color=black>');
+{% endblock %}
+
+{% block content %}
+	<form action="{% url publisher_dashboard_settings  %}" method="post" class="widget_edit_style" >
+		{{ form }}
+         <label></label>
+		<div class="input"><input type="submit" value="SAVE SETTINGS" /></div>
+		<div class="clearfix"></div>
+	</form>
+{% endblock %}

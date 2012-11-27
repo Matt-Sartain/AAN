@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    initComposeReplyFormManipulation();
+    if("{{secondTier}}" == 1){
+        initAjaxFormPostFromLightbox();
+    }else{
+        initAjaxFormPost();
+    }
+    
+</script>
+{% comment %}
+    This is used to load the compose form within the 2nd level of lightboxes..ie, Lightbox loading a lightbox.
+{% endcomment %}
+{% if secondTier %}
+    <div id="AjaxContentFromDialog">
+{% else %}
+    <div id="AjaxContent">
+{% endif %}
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_messages_compose %}?secondtier=1" method="post" id="send_msg_form" enctype="multipart/form-data" class="MooseHead">
+		<input type="Hidden" id="MessageOrStatus" name="MessageOrStatus" value="Msg">	
+	    {% for id in publisher_id %}<input type="hidden" name="publisher_id" value="{{ id }}"/>{% endfor %}
+        {{ form }}
+        <input type="submit" class="submitPlusWBGBtn pushRight" style="clear: left" value="">
+        <div class="clearfix"></div>
+    </form>
+</div>
+    

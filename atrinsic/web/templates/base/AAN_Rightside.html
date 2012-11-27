@@ -1,0 +1,196 @@
+{% load compare %}
+{% load thumbnail_tag %}
+{% ifequal current_tab 'Dashboard' %}
+	{% ifequal org_live_type 'advertiser' %}
+	<div class="staticWidget">
+	    <div class="staticWidgetHdrCtn">
+			<div class="staticWidgetHdr">Alerts</div>
+			<a href="" class="collapseStaticWidget"></a>
+		</div>
+		<div class="staticWidgetContent">
+			<table class="staticWidgetTbl" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+				    <th>Alert Type</th>
+					<th>Time Period:</th>
+					<th>% Change:</th>
+				</tr>
+				{% if right_side_alerts %}
+    				{% for alert in right_side_alerts %}
+    				
+        				<tr>
+        					<td>{{ alert.get_alert_field_display }}</td>
+        					<td>{{ alert.get_time_period_display }}</td>
+        					<td>
+        					<div style="{% if alert.change|lt:0 %}color:#be0101;{% else %}color: #090;{% endif %}">{{ alert.change }}%</div>
+        										
+        					</td>
+        				</tr>
+        			{% endfor %}
+				{% else %}
+			    <tr><td colspan="3">No alerts</td></tr>
+			    {% endif %}
+			    <tr><td colspan="3" align="center"><a href="/advertiser/settings/alerts/" class="add">Go To Alerts</a></td></tr>
+			</table>
+		</div>		
+	</div>
+	<br />
+	
+	<div class="staticWidget">
+        <div class="staticWidgetHdrCtn">
+    		<div class="staticWidgetHdr">Inquiries</div>
+    		<a href="" class="collapseStaticWidget"></a>
+    	</div>
+    	<div class="staticWidgetContent">
+    		<table class="staticWidgetTbl" cellpadding="0" cellspacing="0">
+    			<tr><th>Date Inquired:</th>
+    				<th>Inquiry from:</th>
+    				<th>Amount:</th>
+    				<th class="newMsg">New Msg:</th>    			
+				</tr>
+				{% if right_side_inquiries %}
+        			{% for i in right_side_inquiries %}
+        			{% if i %}
+        			<tr>
+        				<td><a href="/advertiser/messages/inquiries/?inquiry_load_id={{i.id}}" style="color:blue; text-decoration:underline;">{{ i.date_created|date:"m/d/Y" }}</a></td>
+        				<td>{{ i.publisher.company_name }}</td>
+        				<td>
+        				{% if i.is_transaction_inquiry %}
+        					{{ i.transaction_amount }}
+        				{% else %}
+        					{{ i.amount_due }}
+        				{% endif %}
+        				</td>
+        				{% if i.advNew %}<td style="background: white url('/images/mail.png') no-repeat;background-position:center center;"></td>{% else%}<td>&nbsp;</td>{% endif %}
+        			</tr>
+        			{%endif%}
+        			{% endfor %}
+        		{% else %}
+        		    <tr><td colspan="3">No inquiries</td></tr>
+        		{% endif %}
+			    <tr><td colspan="4" align="center"><a href="/advertiser/messages/inquiries/" class="add">Go To Inquiries</a></td></tr>
+    		</table>
+		</div>
+	</div>
+    <br>
+	{% endifequal %}
+{% endifequal %}
+
+{% ifequal org_live_type 'publisher' %}
+<div class="staticWidget">
+    <div class="staticWidgetHdrCtn">
+		<div class="staticWidgetHdr">New Advertisers</div>
+		<a href="" class="collapseStaticWidget"></a>
+	</div>
+	<div >
+	    <table class="staticWidgetTbl" style="width:100%;text-align:center;">
+	       
+		{% for key,value in newAdvResults.items %}
+            {% ifequal value.0 '' %}
+                <tr><td><img src="{{value.2}}"></td>
+            {% else %}
+                <tr><td><img src="{{value.0|thumbnail}}"></td>
+            {% endifequal %}
+			
+			    
+		    {% ifequal value.1 0 %}
+		        <td><a href="" id="{% url publisher_advertisers_apply %}?advertiser_id={{key}}" class="applyToAdvertiser joinBtn" value="{{ x.id }}" name="Join"></a></td>
+		    {% endifequal %}    
+		    {% ifequal value.1 2 %}
+		        <td>Pending Approval</td>
+		    {% endifequal %} 
+		    {% ifequal value.1 1 %}
+		        <td><a href="/publisher/advertisers/offers/">Was invited</a></td>
+		    {% endifequal %} 
+		    {% ifequal value.1 3 %}
+		        <td><a href="" id="{% url publisher_links "all" %}?advertiser_id={{ key }}&link_type=all" class="AjaxLightBox getLinksB" name="Get Links"></a></td>
+		    {% endifequal %} 
+		    </tr>
+
+		{% endfor %}
+		</table>
+	</div>
+</div>
+{% endifequal %}	
+<div class="staticWidget">
+    <div class="staticWidgetHdrCtn">
+		<div class="staticWidgetHdr">Status Updates</div>
+		<a href="" class="collapseStaticWidget"></a>
+	</div>
+	<div class="staticWidgetContent">
+		<table class="staticWidgetTbl" cellpadding="0" cellspacing="0">
+			<tr><th>Profile:</th>
+				<th>Status:</th>
+				<th>Date:</th></tr>
+			{% for status in right_side_status %}
+			{% if status %}
+			<tr>
+				<td class="Profile">
+				    {% if status.organization.ticker_symbol %}
+                        <img src="http://network.atrinsic.com/images/{{status.organization.ticker_symbol}}">
+                    {%else%}
+                        {% if status.organization.ticker %}
+                            {{status.organization.ticker}}
+                        {%else%}
+                            {{status.organization.name}}
+                        {% endif %}
+                    {% endif %}
+				</td>
+				<td>{{ status.message }}
+				    <br />
+				    {% ifequal status.organization request.organization %} 
+				        <a href="" id="{% url delete_status status.id %}" class="deleteStatus" name="Status Update">delete</a>
+				    {% endifequal %}
+				</td>
+				<td class="date">{{ status.created|date:"m/d/Y g:i A"}}</td>
+			</tr>
+			{%endif%}
+			{% endfor %}
+			<tr class="bot"><td colspan="3" align="center"><a href="" id="{% url update_status%}" class="updateStatus" name="Status Update">Update Status</a></td></tr>
+		</table>
+	</div>
+</div>
+<br />
+
+{% ifequal current_tab 'Dashboard' %}
+<div class="staticWidget">
+    <div class="staticWidgetHdrCtn">
+		<div class="staticWidgetHdr">Event</div>
+		<a href="" class="collapseStaticWidget"></a>
+	</div>
+	<div class="staticWidgetContent">	    
+		{% for event in right_side_events %}
+		{% if event %}
+		<table class="staticWidgetTbl">
+			<tr><th>When:</th><td>{{ event.events_date|date:"m/d/Y" }}</td>
+				<th>What:</th><td>{{ event.events_name }}</td>
+			</tr>
+			<tr><th>Where:</th><td>{{ event.location }}</td>
+				<th>How:</th><td><a href="{{ event.registration }}" style="color:blue;">{{ event.registration }}</a></td>
+			</tr>
+			<tr><th>More:</th><td colspan="3">{{ event.data }}</td></tr>
+		</table>
+		{%endif%}
+		{% if not forloop.last %}<hr>{% endif %}{% endfor %}
+	</div>
+</div>
+<br />
+
+<div class="staticWidget">
+    <div class="staticWidgetHdrCtn">
+		<div class="staticWidgetHdr">News</div>
+		<a href="" class="collapseStaticWidget"></a>
+	</div>
+	<div class="staticWidgetContent">	
+		{% for new in right_side_news%}
+        	{% if new %}
+        	<p><strong>{{ new.created|date:"m/d/Y" }}</strong><br>{%autoescape off %}{{new.data}}{% endautoescape %}</p>{% if not forloop.last %}<hr>{% endif %}
+            {%endif%}
+		{% endfor %}
+	</div>
+</div>
+<br />
+<br />
+
+<div class="clearfix"></div>
+
+{% endifequal %}

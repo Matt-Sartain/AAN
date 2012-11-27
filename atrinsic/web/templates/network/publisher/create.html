@@ -1,0 +1,35 @@
+{% extends 'base/main.html' %}
+{% block document_ready %}
+
+$('.FormStateField').hide();
+$('.FormProvinceField').hide();
+$('.TypedChoiceField').each(function(){
+    if($(this).children().children().attr("id") == "id_state" || $(this).children().children().attr("id") == "id_province"){ 
+        $(this).hide();
+    }
+});
+
+$('select').change(function(){
+    if($(this).attr("id") == "id_country"){
+        State_Province_Toggle(this);    
+    }
+});
+$('select').each(function(){
+    if($(this).attr("id") == "id_country"){
+        State_Province_Toggle(this);    
+    }
+})
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+{{form_step2}}
+{{form_step3}}
+{{form_contact_info}}
+{{website_form}}
+{{form_payment}}
+<input type="submit" name="Submit" value="Submit">
+</form>
+
+{% endblock %}
+

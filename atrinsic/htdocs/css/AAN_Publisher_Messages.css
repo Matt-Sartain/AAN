@@ -1,0 +1,12 @@
+.sendCommentBtn {
+    background-image:url('/images/btn_blues_sendcomments.gif');
+    background-repeat:no-repeat;
+    border:none;
+    display:block;
+    float:left;
+    height:33px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:151px;
+}.sendCommentBtn:hover { background-image: url('/images/btn_blues_sendcomments_mo.gif'); }

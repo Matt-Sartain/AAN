@@ -1,0 +1,18 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_advertiser_tracking advertiser.id %}';
+    });
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_advertiser_tracking_add advertiser.id %}" method="post">
+{{ form }}
+<br/>
+Pixel: {{ pixel }}
+<br/>
+<input type="submit" value="Add Action"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

@@ -1,0 +1,158 @@
+/********** Moosehead represents the main form styling for the entire site. **********/
+/* Moosehead form output is in the following format:
+    | min-width 175px   | : | Input Box with left and right padding |
+    Label                 : Input
+    Label                 : Input
+    Label                 : Input
+    Etc.
+*/
+
+form.MooseHead { margin:2em 0; padding:0; }
+form.MooseHeadSm { margin: 2em auto !important;}
+form.MooseHeadSm label { min-width:125px !important; }
+
+table.MooseHead { font-size:14px; margin:1em 0em; width:90%; }
+table.MooseHead tr { height:30px; }
+table.MooseHead th { min-width:150px; text-align:right; }
+table.MooseHead th, td { vertical-align:top; }
+table.MooseHead td { padding:0 15px; vertical-align:top; }
+table.MooseHead textarea.Message { height:300px; width:415px; }
+
+form.MooseHead fieldset { border:0; margin:1em; padding:0; }
+form.MooseHead fieldset legend { font-size:14px; font-weight:bold; }
+form.MooseHead .field { clear:both; display:block; margin:2px 0; padding:8px 0 0 0; 
+}
+form.MooseHead label {
+    float:left;
+    font-size: 14px;
+    font-weight:normal;
+    margin-top:5px;
+    min-width:175px;
+    text-align:right;
+}
+
+form.MooseHead_Signup { margin:2em 0; padding:0; }
+form.MooseHeadSm_Signup { margin: 2em auto !important;}
+form.MooseHeadSm_Signup label { min-width:125px !important; }
+
+table.MooseHead_Signup { font-size:14px; margin:1em 0em; width:90%; }
+table.MooseHead_Signup tr { height:30px; }
+table.MooseHead_Signup th { min-width:150px; text-align:right; }
+table.MooseHead_Signup th, td { vertical-align:top; }
+table.MooseHead_Signup td { padding:0 15px; vertical-align:top; }
+table.MooseHead_Signup textarea.Message { height:300px; width:415px; }
+
+form.MooseHead_Signup fieldset { border:0; margin:1em; padding:0; }
+form.MooseHead_Signup fieldset legend { font-size:14px; font-weight:bold; }
+form.MooseHead_Signup .field { clear:both; display:block; margin:2px 0; padding:8px 0 0 0; 
+}
+form.MooseHead_Signup label {
+    float:left;
+    font-size: 14px;
+    font-weight:normal;
+    margin-top:5px;
+    min-width:300px;
+    text-align:right;
+}
+
+form.MooseHead_Signup div.input {	display:block; float:left; text-align:left; margin-left:10px; }
+form.MooseHead_Signup div.input input, 
+form.MooseHead_Signup div.input select, 
+form.MooseHead_Signup div.input textarea, 
+form.MooseHead_Signup div.input span.ui-dropdownchecklist-wrapper{
+	font-size: 14px;
+	margin: 5 15px;
+}
+
+form.MooseHead_Signup ul { list-style: none; height:20px; padding:0px; margin:0px; }
+form.MooseHead_Signup ul.errorlist { color:red; height:15px; margin:0 0 0 10px; }
+form.MooseHead_Signup ul img { vertical-align:middle; }
+form.MooseHead_Signup ul input { vertical-align:text-bottom; }
+form.MooseHead_Signup li { float:left; min-width:90px; max-width:140px;text-align:left;white-space:nowrap;}
+form.MooseHead_Signup li label{ text-align:left; }
+
+.widerLabels label {
+    min-width:300px !important;
+}
+.widerLeftSide label { min-width:250px !important; }
+
+form.MooseHead div.input {	display:block; float:left; text-align:left; }
+form.MooseHead div.input input, form.MooseHead div.input select, form.MooseHead div.input textarea, form.MooseHead div.input span.ui-dropdownchecklist-wrapper{
+	font-size: 14px;
+	margin: 0 15px;
+}
+
+form.MooseHead ul { list-style: none; height:20px; padding:0px; margin:0px; }
+form.MooseHead ul.errorlist { color:red; height:15px; margin:0 0 0 10px; }
+form.MooseHead ul img { vertical-align:middle; }
+form.MooseHead ul input { vertical-align:text-bottom; }
+form.MooseHead li { float:left; min-width:90px; max-width:140px;text-align:left;white-space:nowrap;}
+form.MooseHead li label{ text-align:left; }
+
+form.MooseHeadVertical label{
+    color:#2F528A;
+    display:block;
+    font-size:14px;
+    font-weight:bold;
+    padding:10px 0;
+}
+form.MooseHeadVertical input[type=submit] { outline:none;margin:5px 25px 10px 0px; }
+form.MooseHeadVerticalSmall { margin:0 auto; width:18%; }
+
+form.MooseHeadSmall { margin:0 !important;}
+form.MooseHeadSmall label{
+    font-size:12px;
+    min-width:150px !important;
+}
+
+/********** Advertiser / Publishers **********/
+.clearBtn {
+	background: url('/images/btn_blues_clear.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:left;
+	height:42px;
+	margin:0 0 0 15px;
+	width:89px;
+}
+.clearBtn:hover { background-image: url('/images/btn_blues_clear_mo.gif'); }
+
+.filterBtn {
+	background: url('/images/btn_blues_filter.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:left;
+	height:42px;
+	margin:0 0 0 150px;
+	width:90px;
+}
+.filterBtn:hover { background-image: url('/images/btn_blues_filter_mo.gif'); }
+
+
+.submitPlusWBGBtn {
+	background: url('/images/btn_blue_submit.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:left;
+	height:42px;
+	margin:15px 15px;
+	width:90px;
+}
+.submitPlusWBGBtn:hover { background-image: url('/images/btn_blue_submit_mo.gif'); }
+.back {
+        background-image:url('/images/1blues_back.gif');
+        background-repeat:no-repeat;
+        display:block;
+        float:left;
+        height:33px;
+        margin:0px;
+        padding:0px;
+        border:0px;
+        width:81px;
+        background-color:#ffffff;
+    }
+.back:hover { background-image: url('/images/1blues_back_mo.gif'); }
+
+
+
+

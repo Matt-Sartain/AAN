@@ -1,0 +1,56 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+
+{% block css %}
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_DataTable_SearchResults.css" rel="stylesheet" type="text/css" media="all">
+	<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all">
+    <style type="text/css">
+        ul.reporttypes li {color:red}
+        ul.reportsformats li {color:blue}
+    </style>
+{% endblock %}
+{% block pageContent %}
+    <div class="pageContentHdr">Run Report</div>
+    <div class="contentCtn">    
+
+        <div style="margin:10px 0px 0px 10px;font-size:12px;">
+        <h3>Welcome to the reporting API section:</h3>
+        
+        <p>Your unique key is: <strong>{{API_KEY}}</strong>
+        <p>Your organization id is: <strong>{{request.organization.pk}}</strong>
+        
+        <p>There are multiple reports and parameters that can be passed
+        <p>Here's the call with the parameters name:<br>
+            <blockquote>
+        {{SITE_URL}}/api/get_report/<span style="color:red">[[report_type]]</span>/<span style="color:blue;">[[return_format]]</span>/?organization=[[organization id]]&auth_key=[[unique key]]&date_range=02/01/2010,03/01/2010
+            </blockquote>
+        
+        <p>Example URL:<br>
+             <blockquote>
+        {{SITE_URL}}/api/get_report/<span style="color:red">sales-report</span>/<span style="color:blue;">json</span>/?organization={{request.organization.pk}}&auth_key={{API_KEY}}&date_range=02/01/2010,03/01/2010<br><br>
+            </blockquote>
+        
+        Report types:<br>
+        <ul class="reporttypes">
+            <li>sales-report</li>
+            <li>sales-by-publishers</li>
+            <li>revenue-report</li>
+            <li>revenue-report-by-publisher</li>
+            <li>link-report</li>
+            <li>link-report-by-promo</li>
+            <li>product-detail-report</li>
+            <li>order-details-report</li>
+            <li>accounting-report</li>
+        </ul>
+        
+        Report formats:<br>
+        <ul class="reportsformats">
+            <li>json</li>
+            <li>json-array</li>
+            <li>xml</li>
+        </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Advertiser</th>
+    <th>Data Feed Name</th>
+    <th>Transfer Method</th>
+    <th>Format</td>
+    <th>Action</th>
+</tr>
+{% for o in object_list %}
+<tr class="{% cycle "odd" "even" %}">
+    <td>{{ o.advertiser.name }}</td>
+    <td>{{ o.name }}</td>
+    <td>{{ o.get_datafeed_type_display }}</td>
+    <td>{{ o.get_datafeed_format_display }}</td>
+
+    <td>
+        <a href="{% url network_account_advertiser_requests_approve o.id %}" class="AddProgram2">Approve</a>
+        <a href="{% url network_account_advertiser_requests_deny o.id %}" class="AddProgram2">Deny</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="13" class="bottom">
+        {{ total_results }} results
+        <span class="pages">
+            {% paginate %}
+        </span>
+    </td>
+</table>
+{% endblock %}

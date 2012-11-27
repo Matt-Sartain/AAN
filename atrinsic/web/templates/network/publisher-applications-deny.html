@@ -1,0 +1,15 @@
+{% extends 'base/main.html' %}
+{% block content %}
+{%if error%}
+<font color="red"><strong>{{error}}</strong><font>
+{%else%}
+<font color="red"><strong>Application Denied</strong><font>
+{%for publisher in publisher_list%}
+    <br>{{publisher}}
+{%endfor%}
+{%endif%}
+<p>You will be redirected back to the publisher application page in a few secs, or you can <a href="/network">click here</a></p>
+<script>
+setTimeout("window.location = '/network/'",9000);
+</script>
+{%endblock%}

@@ -1,0 +1,33 @@
+.uploadMltplCtn
+{
+	/*border:1px solid #000000;*/
+	width:750px;
+	height:245px;
+	margin:50px 0px 0px 50px;
+	color:#2874BF;
+}
+.leftContentCtn
+{
+	margin:15px 0 0 0px;
+	font-size:14px;
+}
+.rightContentCtn
+{		
+	margin:15px 0 0 0;
+	font-size:14px;
+}
+#id_upload_action
+{
+	font-size:1.0em;
+	margin-top:1px;
+}	
+#id_upload_type
+{
+	font-size:1.0em;
+	margin-top:1px;
+}
+textarea, input 
+{
+	font-size:1.0em;
+	margin-top:2px;
+}

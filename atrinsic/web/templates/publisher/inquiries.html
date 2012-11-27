@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+{% block content %}
+{%if inquiry_list%}
+<table>
+<tr>
+    <th>Inquiry #</th>
+    <th>Date Created</th>
+    <th>Advertiser</th>
+    <th>Transaction Date</th>
+    <th>Order ID</th>
+    <th>Order Amount</th>
+</tr>
+
+{% for inquiry in inquiry_list %}
+<tr>
+    <td>{{ inquiry.id }}.</td>
+    <td>{{ inquiry.date_created }}</td>
+    <td>{{ inquiry.advertiser_id }}</td>
+    <td>{{ inquiry.transaction_date }}</td>
+    <td>{{ inquiry.order_id }}</td>
+    <td>{{ inquiry.transaction_amount }}</td>
+</tr>
+{% endfor %}
+</table>
+{%else%}
+<p style="padding:25px 40px;">No Inquiries at the moment<p>
+{%endif%}
+<br>
+<a href="/publisher/inquiry/add/order/" class="checkmark" style="float:left;">SEND ORDER INQUIRY</a>
+<a href="/publisher/inquiry/add/payement/" class="checkmark" style="float:left;">SEND PAYEMENT INQUIRY</a>
+{% endblock %}

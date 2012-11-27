@@ -1,0 +1,63 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Publisher</th>
+    <th>Request Name</th>
+    <th>Action</th>
+</tr>
+
+{% for o in object_list %}
+<tr class="{% cycle "odd" "even" %}">
+	<!-- Check if certain fields exist to display all types of Requests
+		 DataTransfer, PublisherDataFeed, PublisherInquiry, SID Request -->
+	<!-- PublisherInquiry -->
+    {% if o.transaction_date %}
+    <td>Publisher: {{ o.publisher.name }}, Advertiser: {{ o.advertiser.name }}</td>
+    <td>{{ o.get_status_display }}, order #{{ o.order_id }}</td>
+    <td>
+        <a href="#"><button class="AddProgram2">Approve</button></a>
+        <a href="#"><button class="AddProgram2">Deny</button></a>
+    </td>
+    {% endif %}
+	<!-- SID Request -->
+    {% if o.name %}
+    <td>{{ o.name }}</td>
+    <td>SID Status: {{ o.get_sid_status_display }}</td>
+    <td>
+        <a href="{% url network_account_publisher_sidrequests_approve o.id %}" class="AddProgram2">Approve SID Request</a>
+        <a href="{% url network_account_publisher_sidrequests_deny o.id %}" class="AddProgram2">Deny SID Request</a>
+    </td>
+    {% endif %}
+	<!-- DataTransfer -->
+    {% if o.format %}
+    <td>{{ o.publisher.name }}</td>
+    <td>{{ o.get_format_display }} {{ o.get_datafeed_type_display }} {{ o.get_status_display }}</td>
+    <td>
+        <a href="{% url network_account_publisher_datatransfer_approve o.id %}" class="AddProgram2">Approve Data Transfer</a>
+	    <a href="{% url network_account_publisher_datatransfer_deny o.id %}" class="AddProgram2">Deny Data Transfer</a>
+    </td>
+    {% endif %}
+    <!-- PublisherDataFeed -->
+    {% if o.datafeed_format %}
+    <td>{{ o.publisher.name }}</td>
+    <td>{{ o.get_format_display }} {{ o.get_datafeed_type_display }} {{ o.get_status_display }}</td>
+    <td>
+        <a href="{% url network_account_publisher_datatransfer_approve o.id %}" class="AddProgram2">Approve Data Transfer</a>
+	    <a href="{% url network_account_publisher_datatransfer_deny o.id %}" class="AddProgram2">Deny Data Transfer</a>
+    </td>
+    {% endif %}
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="3" class="bottom">
+        {{ total_results }} results
+        <span class="pages">
+            {% paginate %}
+        </span>
+    </td>
+</table>
+{% endblock %}

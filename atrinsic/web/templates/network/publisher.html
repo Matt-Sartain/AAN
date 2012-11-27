@@ -1,0 +1,40 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<a href="/network/publisher/create/">Add new publisher</a>
+<table>
+<thead>
+<tr>
+    <th>#</th>
+    <th>Publisher</th>
+    <th>Email</th>
+    <th>Contact</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for o in qs %}
+<tr>
+    <td>{{ o.id }}.</td>
+    <td><a href="/network/publisher/edit/{{o.id}}">{{ o.name }}</a></td>
+    <td>{{ o.email }}</td>
+    <td>{{ o.firstname }} {{ o.lastname }}</td>
+    <td><strong>{{ o.get_orgstatus_display }}</strong></td>
+    <td style="width:400px;">
+    {% ifequal buttons 'settings' %}
+        <a href="{% url network_publisher_account_contact o.id %}" class="AddProgram2">Assign Network Contact</a>
+        <a href="{% url auth_impersonate o.id "publisher/" %}" class="AddProgram2">Work as this Publisher</a><br/><br/>
+        <a href="{% url network_publisher_status o.id %}" class="AddProgram2">Update Status</a>
+        <a href="{% url network_relationships_publisher_rating o.id %}" class="AddProgram2">Edit Rating</a>
+        <a href="{% url network_relationships_publisher_force o.id %}" class="AddProgram2">Edit Force</a>
+        <a href="{% url network_publisher_settings_w9 o.id %}" class="AddProgram2">W9&nbsp;Status</a>
+    {% endifequal %}
+    {% ifequal buttons 'incentive' %}
+        <a href="{% url network_publisher_tracking o.id %}" class="AddProgram2">Update Publisher Incentive Site Settings</a>
+    {% endifequal %}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

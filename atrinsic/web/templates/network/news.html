@@ -1,0 +1,29 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Created</th>
+    <th>Status</th>
+    <th>Viewed By</th>
+    <th>News</th>
+    <th>Action</th>
+</tr>
+{% for o in object_list %}
+<tr>
+    <td>{{ o.created }}</td>
+    <td>{{ o.get_news_status_display }}</td>
+    <td>{{ o.get_viewed_by_display }}</td>
+    <td>{{ o.data|safe }}</td>
+    <td>
+        <a href="{% url network_dashboard_news_edit o.id %}" class="AddProgram2">Edit</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="4" class="bottom">
+        <a href="{% url network_dashboard_news_add %}" class="AddProgram2">Add News</a>
+        {{ total_results }} results
+    </td>
+</table>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{%endblock%}
+
+{% block document_ready %}
+    initAjaxLightBox();
+{% endblock %}
+
+{% block pageContent %}
+<form action="{% url advertiser_messages_delete %}" method="post">
+<div class="pageContentHdr">Inquiries</div>
+    <a href="{% url advertiser_messages_inquiries %}" class="unresolvedBtn"><div>({{ unresolved.count }})</div></a>
+    <a href="{% url advertiser_messages_inquiries "resolved" %}" class="resolvedBtn"><div>({{ resolved.count }})</div></a>
+    <a href="{% url advertiser_messages_inquiries "closed" %}" class="archivedBtn"><div>({{ closed.count }})</div></a>
+    <div class="clearfix"></div>
+    <div class="contentCtn whiteBG">  
+        <div class="ajaxLoading"></div>
+		<input type="hidden" value="{{inquiry_load_id}}" id="inquiry_load_id">
+        <table class="primaryDisplayTable primaryDisplayTableHdrsLeft" cellspacing="0">
+            <tr>
+                <!-- <th align="left"><input type="checkbox" id="select_all" ></th> -->
+                <th>&nbsp;</th>
+                <th>Transaction Date</th>
+                <th>Publisher</th>
+                <th>Order ID</th>
+                <th>Transaction Amount</th>
+                <th>Inquiry Type</th>
+                {%if is_closed%}
+                <th>Denied Reason</th>
+                <th>Denied Comments</th>
+                {%endif%}
+            </tr>
+            {% for m in object_list %} 
+            <tr class="rowSpacer"><td colspan="7"></td></tr>
+    	    <tr class="highlightRow">
+        		{% if m.advNew %}
+        		    <td class="newmsg"></td>{% else%}<td></td>
+        		{% endif %}
+                <td><a href="#" id ="{% url advertiser_messages_inquiry_view m.id %}" class="AjaxLightBox"  name="Inquiry">
+                    {{ m.transaction_date|date:"m/d/Y" }}</a>
+                </td>
+                <td>{{ m.publisher.name }}</td>
+                <td>{{ m.order_id }}</td>
+                {%ifequal m.is_transaction_inquiry 1 %}
+                    <td>${{m.transaction_amount }}</td>
+                {%else%}
+                    <td>${{ m.amount_due }}</td>
+                {%endifequal%}
+                <td>
+                    {% if m.is_transaction_inquiry %}order{% else %}payment{% endif %}
+                </td>
+                {%if is_closed%}
+                <td>{{m.advertiser_reason}}</td>
+                <td>{{m.advertiser_reason_comment}}</td>
+                {%endif%}
+            </tr>
+            {% endfor %}
+            {% if not object_list %}
+            <tr class="rowSpacer"><td colspan="7"></td></tr>
+    	    <tr class="highlightRow">
+                <td class="noResults" colspan="7">There are no inquiries in {{ folder|title }}.</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+</form>
+<div id="ajaxLightbox"></div>
+{% endblock %}

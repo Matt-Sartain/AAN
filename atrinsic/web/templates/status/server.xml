@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<KeepAlive>
+<Steps>
+{% for a in applications %}
+	<Step name="{{ a.name }}">
+		<Created>{{ a.last_run }}</Created>
+		<Status>{{ a.last_report.get_status_display }}</Status>
+		<Description>{{ a.last_report.result }}</Description>
+	</Step> 
+{% endfor %}
+</Steps>
+</KeepAlive>

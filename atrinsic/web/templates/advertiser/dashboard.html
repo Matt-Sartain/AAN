@@ -1,0 +1,90 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/AAN_widgets.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/dataTables.currencySort.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/dataTables.currencyTypeDetect.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaSort.js"></script>    
+    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaTypeDetect.js"></script> 
+{% endblock %}
+
+{% block document_ready %}
+
+
+    // Update the StartDate and EndDate ID fields of the widgets to make them unique
+    // Apply the DatePicker to these input fields.
+    {%for widget in widgets%}
+        inputStartDate = $(".widgetFrm{{widget.widget_id}}").find('#id_start_date')
+        inputStartDate.attr('id', 'id_start_date_{{widget.widget_id}}')
+        inputEndDate = $(".widgetFrm{{widget.widget_id}}").find('#id_end_date')
+        inputEndDate.attr('id', 'id_end_date_{{widget.widget_id}}')
+        $("#id_start_date_{{widget.widget_id}}, #id_end_date_{{widget.widget_id}}").datepicker({showOn: "both", clickInput:true, dateFormat: "mm/dd/yy", buttonImage: "/images/blankdatepicker.png",buttonImageOnly: true});  
+    {% endfor %}
+    
+
+    $('.widget_table').dataTable({'bFilter':false,
+ 	                       'bJQueryUI': true,
+                           'bLengthChange':false,
+                           'iDisplayLength':25,        
+                           'bAutoWidth': false});                           
+                           
+$( ".mainWidgetCtn" ).sortable({ 
+    update: function(event, ui) { saveLayout() }
+    });
+
+function saveLayout (){
+    var wlist = {};
+    $( ".dynamicWidgetCtn" ).each(function(index) {
+        wlist[index] = $(this).children('.currentWidgetID').attr('value');
+    });
+  
+    $.ajax({
+		type: "POST",
+		url: "/api/new_ajax_sort_order/",
+		data:wlist,
+		dataType: "json",
+		async: 'false'
+	});  
+
+};
+//WIDGET PREVIEW
+$('.preview').click(function(event){
+    event.preventDefault();
+		var v_widget_id = $(this).siblings(".widget_selector_id").val();
+		//$(".toolbar_widget:last").children(".widget_id").val(v_widget_id);
+		//$(".toolbar_widget:last").children(".widget_page").val( $(".widget_page").val());
+		//$(".toolbar_widget:last").children(".widget_header").val($(this).text());
+		$.ajax({
+			type: "POST",
+			url: "/api/ajax_new_chart/"+v_widget_id+"/lines/?preview=1",
+			dataType: "json",
+			async: true,
+			success: function(data){
+				//$('.toolbar_widget:last').children().children(".widget_header").text(data.header);
+				//$('.toolbar_widget:last').children(".widget_content").html(data.html);
+				$("#preview").html(data.html);
+				data_html = data.html;
+			}
+		});
+	});
+{% endblock %}
+{% block add_widget %}
+    <a href="" class="AddWidget" id="addWidget"></a>
+    
+{% endblock %}
+
+{% block dynamicWidgets %}
+
+<ul id="mainWidgetCtn" class="mainWidgetCtn">
+	{%for widget in widgets%}
+		{%include 'base/AAN_Widget_Template.html'%}									
+	{%endfor%}	
+</ul>
+{% endblock %}

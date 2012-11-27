@@ -1,0 +1,10 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <form action="{% url publisher_dashboard_comparisons %}" method="post">
+        {{ form }}
+        <input type="submit" value="Go"/> 
+    </form>
+
+    DATA: {{ data }}
+{% endblock %}

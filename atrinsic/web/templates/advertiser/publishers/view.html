@@ -1,0 +1,55 @@
+<div class="contentCtn profileView">
+    <table class="DisplayTableAsForm OrganizationView" cellspacing="0">
+        <tr><th>Publisher ID:</th><td>{{pub.get_publisher_id}}</td></tr>
+        <tr><th>Contact Name:</th><td>{{pub.name}}</td></tr>
+        <tr><th>Email:</th><td>{{pub.organizationcontacts_set.all.0.email}}</td></tr>
+    </table>
+</div>
+
+<div class="contentCtn profileView">
+    <div class="primaryDisplayTableHdr">Publisher Address</div>
+    <table class="DisplayTableAsForm OrganizationView" cellspacing="0">
+		<tr><th>Phone Number:</th><td>{{pub.organizationcontacts_set.all.0.phone}}</td></tr>        
+		<tr><th>Status:</th><td>{{app}}</td></tr>        
+		<tr><th>Premiere:</th><td>No</td></tr>        
+		<tr><th>Rating:</th><td>{% if pub.current_rating %}{{pub.current_rating}}{% else %}New{%endif%}</td></tr>        
+		<tr><th>Force:</th><td>{{pub.force}}</td></tr>        
+		<tr><th>Country:</th><td>{{pub.country}}</td></tr>        
+    </table>
+</div>
+<div class="contentCtn profileView">
+    <div class="primaryDisplayTableHdr">Web Site URLs</div>
+    <table class="DisplayTableAsForm OrganizationView" cellspacing="0">
+        {% for website in pub.website_set.all %}
+    		<tr><th>Site:</th><td><a href="{{website.url}}" target="new">{{ website }}</a></td></tr>   
+        {% endfor %}  
+    </table>
+</div>
+<div class="contentCtn profileView">
+    <div class="primaryDisplayTableHdr">Network Information</div>
+    <table class="DisplayTableAsForm OrganizationView" cellspacing="0">
+		<tr><th>Joined Network:</th><td>{{pub.date_joined|date:"d-M-Y"}}</td></tr>   
+		<tr><th>Promotional Methods:</th><td>{{pub.promotion_type}}</td></tr>   
+		<tr><th>Incentive Program:</th><td>No</td></tr>   
+		<tr><th>Group Assigned:</th><td>None</td></tr>   
+    </table>
+</div>
+<div class="contentCtn profileView">
+    <div class="primaryDisplayTableHdr">Site Performance</div>
+    <table class="DisplayTableAsForm OrganizationView" cellspacing="0">
+		<tr><th>
+				<select name="date_range" id="date_range">
+				    {%for type in report_types%}
+					<option value="{{type.0}}" {% ifequal type.0 date_range %}selected{% endifequal %}>{{type.1}}</option>
+					{%endfor%}
+				</select></th><td valign="top"><a href="{% url advertiser_publishers_view pub.id %}" id="updatePerformance" class="updateBtn"></a></td></tr>
+		<tr><th>Commissions Paid:</th><td>{{commission}}</td></tr>
+		<tr><th># Sales:</th><td>{{sales}}</td></tr>
+		<tr><th># Leads:</th><td>{{leads}}</td></tr>
+		<tr><th># Clicks:</th><td>{{clicks}}</td></tr>
+		<tr><th># Impressions:</th><td>{{impressions}}</td></tr>
+		<tr><th>CTR %:</th><td>{{ctr|floatformat:2}}</td></tr> 
+    </table>
+</div>
+<br>
+<div class="clearfix"></div>

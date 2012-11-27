@@ -1,0 +1,3 @@
+alter table base_skulistconversion add column `quantity` integer NOT NULL; 
+alter table base_skulistconversion add column `amount` numeric(10, 2) NOT NULL;
+

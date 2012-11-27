@@ -1,0 +1,80 @@
+
+<script language="javascript" type="text/javascript" src="/js/jquery.field.js"></script>
+<script type="text/javascript">
+    initAjaxFormPost();
+    hideAssignedTo();
+    initAssignedTo();
+	$("#id_banner_url").after('{{ form.ad_image_id }}<input type="button" id="ad_image_link" value="Select Image"><div id="notify"></div>');
+
+    function ajaxLoadingFromLightbox(){        
+		$("#AjaxContent .ajaxLoading").height($(".ajaxLoading").parents("#ajaxLightbox").height());
+		$("#AjaxContent .ajaxLoading").width($(".ajaxLoading").parents("#ajaxLightbox").width());
+		$("#AjaxContent .ajaxLoading").show();
+    }
+    function hideAjaxLoadingFromLightbox(){
+        $("#AjaxContent .ajaxLoading").hide();
+    }    
+	$("#ad_image_link").click(function(event) {
+    		// Default Dimensions
+    		dWidth = 850;
+    		dHeight = 545;
+    		
+    		var ajaxUrl = "{% url advertiser_links_banner_list %}"		
+    		var dialogHdr = "Banner List"		
+            ajaxLoadingFromLightbox();
+
+        	$.ajax({    		
+    			type: "GET",
+    			url: ajaxUrl,
+    			dataType: "html",
+    			async: true,
+    			success: function(data){	
+    				var dialog = $("#AjaxLightBoxFromLightbox").clone();
+    				dialog.html(data);		
+    				dialog.dialog({bgiframe:true, 
+    				               height:dHeight, 
+    				               width:dWidth, 
+    				               modal:true, 
+    				               draggable:false, 
+    				               resizable:false,
+    				               open: function(event, ui) { 
+    				                   $("#ui-dialog-title-AjaxLightBoxFromLightbox").text(dialogHdr); 
+    				                   $("#ui-dialog-title-AjaxLightBoxFromLightbox").addClass("modifyDialogTitle");
+    			                   } 
+    			               });
+                        	
+                    $(".selectBanner").click(function(event) {                        
+                        selectedBanner = $("input[name='bid']").getValue();	
+                		$("input[name='ad_image_id']").setValue(selectedBanner);
+	                    $("#notify").html("Selected image ID: " + selectedBanner);
+                        dialog.html("");
+                        dialog.dialog("destroy");
+                        
+                    });	               
+                    dialog.bind("dialogclose", function(event, ui) {                        
+                        dialog.html("");
+                        dialog.dialog("destroy");
+                    });                    
+                    hideAjaxLoadingFromLightbox();
+    				               
+    			},
+                error:function (xhr, ajaxOptions, thrownError){
+                    hideAjaxLoadingFromLightbox();
+                    alert("Status Code: " + xhr.status + ". Further error details should go here.");                                
+    
+    
+                }    
+    		}); 	
+    
+	    
+	});
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_links_add_bannerlink %}" method="post" name="form" id="add_banner_link_form" enctype="multipart/form-data" class="MooseHead noMargin">
+        {{ form }}
+        <input type="submit" class="submitPlusWBGBtn pushRight" value="">
+        <div class="clearfix"></div>
+    </form>
+</div>
+<div id="AjaxLightBoxFromLightbox"></div>

@@ -1,0 +1,13 @@
+.settingsHdr{ margin:0px 0px 0px 50px; }
+.settingsCtn{ border:1px solid #000000;	width:630px;height:auto;margin:0px 0px 0px 50px; }
+.settings{ margin:20px 0px 0px 70px;width:530px;height:auto;font-size:12px; }
+.leftColumn{ width:255px;height:19px;padding: 3px 0px 0px 0px;text-align:right;float:left;color:#0c467e;font-size:14px; }
+.rightColumn{ width:250px;height:19px;padding: 3px 0px 0px 5px;background-color:#E0EAF4;float:left; }
+.NoBG{	background-color:#FFFFFF; }
+.editBtn{ width:95%;height:38px;text-align:right; }
+#add_vertical{	display:none; }
+.Colh45w100{ width: 250px;height:auto; }
+.secItemsCtn{ height:22px; }
+.secItemName{ width:175px;float:left; }
+.secItemRem{ float:left; }
+.colSpacer{ width:10px;height:20px;float:left; }

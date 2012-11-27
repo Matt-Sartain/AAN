@@ -1,0 +1,20 @@
+.headerWrapper > .bl, .headerWrapper > .br
+{
+  width: 5px;
+  height: 5px;
+  position: absolute;
+}
+
+.headerWrapper > .bl
+{
+  background: URL(/images/blheader.png) bottom left no-repeat;
+  bottom: 0;
+  left: 0;
+}
+
+.headerWrapper > .br
+{
+  background: URL(/images/brheader.png) bottom right no-repeat;
+  bottom: 0;
+  right: 0;
+}	

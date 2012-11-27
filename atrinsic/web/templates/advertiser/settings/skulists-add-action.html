@@ -1,0 +1,18 @@
+<script type="text/javascript">
+    initAjaxFormPostFromLightbox();
+</script>
+<div id="AjaxContentFromDialog">
+    <div class="ajaxLoading"></div>
+    <form id='form' action="{% url advertiser_programs_skulist_add programterm_id %}" method="post" class="MooseHead">
+        {{ form }}
+        <input type="hidden" id="pt" value="{{programterm_id}}">
+        <input type="submit" class="saveBtn" value=""/>
+    </form>
+</div>
+
+
+    
+    
+    
+
+

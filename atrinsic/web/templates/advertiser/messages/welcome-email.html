@@ -1,0 +1,35 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css%}
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block pageContent %}
+
+
+<div class="pageContentHdr">Welcome Email</div>
+<div class="contentCtn whiteBG">   
+    <div class="welcomeECtn">
+    	<div class="welcomeCtn" style="clear:left;">
+    		<div class="welcomeHdrs">Welcome Email Text</div>
+    		<iframe width="385" height="430" src="{% url advertiser_messages_welcome_email_view %}" frameborder="0">
+    	        If you can see this, your browser doesn't understand IFRAME.  However, we'll still 
+    	        <A HREF="{% url advertiser_messages_welcome_email_view %}">link</A> you to the file.
+    	    </iframe>
+    	</div>					
+
+    	<div class="welcomeCtn" >
+    		<div class="welcomeHdrs">Welcome Email HTML</div>
+    	    <iframe width="385" height="430" src="{% url advertiser_messages_welcome_email_view_html %}" frameborder="0">
+    	        If you can see this, your browser doesn't understand IFRAME.  However, we'll still 
+    	        <A HREF="{% url advertiser_messages_welcome_email_view_html %}">link</A> you to the file.
+    	    </iframe>
+    	</div>					
+    </div>
+    <div class="clearfix"></div>
+    <div class="edit" style="cursor:pointer;height:45px;margin:5px 0 0 45px;text-align:left;clear:left;">
+    	<a href="{% url advertiser_messages_welcome_email_edit %}" class="editBtn"></a>	
+    </div>
+</div>
+
+{% endblock %}

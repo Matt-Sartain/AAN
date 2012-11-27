@@ -1,0 +1,265 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+<link href="/css/redmond/jquery-ui-1.7.1.custom.css " rel="stylesheet" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/css/ui.dropdownchecklist.css" />
+<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <style type="text/css">
+
+        
+        .inputCtn div{float:left;font-size:14px;font-weight:normal;min-width:175px;text-align:right;margin-top:5px;margin-right:10px;clear:left;}
+        .inputCtn span:first-child, .inputCtn input, .inputCtn select{display:block;float:left;margin-bottom:5px;margin-right:0px;}
+        .inputCtn input[type=checkbox] { margin:8px 0 0 15px}
+        .req div{font-weight:bold;color:#2A74BD;}
+        
+        .ui-dropdownchecklist-dropcontainer {width:250px;}
+        
+        h1,h3 {color:#2A74BD;}
+        .validation{color:red;}
+        
+        .blbtn{
+            border:1px solid;
+            border-color:#55861A;
+        }
+        
+        a.getKeywordsBtn {
+            background-image:url('/images/btn_blues_getkeywords.gif');
+            background-repeat:no-repeat;
+            display:block;
+            float:left;
+            height:33px;
+            margin:0 0 0 15px;
+            padding:0 4px;
+            width:117px;
+        }a.getKeywordsBtn:hover { background-image: url('/images/btn_blues_getkeywords_mo.gif'); text-decoration:none; }
+        a.runReportBtn {
+            background-image:url('/images/btn_blues_runrewards.gif');
+            background-repeat:no-repeat;
+            display:block;
+            float:left;
+            height:33px;
+            padding:0 4px;
+            width:117px;
+            margin-left:25px;
+        }a.runReportBtn:hover { background-image: url('/images/btn_blues_runrewards_mo.gif'); text-decoration:none; }
+
+        hr {color: #2A74BD;
+        background-color: #2A74BD;
+        height: 1px;
+        width:95%;}
+        
+        
+        
+        .dataTables_length {
+        	width: 40%;
+        	float: left;
+        }
+        
+        .dataTables_filter {
+        	width: 50%;
+        	float: right;
+        	text-align: right;
+        	margin-right:5px;
+        }
+        
+        .blreport{
+            margin-left:5px;
+            width:900px;    
+        }   
+             
+    </style>
+{% endblock %}
+
+{% block javascript %} 
+
+<script type="text/javascript" src="/js/ui.dropdownchecklist.js"></script>
+<script type="text/javascript" src="/js/brandlock.js"></script>
+<script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    
+    $("#id_start_date, #id_end_date").datepicker({showOn: 'both', buttonImage: '/images/blankdatepicker.png', buttonImageOnly: true, dateFormat: 'mm/dd/yy'});
+    
+    $("#getkwbtn").click(function(e) {e.preventDefault();getKeywords()});
+    
+    $('#id_campaigns').change(function () {getCompetitors();});
+    
+    $('#id_reportType').change(function () {reportChange($(this).val());});
+    
+    //Change multi selects to CheckBox selects using js api
+    $("#id_competitors").dropdownchecklist({firstItemChecksAll: true, maxDropHeight: 100});
+    $("#id_keyword_groups").dropdownchecklist({firstItemChecksAll: true, maxDropHeight: 100});
+    $("#id_keywords").dropdownchecklist({maxDropHeight: 100});
+    $("#id_search_provider").dropdownchecklist({maxDropHeight: 75});
+    $("#id_listing_attributes").dropdownchecklist({maxDropHeight: 100});
+    $("#id_listing_attributes_ratings").dropdownchecklist({maxDropHeight: 100});
+    $("#id_listing_attributes_reviews").dropdownchecklist({maxDropHeight: 100});
+    $("#id_listing_section").dropdownchecklist({maxDropHeight: 100});
+    
+    
+    $(".ui-dropdownchecklist-item").click(function(){
+    
+    	childid = $(this).find('input:first').attr('id');
+    	if(childid.search("id_keyword_groups") >= 0){
+    		kwChange();
+    	}
+    
+    }
+    );
+    
+    $(":checkbox").change(function () {
+    	elementid = this.id
+    	
+    	if(elementid.search("id_keyword_group") >= 0){
+    		kwChange();
+    	}
+    	
+    ;});
+    
+    $('#subbtn').click(function(e){
+        e.preventDefault();
+    	if($('#id_xls').attr('checked')){
+    		$('#report_form').submit();
+    	}else{
+    		runreport();
+    			
+    	}
+    	
+    })
+    	
+    
+    function runreport() {
+        $("#validation").hide();
+    	if(validation()){
+    		$("#reportLoader").show();
+    	    $.ajax({ 
+    	             type: "POST", 
+    	             url: "report/",  
+    	             data: $("#report_form").serialize(),  
+    	             success: function(data){
+    	                 $("#report").html(data);
+    	                 $('#reportTbl').dataTable({'bFilter':false,'bJQueryUI': true,'bLengthChange':false,'iDisplayLength':25,'bAutoWidth':false});
+    	            	$("#reportTbl_wrapper").attr({style : "width:910px;overflow:auto;overflow-y: hidden;padding-bottom:10px;"});
+                		
+    	            	$("#reportLoader").hide();
+    	             }  
+    	    });
+    	    
+	  }else{
+	  	// display validation errors
+	  	$("#validation").show();
+     }
+     
+     return false;
+}
+{% endblock %}
+
+{% block pageContent %}
+
+<div class="pageContentHdr">Brandlock Reports</div>
+<div class="contentCtn">    
+    <form id="report_form" action="{% url advertiser_brandlock_report %}" method="POST"  class="MooseHead">
+    <div class='inputCtn'>
+    	<div>{{ form.campaigns.label }}</div>
+    	<span>{{ form.campaigns }}</span>
+    </div>	
+    <div class="clearfix"></div>
+    <div class='inputCtn'>
+    	<div>{{ form.reportType.label }}</div>
+    	<span>{{ form.reportType }}</span>
+    </div>
+    <div class="clearfix"></div>
+    <div class='inputCtn'>
+    	<div>{{ form.xls.label }}</div>
+    	<span>{{ form.xls }}</span>
+    </div>		
+    <div class="clearfix"></div>
+    <br /><hr /><br />
+
+    <div id="start_date" class="input_val inputCtn req">
+    	<div>{{form.start_date.label}}</div>
+    	<span>{{form.start_date}}</span>
+    </div>
+    <div class="clearfix"></div>
+    <div id="end_date" class="input_val inputCtn req">	
+    	<div>{{form.end_date.label}}</div>
+    	<span>{{form.end_date}}</span>
+    </div>
+    <div class="clearfix"></div>
+    
+    <div id="competitors" class='inputCtn'>
+    	<div>{{form.competitors.label}}</div>
+    	<span>{{form.competitors}}</span>
+    </div> 
+    <div class="clearfix"></div>
+    <div id="keyword_groups" class='inputCtn'> 
+    	<div>{{form.keyword_groups.label}}</div>
+    	<span>{{form.keyword_groups}}</span>
+    </div>
+    <div class="clearfix"></div>
+    <div id="keywords" class='inputCtn'>
+    	<div>{{form.keywords.label}}</div>
+    	<span id="keywordlist" style="display:none;width:250px">{{form.keywords}}</span>
+    	<span id="ajaxLoader" style="display:none;" ><img src="/images/ajax-loader.gif" /></span>
+     	<span id="getKeywords">
+     	    <a href="" id="getkwbtn" class="getKeywordsBtn"></a>
+ 	    </span> 
+    	
+    </div> 
+    <div class="clearfix"></div>
+    <div id="ad_offer_type" class='inputCtn' style="display:none;">
+    	<div>{{form.ad_offer_type.label}}</div> 
+    	<span>{{form.ad_offer_type}}</span>
+    </div> 
+    <div class="clearfix"></div>
+    <div id="searchproviders" class='inputCtn'>
+    	<div>{{form.search_provider.label}}</div> 
+    	<span>{{form.search_provider}}</span>
+    </div> 
+    <div class="clearfix"></div>
+    <div id="time_period" class='inputCtn' style="display:none;">
+    	<div>{{ form.time_period.label}}</div>
+    	<span>{{ form.time_period }}</span>
+    </div>	
+    <div class="clearfix"></div>
+    <div id='listing' style="display:none;">
+    	<div class='inputCtn'>
+    		<div>{{ form.listing_attributes.label}}</div>
+    		<span>{{ form.listing_attributes }}</span>
+    	</div>
+    	<div class='inputCtn'>
+    		<div>{{ form.listing_attributes_ratings.label}}</div>
+    		<span>{{ form.listing_attributes_ratings }}</span>
+    	</div>
+    	<div class='inputCtn'>
+    		<div>{{ form.listing_attributes_reviews.label}}</div>
+    		<span>{{ form.listing_attributes_reviews }}</span>
+    	</div>
+    	<div class='inputCtn'>
+    		<div>{{ form.listing_section.label}}</div>
+    		<span>{{ form.listing_section }}</span> 
+    	</div>
+    </div>	
+    <div class="clearfix"></div>
+    <div id="exclude_tracking_urls" class='inputCtn' style="display:none;">
+    	<div>{{ form.exclude_tracking_urls.label}}</div>
+    	<span>{{ form.exclude_tracking_urls }}</span>
+    </div>
+    <div class="clearfix"></div>
+    <input type="hidden" id="lastKeywords" name="lastKeywords" value="" />
+    <br /><br />
+    <a href="" id="subbtn" class="runReportBtn"></a>
+    <br /><br />
+    
+    </form>
+    
+    <div id="validation" style="display:none;" class="validation"></div>
+    <div id="reportLoader" style="display:none;" ><img src="/images/ajax-loader.gif" /></div>
+    <div id="report" class="whiteBG" style='width:920px;overflow:auto;border:1px;'>
+    	{% ifnotequal report None %}
+    		{{ report|safe }}
+    	{% endifnotequal %}
+    </div>
+</div>
+{% endblock %}

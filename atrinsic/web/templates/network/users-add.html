@@ -1,0 +1,15 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_account %}';
+    });
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_account_users_add %}" method="post">
+{{ form }}
+<input type="submit" value="Add User"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

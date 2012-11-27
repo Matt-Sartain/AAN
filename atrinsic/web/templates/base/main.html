@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<title>Atrinsic Affiliate Network</title>
+		<link href="/css/atrinsic.css" rel="stylesheet" type="text/css" media="all"/>
+		<link href="/css/headerNetSgnup.css" rel="stylesheet" type="text/css" media="all"/>
+		<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+		<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all"/>
+		<link rel="shortcut icon" href="/images/aan.ico">
+		<link rel="icon" type="image/ico" href="/images/aan.ico"> 
+		<!--[if lt IE 7]><style type="text/css" media="screen">@import "/css/ie.css";</style><![endif]-->
+
+        {% block css %}{% endblock %}
+		
+		<script type="text/javascript" src="/js/tabs.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/jquery-ui-1.7.1.custom.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/date.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/atrinsic.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+	    <script language="javascript" type="text/javascript" src="/js/dataTables.currencySort.js"></script> 
+	    <script language="javascript" type="text/javascript" src="/js/dataTables.currencyTypeDetect.js"></script> 
+	    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaSort.js"></script>    
+	    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaTypeDetect.js"></script> 
+        {% block javascript %}{% endblock %}
+        <script type="text/javascript">
+            $( function () {
+            $("#organization_switch").change(function() {
+              window.location = "{% url auth_choice %}/"+$(this).val()+"/";
+            });
+            $("table[class!='widget_table']").dataTable({'bFilter':true,
+                          'bLengthChange':true,
+             				'iDisplayLength':25});
+            {% block document_ready %}{% endblock %}
+            });
+        </script>
+	</head>
+
+	<body>
+		<div id="main">
+			<h1 class="logo"><a href="/">Atrinsic Affiliate Network-2</a></h1>
+			<div id="content" style="overflow:visible;">
+				<div class="info">
+					<div class="holder">
+						<div class="heading">
+							<div class="heading-info">
+								<div id="subnav">
+									<ul class="tabset">
+                                        {% for tab in subnavs %}
+                                        <li><a {% ifequal current_subnav tab.name %}class="active" {% endifequal %}href="{{tab.url}}"><span>{{tab.name}}</span></a></li>
+                                        {% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
+                        <div>{% block content %}{% endblock %}</div>
+					</div>
+				</div>
+			</div>
+            
+			{% include 'base/networkheader.html' %}
+		</div>
+        
+        {% block footer %}
+        {% include 'base/footer.html' %}
+        {% endblock %}
+	</body>
+</html>

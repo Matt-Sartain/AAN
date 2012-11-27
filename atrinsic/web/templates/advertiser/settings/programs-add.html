@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_settings_programs_add %}" method="POST" class="MooseHead DoNotReload">
+    	{{ form }}	
+    	<div class="clearfix"></div>
+    	{{ formPTA }}	
+    	<label>&nbsp;</label><br>
+    	<div class="clearfix"></div>
+    	<input type="submit" class="saveBtn" value=""/>
+    </form>
+</div>
+
+

@@ -1,0 +1,2 @@
+alter table base_organization add column `piggybackpixel_url` longtext;
+alter table base_organization add column `invite_piggybackpixelid` integer;

@@ -1,0 +1,61 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.settings.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+    
+    $(".delSkuItem").live('click', function(event){
+            event.preventDefault();
+            url = $(this).attr('href');
+            
+            $.post(url, function(data) {
+              $("#ajaxLightbox").html(data);
+            });
+
+    });
+    
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">SKU Lists</div>
+    <div class="contentCtn whiteBG">  
+        <div class="ajaxLoading"></div>
+        <table class="primaryDisplayTable" cellspacing="0">
+            <tr>
+                <th>SKU List</th>
+                <th># of Items</th>
+                <th>Action</th>        
+            </tr>
+            {% for o in object_list %}
+                <tr class="rowSpacer"><td colspan="7"></td></tr>
+        	    <tr class="highlightRow">
+                    <td>{{ o.name }}</td>
+                    <td>{{ o.skulistitem_set.all|length }}</td>
+                    <td>
+                        <a href="#" id="{% url advertiser_settings_skulists_edit o.id %}" class="AjaxLightBox dSmallWide" name="Edit SKU List">Edit</a>
+                        <a href="{% url advertiser_settings_skulists_delete o.id %}" class="">Delete</a>
+                    </td>
+			    </tr>
+            {% endfor %}  
+            {% if not object_list %}
+                <tr class="rowSpacer"><td colspan="3"></td></tr>
+        	    <tr class="highlightRow">
+                    <td class="noResults" colspan="3">You have no SKU Lists.</td>
+                </tr>
+            {% endif %}
+        </table>
+        <a href="#" id="{% url advertiser_settings_skulists_add %}" class="addSkuListBtn AjaxLightBox dXtraSm" name="Add Sku List"></a>
+    </div>    
+      
+<div id="ajaxLightbox"></div>
+{% endblock %}

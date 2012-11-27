@@ -1,0 +1,61 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+
+{% block css %}
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+	<link href="/css/AAN_Advertiser_Publishers.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/advertiser.publisher.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.messages.js"></script>
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initAjaxLightBox(); 
+    initGroups();
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Groups</div>
+<div class="contentCtn whiteBG">    
+    <div class="ajaxLoading"></div>
+    <table class="primaryDisplayTable" cellspacing="0">
+    	<tr><th>Group Name</th>
+    		<th># Publishers in group</th>
+    		<th>Actions</th>
+    	</tr>
+        {% for g in organization.publisher_groups.all %}
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+    	    <td>{{ g.name }}</td>
+    		<td>{{ g.publishers.count }} publishers</td>
+    	    <td>
+    			<a href="" id="{% url advertiser_publishers_groups_view g.id %}" class="AjaxLightBox dShorterMed" name="Edit Group">Edit</a>
+    			<a href="{% url advertiser_messages_campaigns_add %}?group_id={{ g.id }}">Contact Group</a>
+    			<a href="#" id="{% url advertiser_publishers_groups_delete g.id %}" class="AjaxLightBox deleteGroup">Delete</a>
+    		</td></tr>{% endfor %}
+    </table>
+				
+    <form action="{% url advertiser_publishers_groups %}" method="post" class="MooseHeadVertical MooseHeadVerticalSmall">
+        {{ form }}
+	    <input type="submit" value="" class="createGroupBtn">
+	    <div class="clearfix"></div>
+    </form>
+</div>
+
+<div id="confirmLightBox">
+    <div class="contentCtn">
+        <div class="confirmMessage">Are you sure you want to delete this Group?</div>
+        <div class="confirmActions">
+            <a href="" class="noBtnBlueBG"></a>
+            <a href="" class="yesBtnBlueBG"></a>
+        </div>
+    </div>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

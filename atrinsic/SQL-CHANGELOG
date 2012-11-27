@@ -1,0 +1,1 @@
+alter table base_webrequest add column `request` longtext NOT NULL;

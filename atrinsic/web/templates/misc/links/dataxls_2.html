@@ -1,0 +1,19 @@
+<table border="1">	
+    <tr>
+        <th>Link ID</th>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Assigned To</th>
+    </tr>
+    {% for row in banners %}
+	<tr>
+		
+		<td>{{row.link_id}}</td>
+		<td>{{row.name}}</td>
+		<td>Text</td>
+		<td>{{row.assignment}}</td>
+	</tr>
+	{%endfor%}
+</table>
+
+

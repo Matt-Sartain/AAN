@@ -1,0 +1,6 @@
+alter table base_smartad add column    `banner_size_id` integer;
+alter table base_smartad add column     `invite_unit_id` integer;
+alter table base_smartad add column    `invite_invsize_id` integer;
+alter table base_smartad add column    `invite_publineitem_id` integer;
+
+alter table base_link add column     `invite_smartad_id` integer;

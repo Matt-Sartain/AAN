@@ -1,0 +1,36 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load thumbnail_tag %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/advertiser.messages.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    {% include 'advertiser/messages/campaign.js' %}
+    $("#id_date_send").datepicker({showOn: "both", clickInput:true, dateFormat: "mm/dd/yy", buttonImage: "/images/blankdatepicker.png",buttonImageOnly: true});  
+
+{% endblock %}
+
+{% block pageContent %}
+    
+<div class="pageContentHdr">Edit Campaign</div>
+<div class="contentCtn">  
+    <div class="ajaxLoading"></div>
+    <div class="primaryDisplayTableHdr">Publisher Criteria</div>
+        <form action="{% url advertiser_messages_campaigns_edit campaign.id %}" method="post" class="MooseHead">
+        	{{ form }}        		
+            {% if group_id %}
+            <input type="hidden" name="group_id" value="{{ group_id }}"/>
+            {% endif %}
+            <div class="clearfix"></div>
+            <input type="submit" class="btn_CreateCampaign" value=""/>
+            <div class="clearfix"></div>
+        </form>
+	</table>
+</div>     
+{% endblock %}

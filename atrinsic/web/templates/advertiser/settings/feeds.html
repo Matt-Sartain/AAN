@@ -1,0 +1,54 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.settings.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Data Feeds</div>
+    <div class="contentCtn whiteBG">  
+        <div class="ajaxLoading"></div>
+        <table class="primaryDisplayTable" cellspacing="0">
+            <tr>
+                <th>Url ID</th>
+                <th>Name</th>
+                <th>Transfer Method</th>        
+                <th>Format</td>
+                <th>Action</th>
+            </tr>
+            {% for o in object_list %}
+                <tr class="rowSpacer"><td colspan="7"></td></tr>
+        	    <tr class="highlightRow">
+                    <td>{{ o.ape_url_id }}</td>
+                    <td>{{ o.name }}</td>
+                    <td>{{ o.get_datafeed_type_display }}</td>
+                    <td>{{ o.get_datafeed_format_display }}</td>
+                    <td>
+                        <a href="#" id="{% url advertiser_settings_feeds_edit o.id %}" class="AjaxLightBox dSmall" name="Edit Feed">Edit</a>
+                        <a href="{% url advertiser_settings_feeds_delete o.id %}">Delete</a>
+                    </td>
+			    </tr>
+            {% endfor %}  
+            {% if not object_list %}
+                <tr class="rowSpacer"><td colspan="5"></td></tr>
+        	    <tr class="highlightRow">
+                    <td class="noResults" colspan="5">You have no Data Feeds.</td>
+                </tr>
+            {% endif %}
+        </table>   
+        <a href="#" id="{% url advertiser_settings_feeds_add %}" class="requestFeedBtn AjaxLightBox dSmall" name="Feed Request"></a>
+    </div>    
+      
+<div id="ajaxLightbox"></div>
+{% endblock %}

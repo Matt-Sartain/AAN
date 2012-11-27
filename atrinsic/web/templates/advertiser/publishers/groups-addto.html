@@ -1,0 +1,21 @@
+<script>
+	$("legend").remove();
+	$("#addToGroup").insertAfter($("#id_group").parent());
+	
+    $("input[name$='o_id']:checked").each(function (i) {
+        $("#frmAddToGroup").append('<input type="hidden" name="publisher_id" value="' + $(this).val() + '"/>')
+	});
+</script>
+
+<form name="myform" action="{% url advertiser_publishers_groups_addto %}" method="post" class="MooseHead" id="frmAddToGroup">
+    {{ form }}
+    {% for id in publisher_ids %}
+        <input type="hidden" name="publisher_id" value="{{ id }}"/>
+    {% endfor %}
+
+    {% if redir %}
+        <input type="hidden" name="redir" value="{{ redir }}"/>
+    {% endif %}
+    <input type="submit" value="" id="addToGroup" class="addToGroupBtn"  style="margin:0px auto"/>
+</form>
+

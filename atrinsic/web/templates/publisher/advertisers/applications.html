@@ -1,0 +1,90 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+{% load forex %}
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Publisher_Advertisers.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/publisher.advertiser.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initAjaxLightBox();
+    $('.retractApplication').click(function(event) {
+        event.preventDefault();
+        $("#action_" + $(this).attr('id')).load("{% url publisher_advertisers_applications_retract %}?advertiser_id=" + $(this).attr('id')); 
+    });
+    $('.retractSelected').click(function(event) {
+        $("#pendingApps").submit();
+    });
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Pending Applications</div>
+
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>  
+    <table class="primaryDisplayTable" cellspacing="0">
+        <tr>
+            <th></th>
+            <th><a href="?sort={% ifequal sort "company_name" %}{{ sort_next }}{% else %}company_name{% endifequal %}">Company Name</a></th>
+            <th>Vertical</th>
+            <th><a href="?sort={% ifequal sort "state" %}{{ sort_next }}{% else %}state{% endifequal %}">State</a></th>
+            <th><a href="?sort={% ifequal sort "country" %}{{ sort_next }}{% else %}country{% endifequal %}">Country</a></th>
+            <th>URL</th>
+            <th>Contact</th>
+            <th><a href="?sort={% ifequal sort "network_rating" %}{{ sort_next }}{% else %}network_rating{% endifequal %}">Rating</a></th>
+            <th><a href="?sort={% ifequal sort "seven_day_epc" %}{{ sort_next }}{% else %}seven_day_epc{% endifequal %}">7 Day EPC</a></th>
+            <th><a href="?sort={% ifequal sort "three_month_epc" %}{{ sort_next }}{% else %}three_month_epc{% endifequal %}">3 Month EPC</a></th>
+            <th>Action</th>
+        </tr>
+        <form id="pendingApps" action="{% url publisher_advertisers_applications %}" method="POST">
+        {% for o in object_list %}
+            <tr class="rowSpacer"><td colspan="11"></td></tr>
+            <tr class="highlightRow">
+                <td><input type="checkbox" name="o_id" value="{{ o.id }}"></td>
+                <td><a href="" id="{% url publisher_advertisers_view o.id %}" class="AjaxLightBox dMed" name="Advertiser Details">
+                        {{ o.name }}</a></td>
+                <td>{{ o.website_set.all.0.vertical }}</td>
+                <td>{{ o.state }}</td>
+                <td>{{ o.country }}</td>
+                <td><a href="http://{{ o.website_set.all.0.url }}" target="new">{{ o.website_set.all.0.url }}</a></td>
+                <td><a href="" id="{% url publisher_advertisers_view o.id %}" class="AjaxLightBox dMed" name="Advertiser Details">
+                    {{ o.organizationcontacts_set.all.0.firstname }} {{o.organizationcontacts_set.all.0.lastname }}</a></td>
+                <td>{{ o.get_network_rating }}</td>
+                <td>{{ o.seven_day_epc|forex:organization.organizationpaymentinfo_set.all.0.currency }}</td>
+                <td>{{ o.three_month_epc|forex:organization.organizationpaymentinfo_set.all.0.currency }}</td>
+                <td id="action_{{ o.id }}" class="actionTd"> 
+        		    <a href="" id="{{o.id}}" class="retractApplication">Retract</a>
+                    <a href="" id="{% url publisher_messages_compose %}?rid={{o.id}}" class="AjaxLightBox" name="Contact">Contact</a>
+                </td>
+            </tr>
+        {% endfor %}        
+        {% if not object_list %}
+        <tr>
+            <td colspan="11">
+                No matches to your query.
+            </td>
+        </tr>
+        {% endif %}
+
+        {% ifnotequal total_results 0 %}
+    		<tr>
+    		    <td class="footer" colspan="11">
+    			    <a href="" class="dataTableSelectAll"></a>
+                    <a href="" class="retractSelected">Retract Selected</a>
+                    <input type="hidden" name="action" value="action">
+    		    </td>
+    		</tr>
+        {% endifnotequal %}
+        </form>
+    </table>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

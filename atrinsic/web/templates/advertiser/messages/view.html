@@ -1,0 +1,14 @@
+<table class="MooseHead">
+    <tr><th>From:</th><td>{{ message.sender.name }}{{ message.sender.name.errors }}</td></tr>
+	<tr><th>To:</th><td>{{ message.receiver.name }}{{ message.receiver.name.errors }}</td></tr>
+    <tr><th>Subject:</th><td>{{ message.subject }}{{ message.subject.errors }}</td></tr>
+	<tr><th>Message:</th>
+	    <td>
+	        <textarea rows="10" editable="false" readonly class="Message">{{ message.message }}</textarea>
+	        {{ message.message.errors }}
+        </td>
+    </tr>
+    <tr><th>&nbsp;</th>
+        <td align="right"><a href="" class="viewThenReply" name="Reply" id="/advertiser/messages/compose/{{message.id}}/">Reply</a></td>
+    </tr>
+</table>

@@ -1,0 +1,236 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+
+{% block javascript %} 
+<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{% endblock %}
+
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+	<style>
+		.ordersSrchBy {	margin: 10px 0px 0px 0px; }
+		.ordersSrchByHdrs { color: #8d8d8d;	font-weight:bold; height: 20px;	padding: 0px 0px 10px 0px; }
+		.ordersSrchElems {	margin:10px 0px 0px 0px; }
+		.choseSrchMethod { color: #5281b3; }		
+		.chosenSrchMethod { color: #000000; }
+		.widget_edit_style li { min-width:60px; }
+		.widget_edit_style ul { float:left; }
+		.ordersSrchByHdrs div { float:left; width:250px; }
+		.ordersSrchByHdrs .orderAmounts { width:350px; }
+		.ordersSrchFrm div { float:left;  }
+		.ui-datepicker-trigger {vertical-align:top;}
+		#Date_Range { display: none; }
+		#Publishers { display: none; border:0 !important;}
+		#dateFrom,#dateTo{ font-size:13px; font-weight:bold;}	
+		.editLinks a { color: #5281b3; text-decoration:none; font-size:12px;display:block;}
+		#editSrchBy { float:left; margin: 4px 0px 0px 5px; padding:0;height:20px;}
+		.modifySearch a { color: #5281b3; font-weight:bold; text-decoration:none; }
+		.createOrder { background:URL(/images/AAN_AddBlue2.png) no-repeat;background-position:center left;padding:4px 0px 0px 24px;margin:0px 10px 0px 0px;height:20px;display: block;}
+        .manageSubmit {
+            background-image:url('/images/BL_submit.gif');
+            background-repeat:no-repeat;
+            border:none;
+            display:block;
+            float:left;
+            height:42px;
+            padding:0 4px;
+            width:90px;
+            background-color:#ffffff;
+        }.manageSubmit:hover { background-image: url('/images/BL_submit_blue.gif'); }
+	</style>
+{% endblock %}
+
+
+{% block document_ready %}
+$('#id_orderamt').attr('size', '7')
+$('#editDate').click(function(event){	
+	$('#Date_Range').dialog({width:325, height:225, draggable: false });
+	$('#id_start_date, #id_end_date').attr('size', '10');
+	$("#id_start_date, #id_end_date").datepicker({showOn: 'both', buttonImage: '/images/blankdatepicker.png', buttonImageOnly: true, dateFormat: 'yy-mm-dd '});
+	//$("#Date_Range").prev().children(".ui-dialog-titlebar-close").css("display", "none");
+	
+	$('#Date_Range').bind('dialogclose', function(event, ui) {
+	    if($("#id_start_date").val().length > 0)	  
+	        var sDate = new Date($("#id_start_date").val());
+	        $("#dateFrom").text($("#id_start_date").val());
+	        $("#id_hStartDate").val($("#id_start_date").val());
+	    if($("#id_end_date").val().length > 0)
+	        $("#dateTo").text($("#id_end_date").val());	  
+	        $("#id_hEndDate").val($("#id_end_date").val());  
+
+	    $("#id_start_date, #id_end_date").datepicker('destroy');
+	    $('#Date_Range').dialog("destroy");
+
+	});	
+	return false;
+});
+$('#editSrchBy').click(function(event){	
+	$('#Publishers').dialog({width:420, height:390, draggable: false });
+	$('#Publishers').bind('dialogclose', function(event, ui) {
+	    $('#Publishers').dialog("destroy");
+	});	
+	return false;
+});
+$('.searchOrders').click(function(event){	
+	if($(this).hasClass("choseSrchMethod")){
+		$('.searchOrders').addClass("choseSrchMethod");
+		$('.searchOrders').removeClass("chosenSrchMethod");		
+		$(this).addClass("chosenSrchMethod");
+		$(this).removeClass("choseSrchMethod");
+		$('div .ordersSrchBy').toggle("slow");
+	}
+	return false;	
+});
+$('.modifySearch').live('click', function() {
+	$(this).prev().show("slow")
+	$(this).remove();	
+	return false;
+});
+$(".close_lb_button").click(function(event){		
+	$('#Date_Range').dialog('close'); 
+	$('#Publishers').dialog('close'); 
+	return false;
+});
+$('.createOrder').click(function(event){	
+	event.preventDefault();
+	var callUrl = $(this).attr("id");
+	$.ajax({
+		type: "GET",
+		url: callUrl,
+		dataType: "html",
+		async: false,
+		success: function(data){
+			$("#create_order").html(data);				
+			$("#create_order").dialog({bgiframe: true,	height:620, width:860,modal: true,draggable: false,resizable: false});
+			$("#create_order").parent(".ui-corner-all").css("-moz-border-radius", "0")
+			$("#create_order").parent(".ui-widget-content").css("border", "5px solid #A6C9E2")
+			$("#create_order").prev(".ui-dialog-titlebar").css("display", "none")
+			$('#create_order').bind('dialogclose', function(event, ui) {
+			    $('#create_order').dialog("destroy");
+			});					
+		}
+	}); 
+	if($(this).attr("href") == undefined){ return false; }
+});
+
+$('#cancelOrderCreate').live('click', function() {
+    $("#create_order").dialog("destroy");
+});
+
+var myDate=new Date();
+var dDay = 1;
+var dMonth = myDate.getMonth();
+var dYear = myDate.getYear();
+
+var fromDate = new Date(dYear, dMonth, dDay);
+//var dt = Date.parse(myDatetoDateTring())
+
+$('#id_searchby_0').attr("checked", "true");
+$("#id_searchByPublisher").css("height","250px");
+var formSubmitted;
+function showResponse(responseText, statusText)  { 
+	$("#" + formSubmitted).hide();
+	$("#" + formSubmitted).parent().append("<div class='modifySearch'><a href=''>Modify Search ></a></div>");	
+	$(".resultsPane").html(responseText);
+	$(".resultsPane").show("slow")
+
+} 
+var srchopts = {
+	success:       showResponse  // post-submit callback
+};
+$('#srchOrderIds, #srchOrderAdv').bind('submit', function() {
+    bolSubmit = true
+	formSubmitted = $(this).attr("id");
+	if(formSubmitted == "srchOrderAdv"){
+		$('#' + formSubmitted).append($('#Publishers')); }
+	else {
+	    if($("#id_orderids").val() == ""){ bolSubmit = false }
+	}	
+	if(bolSubmit){ $(this).ajaxSubmit(srchopts); }
+	return false; // <-- important!
+});		
+
+
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Manage Orders</div>
+<div class="contentCtn whiteBG">
+	<div style="padding:10px 0px 0px 10px;font-size:12px;">  
+        <div style="float:right;height:30px;padding-top:5px;"><a href="" id="create/" class="createOrder">Create an Order</a></div>
+    	<div class="clearfix"></div>
+		<div class="findEventsBy" style="font-weight:bold;">
+			Find Events > <a href="" class="searchOrders chosenSrchMethod">Search by Order ID</a> | <a href="" class="searchOrders choseSrchMethod">Advanced</a>
+		</div>
+		<div class="ordersSrchBy">
+			<form id="srchOrderIds" action="results/" method="POST" class="widget_edit_style">
+				<input type="hidden" name="searchForm" value="byIds">
+				{{form.searchType}}
+				Enter ID numbers on separate lines.<br><br>
+				<div class="ordersSrchByHdrs">{{form.orderids.label}}</div>
+				<div class="ordersSrchElems">{{form.orderids}}</div>
+				<input type="submit" value="" class="manageSubmit"/>
+			</form>
+		</div>
+		<div class="ordersSrchBy" style="display: none">
+			<form id="srchOrderAdv" action="results/" method="POST" class="widget_edit_style">
+				<input type="hidden" name="searchForm" value="byAdvanced">
+				Find all events associated with the following criteria.<br><br>
+				<div class="ordersSrchByHdrs">
+					<div>{{form.searchby.label}}</div>
+					<div class="orderAmounts">{{form.orderamtby.label}}</div>
+					<div>Date range</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="ordersSrchFrm">
+					<div style="width:250px;">
+						<div style="float:left;">{{form.searchby }}</div>
+						<div id="editSrchBy" class="editLinks"><a href="">Edit / View</a></div>					
+					</div>
+					<div style="width:350px;">{{ form.orderamtby }}&nbsp;{{ form.orderamt.label }}&nbsp;{{ form.orderamt }}</div>
+					<div style="width:300px;">
+						<div id="dateCtn" style="width:300px;">
+							<span id="dateFrom">{{firstOfLast}}</span>
+							<span>&nbsp;to&nbsp;</span>
+							<span id="dateTo">{{todaysDate}}</span>
+						</div>
+						<div class="clearfix"></div>
+						<div id="editDate" class="editLinks"><a href="">edit</a></div>	
+					</div>
+				</div>
+				<div class="clearfix"></div>			
+				<!--- Dialog box for to display list of Publishers --->
+				<div style="float:left; margin:25px 0px 0px 15px;border:none;" id="Publishers">
+					<label>{{form.searchByPublisher.label}}</label>
+					<div class="input_val" style="clear:both;">{{form.searchByPublisher}}{{form.searchByPublisher.errors}}</div>
+					<div style="clear:both"></div>
+					<div style="width:255px;text-align:right;">
+						<a href="" class="close_lb_button checkmark">Close</a>
+					</div>
+				</div>	
+				<div class="clearfix"></div>
+        		<input type="hidden" id="id_hStartDate" name="hStartDate" value="{{initFirst}}">
+        		<input type="hidden" id="id_hEndDate" name="hEndDate" value="{{initToday}}">        		
+				<input type="submit" value="" class="manageSubmit"/>
+
+			</form>
+		</div>
+		<div class="clearfix"></div>
+		<div class="ordersSrchBy resultsPane" style="display: none"></div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<div style="float:left; margin:25px 0px 0px 15px;width:225px;border:none !important;" id="Date_Range">
+	<label>Date Range</label>
+	<div class="input_val" style="clear:left;">{{form.start_date}}{{form.end_date}}</div>
+	<div style="clear:both"></div>
+	<div style="width:255px;text-align:right;"><a href="" class="close_lb_button checkmark">Close</a></div>
+</div>		
+<div class="clearfix"></div>
+<div style="display:none;" id="create_order">I'm in a dialog</div>
+
+
+
+{% endblock %}

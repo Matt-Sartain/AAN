@@ -1,0 +1,13 @@
+.leftContainer{border:1px solid black; width:60%; float:left; margin:20px 10px 0 20px;}
+.leftContainer h1{background-color:#ebeffa; margin:0; padding:8px 0px 8px 20px; font-size:1.2em; color:#2b73bd;}
+.leftContainer h2{color:#5d7600; font-size:1.3em;}
+.rightContainer{border:1px solid #ebeffa; width:30%; float:left; padding:2px; margin-top:20px;}
+.rightContainer label{color:#2b73bb; font-size:1.3em;}
+.rightContainer form{background-color:#ebeffa; padding:15px; margin:2px;}
+.rightContainer h3{color:#2973ba; font-size:1.2em; margin:8px 0 0 0; padding:0;}
+.smallContainer{width:30%; float:left;margin-left:10px;}
+.largeContainer{width:63%; float:left;}
+.seperator{clear:both; height:10px; width:100%;}
+.login_btn{	background-color:#dcfde0;border:1px solid #85b989;color:#516800;font:11px/14px Verdana, Arial, Helvetica, sans-serif;font-weight:bold;margin-right:15px;padding:4px;text-align:center;text-decoration:none;-moz-border-radius: 5px;-webkit-border-radius: 5px;}
+.reset_btn{	background-color:#d7f1fe;border:1px solid #bbbec5;color:#034a74;font:11px/14px Verdana, Arial, Helvetica, sans-serif;font-weight:bold;margin-right:15px;padding:4px;text-align:center;text-decoration:none;-moz-border-radius: 5px;-webkit-border-radius: 5px;}
+#forgotbox label{font-size:1.0em; color:black;}

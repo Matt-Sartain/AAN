@@ -1,0 +1,48 @@
+<div class="AAN_footer">
+	<div class="FooterBar">	    		
+		<div id="NotificationsCtn">
+			<div class="NotificationsHdrCtn">
+				<div class="NotificationsHdr">Notifications</div>
+				<div class="CloseNotifications"><a href="" id="closeNotificationsBtn">__</a></div>
+			</div>
+    		{%if notification_list%}
+    			<ul class="NotificationList">
+    			    {%for notification in notification_list%}
+    			    <li>
+    			    	<div class="NotificationDetailsCtn">
+    				    	<span id="date">{{notification.1|safe}} - </span>
+    				    	<span id="notification_type">{{notification.3|safe}}</span>
+    				    	<span> - {{notification.2|safe}} </span>
+    				    </div>
+    				    
+    			    	<div class="NotificationDetailsDeleteCtn">
+    			    		<a href="" class="deleteNotificationsBtn" alt="{{notification.0}}"></a>
+    		    		</div>
+    		    		<div class="clearfix"></div>
+    	    		</li>
+    			    {%endfor%}
+    			</ul>
+    		{%else%}
+    			<p class="NoNotications">No new notifications</p>
+    		{%endif%}
+		</div>
+		
+		<a href="" class="Notifications report_btns right" id="NotificationsBtn"></a>		
+		<img src="/images/divider.gif" class="Divider" alt="">
+		
+		{% if user.is_authenticated %}
+		    {% if user.get_profile.admin_level %}
+		        {% if organization %}
+		            <div class="ImpersonatingCtn">Impersonating {{organization}} 
+		                <a href="{% url auth_unimpersonate %}" class="Stop">(stop)</a>
+	                </div>
+	            {% endif %}
+	        {% endif %}
+	    {% endif %}
+		<a href="/{{org_live_type}}/settings/" class="Settings"></a>
+		<a href="/{{org_live_type}}/links/" class="Links"></a>
+	</div>
+	<div class="whiteSeparator"></div>
+	<div class="graySeparator"></div>
+	<div class="Copyright">&copy; 2010 Atrinsic. All Rights Reserved</div>
+</div>

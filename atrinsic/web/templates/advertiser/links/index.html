@@ -1,0 +1,158 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Links.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.links.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Links</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <table class="primaryDisplayTable" cellspacing="0">
+    	<tr>  
+    	  <th>Creative Type</th> 
+    	  <th>Number</th> 
+    	  <th>Action</th> 
+    	</tr> 
+    	
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "banner" %}" class="linkType AjaxLightBox dMed" name="View Banner Links">Banner</a></td>
+            <td>
+                {{organization.current_banner|default:"0"}} of 
+                {{organization.allowed_banner}}
+            </td>
+            <td>
+    			{% if organization.can_add_banner %}
+    				<a href="" id="{% url advertiser_links_add_bannerlink %}" class="linkType AjaxLightBox" name="Add Banner Link">Add</a>
+    			{% endif %}
+            	<a href="" id="{% url advertiser_links_view "banner" %}" class="linkType AjaxLightBox" name="View Banner Links">Edit</a>
+                </div>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "text" %}" class="linkType AjaxLightBox" name="View Text Links">Text Links</a></td>
+            <td>
+                {{organization.current_text|default:"0"}} of 
+                {{organization.allowed_text}}
+            </td>
+            <td>
+				{% if organization.can_add_text %}
+					<a href="#" id="{% url advertiser_links_add_textlink %}" class="linkType AjaxLightBox" name="Add Text Link">Add</a>
+				{% endif %}
+				<a href="" id="{% url advertiser_links_view "text" %}" class="linkType AjaxLightBox" name="View Text Links">Edit</a>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "html" %}" class="linkType AjaxLightBox" name="View HTML Links">HTML Links</a></td>
+            <td>
+                {{organization.current_html|default:"0"}} of 
+                {{organization.allowed_html}}
+            </td>
+            <td>
+				{% if organization.can_add_html %}
+					<a href="" id="{% url advertiser_links_add_htmllink %}" class="linkType AjaxLightBox" name="Add HTML Link">Add</a>
+				{% endif %}
+				<a href="" id="{% url advertiser_links_view "html" %}" class="linkType AjaxLightBox" name="View HTML Links">Edit</a>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "rss" %}" class="linkType AjaxLightBox" name="View RSS Links">RSS Links</a></td>
+            <td>
+                {{organization.current_rss|default:"0"}} of 
+                {{organization.allowed_rss}}
+            </td>
+        <td>
+				{% if organization.can_add_rss %}
+					<a href="" id="{% url advertiser_links_add_rsslink %}" class="linkType AjaxLightBox" name="Add RSS Link">Add</a>
+				{% endif %}
+				<a href="" id="{% url advertiser_links_view "rss" %}" class="linkType AjaxLightBox" name="View RSS Links">Edit</a>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "keyword" %}" class="linkType AjaxLightBox" name="View Keyword Links">Keyword Links</a></td>
+            <td>
+                {{organization.current_keyword|default:"0"}} of 
+                {{organization.allowed_keyword}}
+            </td>
+            <td>
+				{% if organization.can_add_keyword %}
+					<a href="" id="{% url advertiser_links_add_keywordlink %}" class="linkType AjaxLightBox" name="Add Keyword Link">Add</a>
+				{% endif %}
+				<a href="" id="{% url advertiser_links_view "keyword" %}" class="linkType AjaxLightBox" name="View Keyword Links">Edit</a>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "flash" %}" class="linkType AjaxLightBox" name="View Flash Links">Flash Link</a></td>
+            <td>
+                {{organization.current_flash|default:"0"}} of 
+                {{organization.allowed_flash}}
+            </td>
+            <td>
+				{% if organization.can_add_flash %}
+					<a href="" id="{% url advertiser_links_add_flashlink %}" class="linkType AjaxLightBox" name="Add Flash Link">Add</a>
+				{% endif %}
+				<a href="" id="{% url advertiser_links_view "flash" %}" class="linkType AjaxLightBox" name="View Flash Links">Edit</a>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="" id="{% url advertiser_links_view "email" %}" class="linkType AjaxLightBox" name="View Email Links">Email Link</a></td>
+            <td>
+                {{organization.current_email_link|default:"0"}} 
+                of {{organization.allowed_email_link}}
+            </td>
+            <td>
+				{% if organization.can_add_email_link %}
+					<a href="" id="{% url advertiser_links_add_emaillink %}" class="linkType AjaxLightBox" name="Add Email Link">Add</a>
+				{% endif %}
+				<a href="" id="{% url advertiser_links_view "email" %}" class="linkType AjaxLightBox" name="View Email Links">Edit</a>
+            </td>
+        </tr> 
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td><a href="{% url advertiser_settings_feeds %}" class="linkType" name="View Data Feeds">Data Feed</a></td>
+            <td>
+                {{organization.current_datafeed|default:"0"}} of 
+                {{organization.allowed_datafeed}}
+            </td>
+            <td>
+				<a href="{% url advertiser_settings_feeds %}" class="linkType" name="View Data Feeds">Edit</a>
+    		</td>
+        </tr>
+        <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+            <td>Deep Linking</td>
+            <td></td>
+            <td>
+            	{% ifequal  organization.adbuilder 1 %}
+            		<a href="{% url advertiser_deeplinking 0 %}" class="linkType">Disable</a>
+            	{% else %}
+            		<a href="{% url advertiser_deeplinking 1 %}" class="linkType">Enable</a>
+            	{% endifequal  %}
+            	
+    		</td>
+        </tr>  
+    </table>
+</div>
+<div id="ajaxLightbox"></div>
+<div id="AjaxLightBoxFromLightbox"></div>
+{% endblock %}

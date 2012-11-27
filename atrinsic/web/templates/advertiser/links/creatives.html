@@ -1,0 +1,112 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+
+{% block css %}
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/css/AAN_Advertiser_Links.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+    
+    $(".viewUrl").click(function(event) {
+        $("#ajaxLightbox").html("<div style='margin:auto; text-align:center; padding:10px;'>"+$(this).attr("href")+"</div>");		
+		$("#ajaxLightbox").dialog({bgiframe:true, 
+		               height:100, 
+		               width:500, 
+		               modal:true, 
+		               draggable:false, 
+		               resizable:false,
+		               open: function(event, ui) { 
+		                   $("#ui-dialog-title-ajaxLightbox").text("View Url"); 
+		                   $(".ui-dialog-titlebar").addClass("ui-widget-header-forDialog");
+		                   //$("#ui-dialog-title-ajaxLightbox").addClass("modifyDialogTitle");
+		                   $(".ui-dialog-titlebar-close span").remove();
+		                   $(".ui-dialog-titlebar-close").addClass("newDialogCloseBtn");
+		                   $(".ui-dialog-titlebar-close").text("Close");
+	                   } 
+	               });
+	               
+	    return false;
+        
+    });
+    
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Upload Images</div>
+
+
+<div class="contentCtn">    
+	<form action="#" method="POST" class="MooseHead widerLeftSide" enctype="multipart/form-data"> 
+        {{form}}
+        <div class="clearfix"></div>
+        <label></label><input type="submit" class="submitPlusWBGBtn" value="" border="0"/>
+    </form>	
+    <div class="clearfix"></div>
+	<form action="#" method="POST" class="MooseHead widerLeftSide" enctype="multipart/form-data"> 
+        {{bulk_form}}
+        <div class="clearfix"></div>
+        <label></label><input type="submit" class="submitPlusWBGBtn" value="" border="0"/>
+    </form>	
+    <div class="clearfix"></div>
+    <div class="insideCtn whiteBG">          
+        <table cellpadding="5" class="uploadImagesTbl">
+            <tr><td class="tblHdr">Help</td></tr>
+            <tr><td>
+                You can upload a zip file to upload multiple images at a time to the server or you may upload one image at a time.</td>
+            </tr>
+            <tr><td>
+                File types must be jpeg, .jpg, .gif or .png and less than 200 KB in file size.</td>
+            </tr>
+            <tr><td>
+                Advertisers are allowed a maximum of  50 images for each account.  Please contact your account manager should you need more.</td>
+            </tr>
+            <tr><td>
+                If you are uploading a zip file, use the browse button to locate and select the file.  Enter an email address to receive a confirmation email when your upload has completed.  Once you have entered your confirmation email, click "Upload".</td>
+            </tr>
+            <tr><td>
+                You will receive a confirmation email with a list of the image urls once the upload is complete.</td>
+            </tr>
+            <tr><td>
+                Note that you may not delete an image if it is associated with an active link within the interface.</td>
+            </tr>
+        </table>
+    </div>
+    
+    <table class="primaryDisplayTable shrinkWidth wBorder" cellspacing="0">
+    	<tr>  
+    	  <th>Image</th> 
+    	  <th>Size</th> 
+    	  <th>Action</th> 
+    	</tr> 
+    	
+    	{% for o in object_list %}        
+    	<tr class="rowSpacer"><td colspan="3"></td></tr>
+    	<tr class="highlightRow">
+    		<td class="imgDisplay"><img src="{{ o.get_url }}"></td>
+    		<td>{{ o.size }}<br>Banner</td>
+    		<td>    		    
+        		{% if o.link_id %}
+        			<a name="Replace Link" href="#" id="{% url advertiser_links_edit o.link_id %}" class="ButtReplace report_btns AjaxLightBox">Replace</a>
+        		{% else %}
+        			<a href="{% url advertiser_links_creatives_delete o.id %}" class="ButtDelete report_btns">Delete</a>
+        		{% endif %}
+        		</br>
+        		<a href="{{ o.get_url }}" class="viewUrl">View Url</a>
+    		</td>
+    	</tr>
+    	<tr><td colspan="3"><hr size="1" color="#cdcdcd" style="margin-top:20px;"></td></tr>
+    	{% endfor %}
+        <tr>
+            <td colspan="3" class="bottom">
+                {{ total_results }} results
+                <span class="pages">{% paginate %}</span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}

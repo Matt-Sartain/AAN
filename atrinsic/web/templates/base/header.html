@@ -1,0 +1,29 @@
+<div id="header">
+    <div class="header">
+        <!-- tabs -->
+        <ul class="menu">
+            {% for tab in tabs %}
+            <li {% ifequal current_tab tab.name %}class="selected"{% endifequal %}><a href="{{tab.url}}"><span>{{tab.name}}</span></a></li>
+            {% endfor %}
+        </ul>
+        <!-- /tabs -->
+
+        <ul class="nav">
+        {% if user.is_authenticated %}
+        <li><a href="{% url auth_logout %}">logout</a></li>
+        {% if organization_options %}<li><select id="organization_switch">
+        {% if user.get_profile.admin_level %}<option {% if not organization %}selected{% endif %}value="0">Network Admin</option> {% endif %}
+        {% for o in organization_options %}
+            <option {% ifequal o organization %}selected {% endifequal %}value="{{o.id}}">{{ o }}</option>
+        {% endfor %}</select></li>
+        {% endif %}
+        <li>{{ user.email }}</li>
+        <li>{% if user.get_profile.admin_level %}{% if organization %}Impersonating {{organization}} <a href="{% url auth_unimpersonate %}">(stop)</a>{% endif %}{% endif %}</li>
+        {% else %}
+        <li><a href="{% url auth_login %}">login</a></li>
+        <li><a href="/signup/advertiser/">signup advertiser</a></li>
+        <li><a href="/signup/publisher/">signup publisher</a></li>
+        {% endif %}
+        </ul>
+    </div>
+</div>

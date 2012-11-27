@@ -1,0 +1,73 @@
+{% extends base/widgetui.html %}
+
+{% block content %}
+{% block navigation %}{% endblock %}
+
+<table border="0" width="100%" id="table1">
+	<tr>
+		<td width="57%" rowspan="3" valign="top">
+		<p style="margin: 0 10px"><font face="Arial" size="4"><strong>{{adv.name}} ({{adv.ticker}})<font></p>
+		<p style="margin: 0 10px">&nbsp;</p>
+		<p style="margin: 0 10px"><font face="Arial" size="2"><strong>Country:</strong> {{ adv.country }}<br/>
+<strong>URL:</strong> {{ adv.url }}<br />
+<strong>Currency: </strong>{{ adv.currency }}<br />
+<strong>Joined Network: </strong>{{ adv.date_joined }}<br/>
+<strong>Category:</strong> {{adv.vertical}}<br/><br/>
+
+{{ adv.advertiser_profile_detail_page }}
+<br/>
+	</tr>
+	<tr>
+		<td width="18%" height="26" align="center" bgcolor="#6699CC">
+		<font face="Arial" size="2" color="#FFFFFF"><b>By Type</b></font></td>
+		<td height="26" align="center" bgcolor="#6699CC" width="24%"><b>
+		<font face="Arial" size="2" color="#FFFFFF">By Promotion</font></b></td>
+	</tr>
+	<tr>
+		<td width="18%" height="291" valign="top">&nbsp;<ul>
+<li><font face="Arial" size="2">Data feed</font></li>
+<li><font face="Arial" size="2">Banner</font></li>
+<li><font face="Arial" size="2">Text</font></li>
+
+<li><font face="Arial" size="2">Content Link </font> </li>
+<li><font face="Arial" size="2">SmartAd</font></li>
+<li><font face="Arial" size="2">Keyword Link</font></li>
+<li><font face="Arial" size="2">Flash Link </font> </li>
+</ul>
+
+
+		<p>&nbsp;</p>
+		<p>&nbsp;</td>
+		<td height="291" valign="top" width="24%">&nbsp;<ul>
+<li><font face="Arial" size="2">All</font></li>
+<li><font face="Arial" size="2">Coupons</font></li>
+<li><font face="Arial" size="2">Hot Product</font></li>
+<li><font face="Arial" size="2">Sale/Discount</font></li>
+<li><font face="Arial" size="2">Free Shipping</font></li>
+<li><font face="Arial" size="2">Seasonal Link</font></li>
+</ul>
+
+		</td>
+	</tr>
+	<tr>
+		<td colspan="1" bgcolor="#6699CC">
+		<p style="margin: 0 10px"><font face="Arial" size="2" color="#FFFFFF">
+<b>Program Term</b></font></td>
+	</tr>
+	<tr>
+		<td colspan="1">&nbsp;<p style="margin: 0 10px">
+		<font face="Arial" size="2"><b>{{ program_term.name}}</b><br/>
+	        {% for pta in program_term.programtermaction_set.all %}
+	        Offer Detail: {{ pta.action.name }}<br/>
+		Cookie Duration: {{pta.action_referral_period}} day(s)<br/>
+	        {% endfor %}
+
+		</font></td>
+	</tr>
+</table>
+<br/>
+<br/>
+<input type="button" onclick="window.close()" value="Close"/>
+&nbsp;
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base/widgetui.html' %}
+{% block javascript %}
+{% endblock %}
+{% block document_ready %} 
+{% endblock %}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block content %}
+<form class="loginForm" action"/analytics/login/" method="POST">
+{{form}}
+<input type="submit" value="Login">
+</form>
+{% endblock %}

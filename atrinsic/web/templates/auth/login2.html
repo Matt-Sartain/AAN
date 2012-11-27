@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Atrinsic Affiliate Network - Login Page</title>
+<link href="/css/loginPage2.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript">
+function displaymessage(){
+    document.getElementById('mypopup').style.display='block'
+}
+function closemessage(){
+    document.getElementById('mypopup').style.display='none'
+}
+
+$(document).ready(function() {
+
+	$('#forgot').click(function () {
+		if($("#email").val() == ""){
+			$("#results").html("Please enter an email address.");
+		}else{
+			forgot();
+		}
+      
+    });
+
+});
+    
+    
+function forgot(){
+	
+	$.ajax({
+	   type: "POST",
+	   url: "{% url forgot_pass %}",
+	   data: {email:$("#email").val()},
+	   success: function(result){
+	     
+	   	$("#results").html(result);
+	   	 
+	   }
+	 });
+	
+}
+
+</script>
+</head>
+
+<body>
+	<div class="wrapper">
+    	<div class="header">
+        	<div class="nav_main">
+        	    <form action="#" method="post">
+                	<div class="nav_box">
+                		{% ifnotequal error None %}
+                		    <div class="error">{{error}}</div>
+                		{%else%}
+                		<span>login:&nbsp;<img src="/images/arrow.png" width="8" height="8"/></span>
+                		
+                		{% endifnotequal %}
+            		</div> 
+                    <div class="nav_box"><span>email</span></div>
+                    <div class="nav_box"><input id="id_email" type="text" name="email" maxlength="256" class="top_nav" /></div>
+                    <div class="nav_box"><span>password:</span></div>
+                    <div class="nav_box"><input id="id_password" type="password" name="password" maxlength="256" class="top_nav" /></div>
+                    <div class="nav_box"><input type="image" src="/images/login_button.png" width="65" height="25" class="login" name="loginbtn" value="login"/></a></div>
+                    <div class="nav_box"><span><a name="" href="#" target="_blank" onclick="displaymessage();return false;">Forgot your username or password?</a></span></div>
+                </form>
+            </div>
+            
+            <div id='mypopup' name='mypopup' class="popup">
+                <div class="pop_close"><a href="" onclick="closemessage();return false;"><img src="/images/popup_close.jpg" width="8" height="8" border="0"/></a></div>
+                <div class="pop_body">
+                    <div class="pop_title">Forgot your password?</div>
+                    <div class="pop_inst">Please enter your email below and we'll send your<br />password to your email account.</div>
+                    <div class="pop_input">
+                            <span class="pop_email_text"><img src="/images/arrow.png" width="8" height="8" />&nbsp;email</span>
+                            <span>
+                            	<!--<input id="id_email" type="text" name="email" maxlength="256" class="pop_email" />-->
+                            	<input id="email" type="text" name="email" maxlength="256" />
+                        	</span>
+                            <span><a id="forgot" href="#"><img src="/images/go_button.png" width="45" height="25" class="go_button"/></a></span><br />
+                            <span id="results"></span>
+                    </div>
+                </div>
+            </div>
+                        
+        </div><!--header ends-->
+        <div class="offer_body">
+        	<div class="body_nav">
+                <div class="body_nav_box_2"><a href="mailto:admin@network.atrinsic.com">contact</a></div>
+                <div class="body_nav_box"><a href="/signup/publisher/">publisher-signup</a></div>
+            	<div class="body_nav_box"><a href="/signup/advertiser/">advertiser sign-up</a></div>
+            	
+            </div>
+        </div><!--offer body ends-->
+        <div class="footer">
+        	<div class="footer_text">
+            	&copy; 2010 Atrinsic. All Rights Reserved.              
+            </div>
+        </div><!--footer ends-->
+    </div><!--wrapper ends-->
+</body>
+</html>
+
+                        

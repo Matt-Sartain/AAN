@@ -1,0 +1,41 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+
+{% block document_ready %}
+  $("#results").dataTable({'bFilter':false,
+                           'bLengthChange':false,
+                           'iDisplayLength':100});
+
+{% endblock %}
+{% block content %}
+    <h2>Reports</h2>
+
+<table id="results" width="600">
+     <thead>
+      <tr>
+	{% for field in report.RenderHeader %}
+	<th>{{field.0}}</th>
+	{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in report.RenderContents %}
+	<tr class="{% cycle 'odd' 'even' %}">
+	  {% for col in row %}
+	    <td>{{col.1|safe}}</td>
+	  {% endfor %}
+	</tr>
+      {% endfor %}
+    </tbody>
+      <tfoot>
+      <tr class="total">
+          {% for col in report.RenderFooter %}
+   	    <td>{{col|safe}}</td>
+          {% endfor %}
+      </tr>
+
+     </tfoot>
+
+</table>
+
+{% endblock %}

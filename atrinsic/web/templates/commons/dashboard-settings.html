@@ -1,0 +1,83 @@
+{% extends 'base/main.html' %}
+
+
+{% block css %}
+<style type="text/css">
+.ctnDashSetting{
+	margin: 1em 1em 1em 0em;
+	border:1px solid #6b6b6b;
+}
+.ctnDashMid{
+	margin:1em auto 2em auto;
+	width:530px;
+}
+.ctnDashMid div{
+	float:left;
+	width:265px;
+	padding-bottom:10px;
+}
+.ctnDashMid div p{
+	color:#2e72bb;
+	font-size:13px;
+}
+.ctnDashMid hr{
+	clear:both;
+}
+.ctnDashMid hr{
+     color: #cdcdcd;
+}
+.AddProgram{
+	display:block;	
+	background-color:#dcfde0;
+	border:1px solid #85b989;
+	color:#516800;
+	font:11px/14px Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	margin-right:15px;
+	padding:4px;
+	text-decoration:none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+    <form action="/{{org}}/dashboard/settings/" method="post">
+	<div class="ctnDashSetting">
+		<div class="ctnDashMid">
+			<div>
+				<p>{{ form.dashboard_group_data_by.label }}</p>
+				{{ form.dashboard_group_data_by }}
+			</div>
+			<div>
+				<p>{{ form.dashboard_viewing_settings.label }}</p>
+				{{ form.dashboard_viewing_settings }}
+			</div>
+			<hr size="1">
+			<div>
+				<p>{{ form.dashboard_viewing_promo_method.label }}</p>
+				{{ form.dashboard_viewing_promo_method }}
+			</div>
+			<div>
+				<p>{{ form.dashboard_viewing_group.label }}</p>
+				{{ form.dashboard_viewing_group }}
+			</div>
+			<p>{{ form.dashboard_viewing_programtype_flatfee.label }}</p>
+			{{ form.dashboard_viewing_programtype_flatfee }}
+			<hr size="1">
+			<div>
+				<p>{{ form.dashboard_variable1.label }}</p>
+				{{ form.dashboard_variable1 }}<br><br>
+			</div>
+			<div>
+				<p>{{ form.dashboard_variable2.label }}</p>
+				{{ form.dashboard_variable2 }}<br><br>
+			</div>
+	        <input type="submit" value="SAVE SETTINGS"/ class="AddProgram">
+		</div>
+	</div>
+      
+    </form>
+{% endblock %}

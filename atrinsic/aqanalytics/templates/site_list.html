@@ -1,0 +1,25 @@
+{% extends 'base/widgetui.html' %}
+{% block javascript %}
+{% endblock %}
+{% block document_ready %} 
+{% endblock %}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Select site to report on</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for site in site_list%}
+        <tr>
+            <td><a href="/analytics/select_site/{{site.table_id}}/">{{site.site_url}}</a></td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,51 @@
+@import url("jquery-ui-theme.css");
+
+/********** Advertiser/Links **********/
+table.primaryDisplayTable td a.linkType { color:#000000; text-decoration:none; }
+table.primaryDisplayTable td a.linkType:hover { text-decoration:underline; }
+table.primaryDisplayTable td.optionBtns { text-align:right; }
+table.primaryDisplayTable td.Bottom { padding:0px 0px 0px 10px; text-align:left; }
+a.downloadLinksBtn {
+    background-image:url('/images/btn_blue_downloadlinks.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:42px;
+    margin:10px 0 0 0;
+    padding:0 4px;
+    width:133px;
+}a.downloadLinksBtn:hover { background-image: url('/images/btn_blue_downloadlinks_mo.gif'); }
+a.addLinksBtn {
+    background-image:url('/images/btn_blue_addlinks.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:42px;
+    margin:10px 0 0 0;
+    padding:0 4px;
+    width:90px;
+}a.addLinksBtn:hover { background-image: url('/images/btn_blue_addlinks_mo.gif'); }
+
+#notify { margin:0 0 0 15px; }
+/********** END Advertiser/Links **********/
+
+/********** Advertiser/Links/Bulk **********/
+a.downloadTemplate {
+    background-image:url('/images/btn_blue_dl_template.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:33px;
+    margin:10px 0 0 0;
+    padding:0 4px;
+    width:151px;
+}a.downloadTemplate:hover { background-image: url('/images/btn_blue_dl_template_mo.gif'); }
+/********** END Advertiser/Links/Bulk **********/
+
+
+/********** Advertiser/Links/Creatives **********/
+table.uploadImagesTbl { font-size:12px; width:75%; }
+table.uploadImagesTbl td.tblHdr { font-size:14px; font-weight:bold; }
+table.uploadImagesTbl td.tblSubHdr { font-size:13px; font-weight:bold; }
+table.uploadImagesDetails th { text-align:left; }
+/********** END Advertiser/Links/Creatives **********/

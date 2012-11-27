@@ -1,0 +1,40 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+
+{% block document_ready %}
+    $("#id_date_to, #id_date_from").datepicker({showOn: 'both', buttonImage: '/images/calendar.gif', buttonImageOnly: true, dateFormat: 'mm/dd/yy'});
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_admin %}" method="post">
+    {{ form }}
+    <input type="submit" value="go" class="AddProgram2"/>
+</form>
+<table>
+<tr>
+    <th>Created</th>
+    <th>Method</th>
+    <th>URL</th>
+    <th>User</th>
+    <th>Organization</th>
+    <th>Length</th>
+    <th>Status</th>
+</tr>
+{% for o in object_list %}
+<tr>
+    <td>{{ o.created }}</td>
+    <td>{{ o.method}}</td>
+    <td>{{ o.url }}</td>
+    <td>{{ o.user }}</td>
+    <td>{{ o.organization }}</td>
+    <td>{{ o.length }}</td>
+    <td>{{ o.status }}</td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="7" class="bottom" align="right">
+        {{ total_results }} results
+        <span class="pages">{% paginate %}</span>
+    </td>
+</table>
+{% endblock %}

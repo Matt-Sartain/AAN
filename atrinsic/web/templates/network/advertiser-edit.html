@@ -1,0 +1,349 @@
+{% extends 'base/main.html' %}
+
+{% block css %}
+<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/css/widget.css" rel="stylesheet" type="text/css" media="all"/>
+<style>
+	.staticWidget
+	{
+		border: 2px solid #DFDFDF;
+		height:auto;
+		width:80%;
+		margin:0px 0px 0px 10px;
+		padding:0px 0px 20px 0px;
+	}
+	.btntabsCtn { background-color:#F0F0FC;}
+	a.buttonTabs
+	{		
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border:1px solid #DFDFDF;
+		background-color:#FFFFFF;
+		color:#1F5C95;
+		font-size:12px;
+		font-weight:bold;
+		line-height:35px;
+		margin:30px 0px 0px 10px;
+		padding: 4px 30px;
+		text-decoration:none;
+	}	
+	a.buttonTabs:hover
+	{
+		background-color:#7AB6F2;
+		color:#FFFFFF;		
+		font-weight:bold;
+		text-decoration:none;
+	}
+	a.selectedBtnTab
+	{
+		background-color:#7AB6F2;
+		color:#FFFFFF;		
+		font-weight:bold;
+		text-decoration:none;
+	}
+	.tabContents { display: none; }
+	.widget_edit_style { width: 55%; margin:0 auto;}
+	.submitcancel { width:55%;text-align:center;margin:0 auto; }
+	#IOFees 
+	{		
+		margin:0 auto;
+		width:50%;
+	}
+	#moreSettings 
+	{		
+		margin:0 auto;
+		width:70%;
+	}
+	#IOFees fieldset {
+		background-color:white;
+		border:0 none;
+		margin:2em 0;
+		padding:0;
+		font-size:14px;
+		margin-bottom:1.5em;
+	}
+	#IOFees fieldset legend {
+		color:#83A201;
+		font-size:13px;
+		font-weight:bold;
+		padding-left:10%;
+		padding-bottom:10px;
+	}
+	#IOFees label {
+		float:right;
+		text-align:left;
+		color:#5B5B5B;
+		display:block;
+		font-size:13px;
+		font-weight:bold;
+		margin-top:2px;
+		text-align:left;
+		width:220px;
+		padding-bottom: 2px;
+	}	
+	#moreSettings  label{
+		color:#5B5B5B;
+		display:block;
+		float:left;
+		font-size:13px;
+		font-weight:bold;
+		margin-top:2px;
+		text-align:right;
+		width:180px;
+	}
+	#moreSettings div.input select {
+		border:1px solid #ABABAB;
+		font-size:12px;
+		margin-left:10px;
+	}
+	#IOFees .CheckboxInput
+	{
+		width:250px;
+		margin:0 auto;
+	}	
+	#IOFees .TextInput
+	{
+		width:200px;
+		margin:0 auto;
+	}
+	#moreSettings .TextInput
+	{
+		width:100%;
+		margin:0 auto;
+	}
+	#IOFees .CheckboxInput .input
+	{
+		float:right;
+	}
+	#IOFees .TextInput div.input input[type="text"] {
+		-moz-border-radius-bottomleft:5px;
+		-moz-border-radius-bottomright:5px;
+		-moz-border-radius-topleft:5px;
+		-moz-border-radius-topright:5px;
+		border:1px solid #ABABAB;
+		font-size:12px;
+		margin:0px 0px 20px 0px;
+		padding:2px 5px;
+	}
+	#moreSettings .TextInput div.input input[type="text"], input[type="file"] {
+		-moz-border-radius-bottomleft:5px;
+		-moz-border-radius-bottomright:5px;
+		-moz-border-radius-topleft:5px;
+		-moz-border-radius-topright:5px;
+		border:1px solid #ABABAB;
+		font-size:12px;
+		margin:0px 0px 0px 5px;
+		padding:2px 5px;
+	}
+	
+	.errorMsg {
+	    background-color: #F0F0FC;
+	    text-align: center;
+	    width: 100%;
+	    font-size: 1.5em;
+	    color: #FF0000;
+	    
+	}
+</style>
+{% endblock %}
+
+{% block document_ready %}
+
+    function get_url_parameter( param ){
+        param = param.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var r1 = "[\\?&]" + param + "=([^&#]*)";
+        var r2 = new RegExp( r1 );
+        var r3 = r2.exec( window.location.href );
+        if( r3 == null ) return "";
+        else return r3[1];
+    }
+    
+    if (get_url_parameter('error') != '') {
+        $('#ErrorMsg').html('Invalid data entered. Record has not been saved.');      
+    }
+    
+    $('#cancel').click(function(e) {
+        window.location='{% url network_advertiser_account_settings %}';
+    });
+    
+	$(".buttonTabs").click(function(){		
+		var curButton = $(this).attr("id");
+		
+		$(".buttonTabs").removeClass("selectedBtnTab");		
+		$(this).addClass("selectedBtnTab");
+		$(".tabContents").hide()
+		$("." + curButton).show()
+		//$("#btnTabContent").html($("." + curButton).html)
+		return false;
+	});
+$("#advertiserEdit").click();
+
+
+$("#IOFees .checkbox").click( function() {
+	var placementFee = $(this).attr("name").replace("idplacement_", "")
+    if(this.checked){
+        $("#" + $(this).attr("id") + "amt").removeAttr("disabled");
+        //$("#pftracker_" + placementFee).val(1)
+    }else{
+    	$("#" + $(this).attr("id") + "amt").attr("disabled", true);
+    	//$("#pftracker_" + placementFee).val(0)
+    }
+    
+    //alert($("#pftracker_" + placementFee).val())
+    
+});
+
+$(".updateStatus").click( function() {
+    alert("UP")
+	$("#formtype").val("formIOStatusUpdate")
+	$("#IOFees").submit();
+});
+$('.ContactEdit').submit(function() {
+   var errMsg = "";
+   if( $("input[name=firstname]").val() == "" ){
+       errMsg += "Please enter your first name.\n"
+   }
+   if( $("input[name=lastname]").val() == "" ){
+       errMsg += "Please enter your last name.\n"
+   }
+   if( $("input[name=email]").val() == "" ){
+       errMsg += "Please enter a valid email address.\n"
+   }
+   if( $("input[name=phone]").val() == "" ){
+       errMsg += "Please enter your phone number.\n"
+   }
+   if(errMsg != ""){ alert(errMsg);return false; }
+});
+{% endblock %}
+
+{% block content %}
+
+<br>
+<div class="staticWidget">
+    <div id="ErrorMsg" class="errorMsg"></div>
+	<div class="btntabsCtn">
+		<a href="" class="buttonTabs" id="advertiserEdit">Advertiser Information</a>
+		<a href="" class="buttonTabs" id="contactEdit">Contact Information</a>
+		<a href="" class="buttonTabs" id="billingEdit">Billing Information</a>
+		<a href="" class="buttonTabs" id="settingsEdit">Advertiser Settings</a>
+		<a href="" class="buttonTabs" id="termsEdit">Special Program Terms</a>
+		{% if showIOFees %}<a href="" class="buttonTabs" id="ioSettingsEdit">IO Fee Settings</a>{%endif%}
+	</div>
+	<div>
+		<div id="btnTabContent">
+			<div class="tabContents advertiserEdit">
+				<form action="{% url network_advertiser_edit advertiser.id %}" method="post" class="widget_edit_style" enctype="multipart/form-data">
+				<input type="hidden" name="formtype" value="form">
+				{{ form }}
+				<div class="submitcancel" style="width:55%;text-align:center;margin:0 auto;">
+					<input type="submit" value="Update Advertiser" class="checkmark" style="float:left;"/>
+					<input type="reset" value="Cancel" id="cancel" class="checkmark" style="float:left;"/>
+				</div>
+				<div class="clearfix"></div>
+				</form>
+			</div>
+			<div class="tabContents contactEdit">
+				<form action="{% url network_advertiser_edit advertiser.id %}" method="post" class="ContactEdit widget_edit_style">
+				<input type="hidden" name="formtype" value="formContactEdit">
+				{{ formContactEdit }}
+				<div class="submitcancel">
+					<input type="submit" value="Update Contact" class="checkmark" style="float:left;"/>
+					<input type="reset" value="Cancel" id="cancel" class="checkmark" style="float:left;"/>
+				</div>
+				<div class="clearfix"></div>
+				</form>
+			</div>
+			<div class="tabContents billingEdit">
+				<form action="{% url network_advertiser_edit advertiser.id %}" method="post" class="widget_edit_style">
+				<input type="hidden" name="formtype" value="formBillingEdit">
+				{{ formBillingEdit }}
+				<div class="submitcancel">
+					<input type="submit" value="Update Billing" class="checkmark" style="float:left;"/>
+					<input type="reset" value="Cancel" id="cancel" class="checkmark" style="float:left;"/>
+				</div>
+				<div class="clearfix"></div>
+				</form>
+			</div>
+			<div class="tabContents settingsEdit">
+				<form action="{% url network_advertiser_edit advertiser.id %}" method="post" class="widget_edit_style">
+				<input type="hidden" name="formtype" value="formSettingsEdit">
+				{{ formSettingsEdit }}
+				<div class="submitcancel">
+					<input type="submit" value="Update Settings" class="checkmark" style="float:left;"/>
+					<input type="reset" value="Cancel" id="cancel" class="checkmark" style="float:left;"/>
+				</div>
+				<div class="clearfix"></div>
+				</form>
+			</div>
+			<div class="tabContents termsEdit">
+				<form action="{% url network_advertiser_edit advertiser.id %}" method="post" class="widget_edit_style">
+				<input type="hidden" name="formtype" value="formTermsEdit">
+				{{formTermsEdit}}
+				<div class="submitcancel">
+					<input type="submit" value="Update Settings" class="checkmark" style="float:left;"/>
+					<input type="reset" value="Cancel" id="cancel" class="checkmark" style="float:left;"/>
+				</div>
+				<div class="clearfix"></div>
+				</form>
+			</div>
+			
+			<div class="tabContents ioSettingsEdit">
+				<form action="{% url network_advertiser_edit advertiser.id %}" method="post" id="IOFees">
+				<input type="hidden" name="formtype" id="formtype" value="formIOFeeSettingsEdit">
+				 <fieldset>
+				 	<legend>IO Fee Settings</legend>
+                    <!-- Used to display the IO Status if function def says so-->
+			 	    {%if ioStatus %}
+		            <div style="color:#5B5B5B;font-size:13px;font-weight:bold;margin:2px 0px 0px 155px;padding-bottom:2px;text-align:left;width:300px;">Current IO Status: <i>{{ ioStatus }}</i></div>
+		            <div style="color:#5B5B5B;font-size:13px;font-weight:bold;margin-left:170px;">  
+		            	<input type="button" value="Update Status" class="checkmark updateStatus" style="float:none;"/></div>
+                    {%endif%}
+                    <!-- Display placement fees pulled from Ace and display as checkboxes -->
+	                {% for fee in placementFeesList %}
+	                	<div class="field BooleanField CheckboxInput">
+						    <label for="{{ fee.FeeTypeName }}">{{ fee.FeeTypeName }} ({{fee.FeeFrequencyName}})</label>					    
+						    <div class="input">					
+						        <input name="idplacement_{{ fee.PlacementFeeId }}" id="idplacement_{{ fee.PlacementFeeId }}" type="checkbox"  {%ifequal fee.IsApplicable 'true' %}checked="checked"{%endifequal%} class="checkbox">	
+						        
+						        <input type="hidden" name="pftracker_{{ fee.PlacementFeeId }}" id="pftracker_{{ fee.PlacementFeeId }}"{%ifequal fee.IsApplicable 'true' %}value="1"{%else%}value="0"{%endifequal%}>
+						    </div>
+						</div>
+						<div class="clearfix"></div>
+						<div class="field CharField TextInput">				    
+						    <div class="input">
+						        <input name="idplacement_{{ fee.PlacementFeeId }}amt" id="idplacement_{{ fee.PlacementFeeId }}amt" maxlength="256" type="text" value="{{fee.FeeAmount}}" {%ifnotequal fee.IsApplicable 'true' %}disabled="disabled"{%endifnotequal%}>					    
+						    </div>
+						</div>
+	                {% endfor %}
+	                {% ifnotequal chosenSalesPerson 0%}
+	                	<input type="hidden" name="salesperson" id="salesperson" value="{{chosenSalesPerson}}">
+	                {% else %}
+	                <div class="field CharField TextInput">
+	                	<label>Salesperson:</label>
+		                <select name="salesperson">
+			                {% for s in SalesPersonList %}
+			                <option value="{{ s.SalesPersonId }}">{{ s.SalesPersonName }}</option>
+			                {% endfor %}
+		                </select>
+		            </div>
+		            <br>	                
+	                {% endifnotequal %}
+                    {%comment%}{%endif%}{%endcomment%}
+	            </fieldset>
+	            <fieldset id="moreSettings">
+	            	<legend>Payout Settings</legend>
+            	{{formOrgIOEdit}}
+            	</fieldset>
+
+				<div class="submitcancel" style="width:60%;">
+					<input type="submit" value="Update Settings" class="checkmark" style="float:left;"/>
+					<input type="reset" value="Cancel" id="cancel" class="checkmark" style="float:left;"/>
+				</div>
+				<div class="clearfix"></div>
+				</form>
+			</div>			
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+{% endblock %}

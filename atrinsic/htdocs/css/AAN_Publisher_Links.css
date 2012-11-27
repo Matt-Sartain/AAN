@@ -1,0 +1,56 @@
+/********** Publisher/Links **********/
+.hideForm { display:none; }
+#dynamicSearchForm .srchFiltersCtn {
+    display:block;
+    float:left;
+    font-size:14px;
+    padding:30px 1% 0;
+    width:35%;
+}
+#selectbox_vertical, #selectbox_promotion { float:right; }
+#srchByVertical, #srchByPromotion { 
+    background-color:#FFF;
+    border:1px solid #D5D7DE;
+    display:block;
+    display:none;
+    float:left;
+    margin:20px 0 20px 10px;
+    width:48%; 
+}#srchByPromotion { float:right; margin-right:10px;}
+.srchCriteriaChosen { font-size:14px; height:22px; padding:3px 0 0 5px; }
+.srchCriteriaChosen a { color:red; float:right; font-size:12px; padding:0 15px 0 0; }
+#dynamicResults { display:none; }
+
+.getLinksBtn {
+	background: url('/images/btn_blues_getlinks.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:right;
+	height:19px;
+	margin:15px 60px 0 0;
+	width:81px;
+}.getLinksBtn:hover { background-image: url('/images/btn_blues_getlinks_mo.gif'); }
+
+.goBackBtn {
+	background: url('/images/btn_blue_cancel2.gif') no-repeat;
+	outline: none;  
+	border: none;
+	float:left;
+	height:33px;
+	margin:15px 60px 0 0;
+	width:81px;
+}.goBackBtn:hover { background-image: url('/images/btn_blue_cancel_mo2.gif'); }
+
+.linkCtn { margin:10px;}
+/********** Table overrides **********/
+.publisherLinksResults th{
+    background-color:#EEF1FE !important;
+    color:#000000;
+}
+table.dataTableSearchResults { border:4px solid #FFF !important; margin:20px auto; }
+/********** END Table overrides **********/
+/********** END Publisher/Links **********/
+
+/* dashboard */
+#showAll{float:right;display:none;margin:5px 5px 0 0;}
+#showAllBtn{font-size:1.2em;font-weight:bold;color:#000;}

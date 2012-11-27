@@ -1,0 +1,24 @@
+.msgContentctn { border:1px solid #000000;float:left;width:750px; }
+.msgHdrCtn { background-color:#86B4D6;color:#FFFFFF;height:45px;font-size:14px; }
+.selectHdr { border-right:1px solid #A1C4E0;height:35px;float:left;padding:10px 0px 0px 10px;width:55px; }
+.tofromHdr { border-right:1px solid #A1C4E0;height:35px;float:left;padding:10px 0px 0px 10px;width:140px; }	
+.subjectHdr { border-right:1px solid #A1C4E0;height:35px;float:left;padding:10px 0px 0px 10px;width:190px; }
+.dateHdr { border-right:1px solid #A1C4E0;height:35px;float:left;padding:10px 0px 0px 10px;width:180px; }
+.actionsHdr { height:35px;float:left;padding:10px 0px 0px 10px;width:105px; }
+.selectCol {
+	border-right:1px solid #A1C4E0;
+	height:42px;
+	float:left;
+	padding:10px 0px 0px 10px;
+	text-align:center;
+	width:55px;
+}
+.tofromcol { border-right:1px solid #A1C4E0;height:42px;float:left;padding:10px 0px 0px 10px;width:140px; }
+.subjectCol { border-right:1px solid #A1C4E0;height:42px;float:left;padding:10px 0px 0px 10px;width:190px; }
+.dateCol { border-right:1px solid #A1C4E0;height:42px;float:left;padding:10px 0px 0px 10px;width:180px; }
+.actionsCol { height:52px;float:left;padding:0px 0px 0px 25px;text-align:center;width:90px; margin:auto;}
+
+.msgRowNoData {	text-align:center;width:750px; }
+.msgRow { height:52px;font-size:14px; }
+.msgRowGrey { background-color: #F0F0F0; }
+.msgRowWhite {	background-color: #FFFFFF; }

@@ -1,0 +1,245 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_DataTable_SearchResults.css" rel="stylesheet" type="text/css" media="all">   
+    <link href="/css/AAN_Publisher_Links.css" rel="stylesheet" type="text/css" media="all">     
+    <link href="/css/AAN_Publisher_Advertiser_Apply.css" rel="stylesheet" type="text/css" media="all">
+    <style>
+    #dialogPH { color:#6699ff;font-size:14px;display:none }
+	#w9Warning
+	{
+		color:#6699ff;font-size:14px;display:none;;margin:7px 14px;
+	}
+	#w9UploadForm
+	{
+		color:#6699ff;font-size:14px;display:none;;margin:7px 14px;
+	}
+	a.w9links
+	{
+		text-decoration:underline:
+		color:#6699ff;
+	}
+	
+    input.btn_goBackToWarning {
+        background-image:url('/images/1blues_back.gif');
+        background-repeat:no-repeat;
+        display:block;
+        float:left;
+        height:33px;
+        margin:0px;
+        padding:0px;
+        border:0px;
+        width:81px;
+    }
+    input.btn_goBackToWarning:hover { background-image: url('/images/1blues_back_mo.gif'); }
+	 input.btn_Upload {
+        background-image:url('/images/1blues_upload.gif');
+        background-repeat:no-repeat;
+        display:block;
+        float:left;
+        height:33px;
+        margin:0px;
+        padding:0px;
+        border:0px;
+        width:81px;
+    }
+    input.btn_Upload:hover { background-image: url('/images/1blues_upload_mo.gif'); }
+	
+    </style>
+{% endblock %}
+
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/AAN_widgets.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/dataTables.currencySort.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/dataTables.currencyTypeDetect.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaSort.js"></script>    
+    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaTypeDetect.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/publisher.advertiser.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    $('.widget_table').dataTable({'bFilter':false,
+ 	                       'bJQueryUI': true,
+                           'bLengthChange':false,
+                           'iDisplayLength':25});
+                           
+    // Update the StartDate and EndDate ID fields of the widgets to make them unique
+    // Apply the DatePicker to these input fields.
+    {%for widget in widgets%}
+        inputStartDate = $(".widgetFrm{{widget.widget_id}}").find('#id_start_date')
+        inputStartDate.attr('id', 'id_start_date_{{widget.widget_id}}')
+        inputEndDate = $(".widgetFrm{{widget.widget_id}}").find('#id_end_date')
+        inputEndDate.attr('id', 'id_end_date_{{widget.widget_id}}')
+        $("#id_start_date_{{widget.widget_id}}, #id_end_date_{{widget.widget_id}}").datepicker({showOn: "both", clickInput:true, dateFormat: "mm/dd/yy", buttonImage: "/images/blankdatepicker.png",buttonImageOnly: true});  
+    {% endfor %}
+                
+                           
+ $(".dashboardCategory").bind("click", function(e){
+			//$("#btnTabContent").html("<div class='loadingFilter'></div>");
+					
+			var verticalID = $(this).attr("id");
+			var getVerticals = "category/" + verticalID;
+			
+			$.ajax({
+    		type: "GET",
+    		url: "/publisher/dashboardAjax/" + getVerticals,
+    		dataType: "html",
+    		success: function(data){
+    		    
+    		    $("#companies").html(data);
+    		    $("#categories").hide();
+    		    $("#companies").show();
+    		    $("#showAll").show();
+    	    }
+            });
+			
+
+			return false;
+		});
+		
+$("#showAllBtn").live("click", function(event){
+	event.preventDefault();
+	 $("#categories").show();
+     $("#companies").hide();
+     $("#showAll").hide();
+});
+		
+initAjaxLightBox();
+
+{% if showW9Warning %}
+    $("#w9Warning").show()
+	$("#w9UploadForm").hide()
+	$("#goBacktoWarning").live("click", function() {
+		$("#w9Warning").show()
+		$("#w9UploadForm").hide()
+		return false
+	});
+	$(".w9Upload").live("click", function() {
+	    $("#w9UploadForm").show()
+	    $("#w9Warning").hide()
+		return false
+	});
+	function showW9WarningLB(){     
+		//$("#dialogPH").dialog({bgiframe: true,	height: 350, width: 600,modal: true,draggable: false,resizable: false});	
+		
+		$("#dialogPH").dialog({bgiframe:true, 
+				               height:350, 
+				               width:600, 
+				               modal:true, 
+				               draggable:false, 
+				               resizable:false,
+				               open: function(event, ui) { 
+				                   $(".ui-dialog-titlebar").addClass("ui-widget-header-forDialog");
+			                   } 
+			               });
+		
+		$("#dialogPH").bind('dialogclose', function(event, ui) {
+				});	
+		// Only way to override style settings within ui-widget-content
+		$(".w9links").css("color","#6699ff")
+		$(".w9links").css("text-decoration","underline")		
+		$("#w9Warning").show()
+		$("#w9UploadForm").hide()
+	}
+	showW9WarningLB()
+	$(".dlw9").click(function(event){
+		$("#w9Warning").show()
+		$("#w9UploadForm").hide()
+		return false
+	});
+
+{% endif %}
+    //WIDGET PREVIEW
+    $('.preview').click(function(event){
+        event.preventDefault();
+		var v_widget_id = $(this).siblings(".widget_selector_id").val();
+		//$(".toolbar_widget:last").children(".widget_id").val(v_widget_id);
+		//$(".toolbar_widget:last").children(".widget_page").val( $(".widget_page").val());
+		//$(".toolbar_widget:last").children(".widget_header").val($(this).text());
+		$.ajax({
+			type: "POST",
+			url: "/api/ajax_new_chart/"+v_widget_id+"/lines/?preview=1",
+			dataType: "json",
+			async: true,
+			success: function(data){
+				//$('.toolbar_widget:last').children().children(".widget_header").text(data.header);
+				//$('.toolbar_widget:last').children(".widget_content").html(data.html);
+				$("#preview").html(data.html);
+				data_html = data.html;
+			}
+		});
+	});
+{% endblock %}
+{% block add_widget %}
+    <a href="" class="AddWidget" id="addWidget"></a>
+{% endblock %}
+
+{% block dynamicWidgets %}
+
+<ul id="mainWidgetCtn" class="mainWidgetCtn">
+	{%for widget in widgets%}
+		{%include 'base/AAN_Widget_Template.html'%}									
+	{%endfor%}	
+	<li class="dynamicWidgetCtn wBorder">    
+        <div class="dynamicWidgetHdrCtn">
+            <div class="dynamicWidgetHdr">Categories</div>
+            <a href='' class='widget_close'></a>
+            <a href='' class='widget_collapse'></a>
+        </div>
+        <div id="showAll"><a id="showAllBtn" href="">Back to Categories</a></div>
+        <div id="categories">            
+            {% for vertical in verticals %}	
+            <div class="dashboardCategoryCtn">
+                <a style="background:url(/images/categories/{{ vertical.icon }}) no-repeat;" id="{{ vertical.order }}" class="dashboardCategory" >
+                <span style="display:block;padding-left:54px;"><strong>{{ vertical.name }}</strong><br>{{ vertical.description }}</span>
+             </a></div>
+            {% endfor %}
+        </div>
+        <div class="clearfix"></div>
+        <div id="companies" style="display:none;">
+        </div>
+    </li>
+</ul>
+{% if showW9Warning %}
+<div id="ajaxLightbox"></div>
+<div id="dialogPH" style="overflow-y:hidden">
+<div id="w9Warning">
+<br>
+Our records indicate we have yet to receive a completed W9 form for this publisher account. <br><br>
+
+Prior to receiving commission for activity on our network, we require all U.S. Citizens to complete and sign a W9 form<br>
+ for tax purposes.  <a href="{{w9Link}}" class="w9links">Click here</a> to download the W9 form.<br><br>
+If you are not a U.S. Citizen, please complete a W8BEN form. <a href="http://www.irs.gov/pub/irs-pdf/fw8ben.pdf" class="w9links">Click here</a> to download the form.<br><br>
+Please complete and fax to (845) 215-0066, Attention Accounts Payable, at your earliest convenience. You may also upload your completed W9 Form 
+{%comment%}<a href="" class="w9links w9Upload" onclick="return false;">here</a>{%endcomment%}.
+
+<a href="#" class="w9links" onClick="window.open('http://media.atrinsic.com/uploads/index.cfm?compid={{hashed_ACEID}}','uploadw9','width=450,height=175');">here</a>.
+<br><br>
+For questions, please contact <a href="mailto:help@network.atrinsic.com" class="w9links">help@network.atrinsic.com</a>.
+
+</div>
+<div id="w9UploadForm">
+	<br>
+    <iframe src="http://media.atrinsic.com/uploads/index.cfm?compid=19675324512" width="550px" style="border:none;height:450px;overflow-x:hidden" >
+        <p>Your browser does not support iframes.</p>
+    </iframe>
+	<!--
+	<form enctype="multipart/form-data" action="w9Uploader/" method = "POST" id="uploadWNine">
+		Upload W9 Form<br>
+		{{ wNineForm.wNineFile }}	
+		<div style="clear:both;"></div>
+		<input type="button" id ="goBacktoWarning" value="" class="btn_goBackToWarning"/>
+		<input type="submit" class="btn_Upload" value=""/>
+	</form>-->
+</div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+8

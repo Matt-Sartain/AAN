@@ -1,0 +1,92 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all"/>
+<style type="text/css">
+    ul.reporttypes li {color:red}
+    ul.reportsformats li {color:blue}
+</style>
+{% endblock %}
+
+{% block document_ready %}
+$("#start_date, #end_date").datepicker({showOn: 'both', buttonImage: '/images/blankdatepicker.png', buttonImageOnly: true, dateFormat: 'mm/dd/yy'}); 
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Reporting API</div>
+<div class="contentCtn"> 
+    <div style="margin:10px 0px 0px 10px;font-size:12px;">
+        <h3>Welcome to the reporting API section:</h3>
+        <form method="post" action="">
+        <table>
+        <tr><td>Report:</td>
+            <td><select name="report_type">
+                <option value="sales-report"{% ifequal inits.report_type 'sales-report' %} selected{% endifequal %}>Sales and Activity Report</option>
+                <option value="sales-by-publishers"{% ifequal inits.report_type 'sales-by-publishers' %} selected{% endifequal %}>Sales and Activity Report by Advertiser</option>
+                <option value="revenue-report"{% ifequal inits.report_type 'revenue-report' %} selected{% endifequal %}>Revenue Report</option>
+                <option value="revenue-report-by-advertisers"{% ifequal inits.report_type 'revenue-report-by-advertisers' %} selected{% endifequal %}>Revenue Report by Advertiser</option>
+                <option value="link-report"{% ifequal inits.report_type 'link-report' %} selected{% endifequal %}>Link Report</option>
+                <option value="order-details-report"{% ifequal inits.report_type 'order-details-report' %} selected{% endifequal %}>Order Detail Report</option>
+                <option value="accounting-report"{% ifequal inits.report_type 'accounting-report' %} selected{% endifequal %}>Accounting Report</option>
+                <option value="advertiser-revenue-report"{% ifequal inits.report_type 'sales-by-advertiser' %} selected{% endifequal %}>Revenue Report</option>
+                {% comment %}<option value="advertiser-revenue-report"></option>{% endcomment %}
+            </select></td></tr>
+        <tr><td>Format receive:</td>
+            <td><select name="format_type">
+                <option value="json"{% ifequal inits.format_type 'json' %} selected{% endifequal %}>JSON</option>
+                <option value="json-array"{% ifequal inits.format_type 'json-array' %} selected{% endifequal %}>JSON Array</option>
+                <option value="xml"{% ifequal inits.format_type 'xml' %} selected{% endifequal %}>XML</option>
+            </select></td></tr>
+            <tr><td>Start Date</td>
+                <td><input type="text" name="start_date" id="start_date" size="12" value="{{inits.start_date}}"></td></tr>
+            <tr><td>End Date</td>
+                <td><input type="text" name="end_date" id="end_date" value="{{inits.end_date}}"></td></tr>
+            <tr><td></td>
+                <td><input type="submit" value="Get API Link"></td></tr>
+        </table>
+        </form>
+        {% if inits.report_type %}
+            <textarea rows="6" cols="40">{{SITE_URL}}/api/get_report/{{inits.report_type}}/{{ inits.format_type }}/?organization={{request.organization.pk}}&auth_key={{API_KEY}}&date_range={{ inits.start_date }},{{inits.end_date}}</textarea>
+        {% else %}
+            To get an API url fill up the form and click [Get API Link]
+        {% endif %}
+        {% comment %}
+        <p>Your unique key is: <strong>{{API_KEY}}</strong>
+        <p>Your organization id is: <strong>{{request.organization.pk}}</strong>
+        
+        <p>There are multiple reports and parameters that can be passed
+        
+        <p>Here's the call with the parameters name:<br>
+            <blockquote>
+        {{SITE_URL}}/api/get_report/<span style="color:red">[[report_type]]</span>/<span style="color:blue;">[[return_format]]</span>/?organization=[[organization id]]&auth_key=[[unique key]]&date_range=02/01/2010,03/01/2010
+        </blockquote>
+        
+        <p>Example URL:<br>
+            <blockquote>
+        {{SITE_URL}}/api/get_report/<span style="color:red">sales-report</span>/<span style="color:blue;">xml</span>/?organization={{request.organization.pk}}&auth_key={{API_KEY}}&date_range=02/01/2010,03/01/2010<br><br>
+            </blockquote>
+       
+        Report types:<br>
+        <ul class="reporttypes">
+            <li>sales-report</li>
+            <li>sales-by-publishers</li>
+            <li>revenue-report</li>
+            <li>revenue-report-by-advertisers</li>
+            <li>link-report</li>
+            <li>product-detail-report</li>
+            <li>order-details-report</li>
+            <li>accounting-report</li>
+            <li>sales-by-advertiser</li>
+            <li>advertiser-revenue-report</li>
+        </ul>
+        
+        Report formats:<br>
+        <ul class="reportsformats">
+            <li>json</li>
+            <li>json-array</li>
+            <li>xml</li>
+        </ul>{% endcomment %}
+        <br><br>
+    </div>
+</div>    
+{%endblock%}

@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_settings_users_add %}" method="POST" class="MooseHead">
+        {{ form }}
+    	<div class="clearfix"></div>
+        <input type="submit" class="saveBtn" value=""/>
+    </form>
+</div>
+

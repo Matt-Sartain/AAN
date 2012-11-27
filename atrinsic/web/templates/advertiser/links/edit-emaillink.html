@@ -1,0 +1,16 @@
+<script type="text/javascript">    
+    hideAssignedTo();
+    initAssignedTo();
+    initDatePickers();
+    initAjaxFormPostFromLightbox();
+</script>
+
+<div id="AjaxContentFromDialog">
+    <div class="ajaxLoading"></div>    
+    <form action="{% url advertiser_links_edit link.link_id %}" method="post" enctype="multipart/form-data" class="MooseHead noMargin">        
+        {{ form }}
+        <input type="submit" class="submitPlusWBGBtn pushRight" value="">
+        <div class="clearfix"></div>
+    </form>
+</div>
+

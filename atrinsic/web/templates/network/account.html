@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block content %}
+<table>
+<thead>
+<tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>E-mail</th>
+    <th>Admin Level</th>
+    <th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for o in object_list %}
+<tr class="{% cycle "odd" "even" %}">
+    <td>{{ o.first_name }}</td>
+    <td>{{ o.last_name }}</td>
+    <td>{{ o.email }}</td>
+    <td>{{ o.get_profile.get_admin_level_display }}</td>
+    <td>
+        <a href="{% url network_account_users_edit o.id %}" class="AddProgram2">Edit</a>
+        <a href="{% url network_account_users_delete o.id %}" class="AddProgram2">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

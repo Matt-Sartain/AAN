@@ -1,0 +1,71 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block javascript %}
+    <script type="text/javascript">
+
+    function approve_app(id) {
+        $("#approve_" + id).hide();
+        $("#status_" + id).load("{% url network_account_applications_approve %}?publisher_id=" + id);
+        $("#status_" + id).show();
+    }
+
+    function deny_app(id) {
+        $("#deny_" + id).hide();
+        $("#status_" + id).load("{% url network_account_applications_deny %}?publisher_id=" + id);
+        $("#status_" + id).show();
+    }
+
+    </script>
+    </script>
+{% endblock %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Location</th>
+    <th>Phone</th>
+    <th>Fax</th>
+    <th>Email</th>
+    <th>Contact</th>
+    <th>Currency</th>
+    <th>Vertical</th>
+    <th>Promotion Method</th>
+    <th>URL</th>
+    <th>Action</th>
+</tr>
+{% for o in object_list %}
+<tr class="{% cycle "odd" "even" %}">
+    <td>{{ o.date_created }}</td>
+    <td>{{ o.name }}</td>
+    <td>{{ o.address }}</td>
+    <td>{{ o.city }}, {{ o.state }} {{ o.zipcode }} {{ o.country }}</td>
+    <td>{{ o.contact_phone }}</td>
+    <td>{{ o.contact_fax }}</td>
+    <td>{{ o.contact_email }}</td>
+    <td>{{ o.contact_firstname }} {{ o.contact_lastname }}</td>
+    <td>{{ o.currency }}</td>
+    <td>{{ o.vertical }}</td>
+    <td>{{ o.promotion_method }}</td>
+    <td><a target="blank" href="{{ o.website_set.all.0 }}">{{ o.website_set.all.0 }}</a></td>
+    <td>
+        <span id="status_{{ o.id }}"></span>
+        <button id="approve_{{ o.id }}" onclick="approve_app({{ o.id }}); return false;" class="AddProgram2">Approve</button>
+        <button id="deny_{{ o.id }}" onclick="deny_app({{ o.id }}); return false;" class="AddProgram2">Deny</button>
+        <a href="mailto:{{ o.contact_email }}" class="AddProgram2">Contact</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="13" class="bottom">
+        {{ total_results }} results
+        <span class="pages">
+            {% paginate %}
+        </span>
+    </td>
+</table>
+{% endblock %}

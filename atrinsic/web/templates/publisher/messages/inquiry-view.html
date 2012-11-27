@@ -1,0 +1,45 @@
+<script type="text/javascript">
+    initComposeReplyFormManipulation();
+    initAjaxFormPost();
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+
+    <form action="{% url publisher_inquiry_add_msg %}" method="post" class="MooseHead">
+        <table class="DisplayTableAsForm inquiryDetails">
+            <tr class="odd"><th>Advertiser:</th><td>{{ inquiry.advertiser.name }}</td></tr>
+            <tr><th>Publisher:</th><td>{{ inquiry.publisher.name }}</td></tr>
+            <tr class="odd"><th>Transaction Date:</th><td>{{ inquiry.transaction_date }}</td></tr>
+             {%if inquiry.is_transaction_inquiry%}
+            <tr><th>Transaction Amount:</th><td>${{inquiry.transaction_amount }}</td></tr>
+            <tr class="odd"><th>Member ID:</th><td>{{ inquiry.member_id }}</td></tr>
+            {%else%}
+            <tr><th>Amount Due:</th><td>${{ inquiry.amount_due }}</td></tr>
+            {%endif%}
+            <tr><th>Is Partial Order?</th><td>{% if inquiry.is_partial_order %}Yes{% else %}No{% endif %}</td></tr>
+            <tr><th>Resolved:</th><td>{% if inquiry.advertiser_reason %}{{ inquiry.advertiser_reason }}{% else %}No{% endif %}</td></tr>
+            <tr class="odd"><th valign="top">Add Additional Comments:</th>
+            <td style="background-color:#ffffff;"><textarea name="additional" rows="8" cols="50"></textarea>
+            </td></tr>
+             <tr><th></th><td>
+            			<input type="hidden" name="inq_id" value="{{ inquiry.id }}"/>
+            	    	<input type="submit" value=" " class="sendCommentBtn"/>
+        
+            </td></tr>
+            <tr style="vertical-align:top;"><th>Message History: </th><td>
+            	
+            	{% for m in msgs %}
+        		  	{% ifequal m.sentby_publisher 1 %}
+        		  		{{ inquiry.publisher.name }} : 
+        		  	{% else %}
+        		  		{{ inquiry.advertiser.name }} : 
+        		  	{% endifequal %}
+        		  	<br>
+        		  	<textarea rows="3" cols="50" readonly="readonly">{{ m.msg }}</textarea><br>
+        		{% endfor%}	
+            	
+            </td></tr>                        
+        </table>    
+    </form>
+</div>
+

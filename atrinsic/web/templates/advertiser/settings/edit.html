@@ -1,0 +1,19 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+    function enableThem(){
+		$("#id_phone").attr("disabled", "")
+		$("#id_email").attr("disabled", "")	
+		return true
+	}
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_settings_edit %}" method="POST" class="MooseHead">
+        {{ form }}
+    	{{ formCI }}
+        <input type="submit" class="saveBtn" value="" onclick="enableThem()"/>
+    	<div class="clearfix"></div>
+    </form>
+</div>
+

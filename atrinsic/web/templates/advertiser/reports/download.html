@@ -1,0 +1,11 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <form action="{% url advertiser_reports_download %}" method="post" class="pumpHouse">
+        {{ form }}
+        <div class="input"><input type="submit" class="buttonStyle" value="DOWNLOAD REPORT" /></div>
+        <input type="hidden" name="redir" value="{{ redir }}"/>
+        <div class="clearfix"></div>
+    </form>
+{% endblock %}
+

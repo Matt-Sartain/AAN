@@ -1,0 +1,117 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#delApp').click(function() {
+        if(confirm("Are you sure you want to delete this Application?")){
+        	return true;
+        }else{
+        	return false;
+        }        
+    });
+{% endblock %}
+
+{% block content %}
+
+    <table>
+    <tr>
+        <th>Organization:</th>
+        <td>{{ application.organization_name }}</td>
+    </tr>
+    <tr>
+        <th>Contact:</th>
+        <td>{{ application.contact_firstname }} {{ application.contact_lastname }}</td>
+    </tr>
+    <tr>
+        <th>Address:</th>
+        <td>{{ application.address }}</td>
+    </tr>
+    <tr>
+        <th>Location:</th>
+        <td>{{ application.city }}, {{ application.state }} {{ application.zipcode }} {{ application.country }}</td>
+    </tr>
+    <tr>
+        <th>Phone:</th>
+        <td>{{ application.contact_phone }}</td>
+    </tr>
+    <tr>
+        <th>Fax:</th>
+        <td>{{ application.contact_fax }}</td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td><a href="mailto:{{ application.contact_email }}">{{ application.contact_email }}</a></td>
+    </tr>
+    <tr>
+        <th>Website:</th>
+        <td><a target="blank" href="{{ application.website_url }}">{{ application.website_url }}</a></td>
+    </tr>
+    <tr>
+        <th>Tax Classification:</th>
+        <td>{{ application.get_tax_classification_display }}</td>
+    </tr>
+    <tr>
+        <th>Date Site Launched:</th>
+        <td>{{ application.date_site_launched }}</td>
+    </tr>
+    <tr>
+        <th># products on site:</th>
+        <td>{{ application.products_on_site }}</td>
+    </tr>
+    <tr>
+        <th>Technical Team Type:</th>
+        <td>{{ application.get_technical_team_type_display }}</td>
+    </tr>
+    <tr>
+        <th>Creative Team Type:</th>
+        <td>{{ application.get_creative_team_type_display }}</td>
+    </tr>
+    <tr>
+        <th>Has Affiliate Program:</th>
+        <td>
+            {% if application.has_existing_affiliate_program %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Participates in PPC?</th>
+        <td>
+            {% if application.participates_in_ppc %}
+                {{ application.get_ppc_working_with_agency_display }}
+            {% else %}
+                No
+            {% endif %}
+        </d>
+    </tr>
+    <tr>
+        <th>Participates on SEO?</th>
+        <td>
+            {% if application.participates_in_seo %}
+                {{ application.get_seo_working_with_agency_display }}
+            {% else %}
+                No
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Participates on Email Marketing?</th>
+        <td>
+            {% if application.participates_in_email %}
+                {{ application.get_email_working_with_agency_display }}
+            {% else %}
+                No
+            {% endif %}
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2">
+            <a href="{% url network_account_advertiser_applications_create application.id %}" class="AddProgram2">Create Advertiser</a>
+            <a href="{% url network_account_advertiser_applications_delete application.id %}" class="AddProgram2" id="delApp">Delete</a>
+            <a href="#" onclick="mailto:{{ application.contact_email }};return false;" class="AddProgram2">Contact</a>
+        </td>
+    </tr>
+</table>
+{% endblock %}

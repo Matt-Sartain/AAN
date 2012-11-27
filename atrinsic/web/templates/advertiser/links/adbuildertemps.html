@@ -1,0 +1,81 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block css %}
+<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+
+{% block document_ready %}
+
+
+$("#adpreview").dialog({title: 'Ad Preview', autoOpen: false })
+
+$(".prev").live("click", function(event){
+	    event.preventDefault();
+	    
+	    
+	    $.ajax({
+    		type: "POST",
+    		url: '/advertiser/links/adbuilder/preview/1/',
+    		dataType: "html",
+    		async: false,
+    		success: function(data){
+    		     $("#adpreview").html(data);
+    		}
+    	}); 
+	    
+	    
+	    $("#adpreview").dialog('open');
+
+	    
+    });
+
+
+
+{% endblock %}
+{% block pageContent %}
+
+<div id="adbuilder" class="adbuilder">
+	<h3>AdBuilder Templates</h3>
+	<div style="height:900px">
+		<table><tr>
+	    {% for template in templates.object_list %}
+			<td>
+		        {{ template.name }}<br/>
+		        <a href="{% url advertiser_adbuilder_advanced template.ad_id %}"><img src="/images/user_images/adbuilder/templates/{{template.ad_id}}/{{template.ad_id}}.jpg" /></a><br/>
+		         <a id='{{template.ad_id}}' href="" class="prev">preview</a>
+		   	</td>
+		   	{% if not forloop.last %}
+			   	{%if forloop.counter|divisibleby:"4"%}
+	                </tr><tr>
+	            {%endif%}
+            {%endif%}
+	    {% endfor %}
+	 </table>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if templates.has_previous %}
+            <a href="?page={{ templates.previous_page_number }}">previous</a>
+            
+        {% endif %}
+
+        <span class="current">
+            Page {{ templates.number }} of {{ templates.paginator.num_pages }}.
+        </span>
+
+        {% if templates.has_next %}
+            <a href="?page={{ templates.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+<div id="adpreview">
+
+</div>
+	
+</div>        
+{% endblock %}

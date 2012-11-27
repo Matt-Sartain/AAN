@@ -1,0 +1,15 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_dashboard_events  %}';
+    });
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_dashboard_events_add %}" method="post">
+{{ form }}
+<input type="submit" value="Add Events" class="AddProgram2"/>
+<input type="reset" value="Cancel" id="cancel" class="AddProgram2"/>
+</form>
+{% endblock %}

@@ -1,0 +1,54 @@
+ <div id="widget_toolbar" style="display:none">
+	<ul style="list-style:none">
+	{%for key, values in widget_list.items%}
+		{% for k,z in values.items%}
+		<li class="widget_type_li"><h3>{{k}}</h3></li>
+
+		{% for x in z%}
+		<div style="cursor:pointer">
+		    <a href="" class="preview">preview</a>
+			<a href="" class="widget_selector">{{x.function}}</a>
+			<input type="hidden" value="{{x.widget_id}}" name="widget_selector_id" class="widget_selector_id">
+		<li>
+		{%endfor%}
+
+		{%endfor%}
+	{%endfor%}
+	</ul>
+	<div id="preview"></div>
+</div>
+<div id="widget_template" style="display:none">	
+		<input type="hidden" value="{{widget.widget_id}}" class="currentWidgetID">
+        <input type="hidden" value="{{current_page}}" name="widget_page" class="widget_page">
+        <input type="hidden" value="{{group_by}}" name="hidden_group_by" id="hidden_group_by" >
+        <textarea style="display:none; width:100%;height:0;" class="hidden_flash_content" ><div style="width:100%;">{{widget.html|safe}}</div></textarea>
+        
+        <div class="dynamicWidgetHdrCtn">
+            <div class="dynamicWidgetHdr"></div>
+            <a href='' class='closeWidget'></a>
+            <a href='' class='collapseWidget'></a>
+        </div>
+        <div class="dynamicWidget">{{widget.html|safe}}</div>
+        
+        <div class="dynamicWidgetSettings" style="display:none;">
+        	<form action="/api/settings/" method="post" class="MooseHead widgetSettingsForm widgetFrm{{widget.widget_id}}">
+        		<input type="hidden" value="{{widget.widget_id}}" name="wid" class="wid">    					
+        		<div class="widget_form_holder"></div>
+    			<input type="submit" class="saveBtn" value=""/>
+    			<div class="clearfix"></div>
+    		</form>
+        </div>
+        <div class="dynamicWidgetFtr">
+            <div class="WidgetOptions">
+                <a href="" class="WidgetOption chartStyle" name="Line Graph" id="lines"></a>
+                <a href="" class="WidgetOption chartStyle" name="Bar Graph" id="columns"></a>
+                <a href="" class="WidgetOption chartStyle" name="Table View" id="table"></a>
+                {%ifequal reporting 1%}
+                <a href="" class="dwnldDynamicWidget" name="Download"></a>{%endifequal%}
+                {%if settings%}<a href="" class="widgetSettingsBtn" name="Settings"></a>{%endif%}
+                &nbsp;
+            </div>
+            <a href="" class="showWidgetOptions"></a>
+            <div class="clearfix"></div>
+        </div>
+</div>

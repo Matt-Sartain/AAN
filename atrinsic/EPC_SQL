@@ -1,0 +1,2 @@
+alter table base_organization add column     `seven_day_epc` numeric(10, 2) NOT NULL;
+alter table base_organization add column    `three_month_epc` numeric(10, 2) NOT NULL;

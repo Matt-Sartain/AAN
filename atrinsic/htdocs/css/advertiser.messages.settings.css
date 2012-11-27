@@ -1,0 +1,19 @@
+.settingsctn { border:1px solid #000000;float:left;width:825px; }
+
+.settingsHdr { margin: 20px 0 0 140px;}
+.settingsHdrCtn { background-color:#86B4D6;color:#FFFFFF;height:45px;font-size:14px;font-weight:bold; }
+.recipientHdr { height:35px;float:left;padding:10px 0px 0px 10px;width:200px; }
+.networkAncHdr { height:35px;float:left;padding:10px 0px 0px 10px;width:225px; }	
+.legalAncHdr { height:35px;float:left;padding:10px 0px 0px 10px;width:185px; }
+.advNewsLHdr { height:35px;float:left;padding:10px 0px 0px 10px;width:165px; }
+
+.settingsRowNoData {	text-align:center;width:825px; }
+.settingsRow { height:52px;font-size:14px; }
+.settingsRowGrey { background-color: #F0F0F0; }
+.settingsRowWhite {	background-color: #FFFFFF; }
+
+.recipientCol { height:42px;float:left;padding:10px 0px 0px 10px;width:200px; }
+.networkAncCol { height:42px;float:left;padding:10px 0px 0px 75px;width:160px; }
+.legalAncCol { height:42px;float:left;padding:10px 0px 0px 75px;width:125px; }
+.advNewsLCol { height:42px;float:left;padding:10px 0px 0px 25px;text-align:center;width:130px; }
+.save { margin: 0 0 0 0; }

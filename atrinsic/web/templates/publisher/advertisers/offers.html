@@ -1,0 +1,89 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+{% load forex %}
+{% block css %}
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Publisher_Advertisers.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.advertiser.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initAjaxLightBox();
+    initPendingOffers();
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Pending Offers</div>
+
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>  
+    <table class="primaryDisplayTable" cellspacing="0">
+        <tr>
+            <th></th>
+            <th><a href="?sort={% ifequal sort "ticker" %}{{ sort_next }}{% else %}ticker{% endifequal %}">Ticker</a></th>
+            <th>
+                <a href="?sort={% ifequal sort "company_name" %}{{ sort_next }}{% else %}company_name{% endifequal %}">Company Name</a></th>
+            <th>Vertical</th>
+            <th><a href="?sort={% ifequal sort "state" %}{{ sort_next }}{% else %}state{% endifequal %}">State</a></th>
+            <th><a href="?sort={% ifequal sort "country" %}{{ sort_next }}{% else %}country{% endifequal %}">Country</a></th>
+            <th>URL</th>
+            <th>Contact</th>
+            <th><a href="?sort={% ifequal sort "network_rating" %}{{ sort_next }}{% else %}network_rating{% endifequal %}">Rating</a></th>
+            <th>Action</th>
+        </tr>
+        <form action="" method="POST" id="pendingOffers">
+        <input type="hidden" id="method" name="method" value="">
+        {% for o in object_list %}
+            <tr class="rowSpacer"><td colspan="10"></td></tr>
+            <tr class="highlightRow">
+                <td><input type="checkbox" name="o_id" value="{{ o.id }}">
+                    </td>
+                <td><a href="" id="{% url publisher_advertisers_view o.id %}" class="AjaxLightBox dMed" name="Advertiser Details">
+                       {%ifequal    o.ticker_symbol ''%} {{ o.ticker }} {%else%} <img src="/images/{{ o.ticker_symbol }}" alt="{{ o.ticker }}" />
+                       {%endifequal%}
+                   </a></td>
+                <td><a href="" id="{% url publisher_advertisers_view o.id %}" class="AjaxLightBox dMed" name="Advertiser Details">
+                        {{ o.name }}</a></td>
+                <td>{{ o.vertical.name }}</td>
+                <td>{{ o.state }}</td>
+                <td>{{ o.country }}</td>
+                <td><a href="http://{{ o.website_set.all.0.url }}" target="new">{{ o.website_set.all.0.url }}</a></td>
+                <td>{{ o.organizationcontacts_set.all.0.firstname }} {{o.organizationcontacts_set.all.0.lastname }}</td>
+                <td>{{ o.get_network_rating }}</td>
+                <td id="action_{{ o.id }}">
+            		<div class="actionButt action_buttons">
+            		    <div class="report_action_tip"></div>
+            			<a href="{% url publisher_advertisers_offers_approve o.id %}">Accept</a>
+            			<a href="{% url publisher_advertisers_offers_deny o.id %}">Decline</a>
+            		</div>
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if not object_list %}
+            <tr>
+                <td colspan="10">
+                    No matches to your query.
+                </td>
+            </tr>
+        {% endif %}    
+
+        {% ifnotequal total_results 0 %}
+    		<tr>
+    		    <td class="footer" colspan="10">
+    			    <a href="" class="dataTableSelectAll"></a>
+    			    <a href="" class="acceptSelected">Accept Selected</a>
+    			    <a href="" class="declineSelected">Decline Selected</a>
+    		    </td>
+    		</tr>
+        {% endifnotequal %}    
+        </form>
+    </table>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

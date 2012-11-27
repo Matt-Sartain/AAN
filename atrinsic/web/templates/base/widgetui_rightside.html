@@ -1,0 +1,150 @@
+{% load compare %}			
+{% ifequal current_tab 'Dashboard' %}
+	{% ifequal org_live_type 'advertiser' %}
+	<div class="widget_headerCtn">
+			<div class="widget_header">Alerts </div>
+				<a href='' class='widget_collapse'></a>
+			<div class="actionButt action_buttons">	
+				<div class="report_action_tip"></div>
+				<a href="/advertiser/settings/alerts/" class="rsAddBtn report_btns" style="margin:0px;">Alerts</a>
+			</div>
+		</div>
+		<div class="widget_content">
+			<div class="right_side_box">
+				<table class="right_side_table" cellpadding="0" cellspacing="0">
+					<tr><th>Alert Type</th>
+						<th>Time Period:</th>
+						<th>% Change:</th></tr>
+					{% if right_side_alerts %}
+					{% else %}
+					<tr><td colspan="3">No alerts</td></tr>
+					{% endif %}
+					{% for alert in right_side_alerts %}
+					{% if alerts %}
+					<tr{% if forloop.last %} class="bot"{% endif %}>
+						<td>{{ alert.organization.get_alert_field_display }}</td>
+						<td>{{ alert.organization.get_time_period_display }}</td>
+						<td
+						{% if alert.change|lt:0 %}style="color:#be0101;"
+						{% endif %}{% if alert.change|gt:0 %} style="color: #090;" {% endif %}>
+						<div style="float:left;width:40%;margin:4px 0px 0px 0px;">{{ alert.change }}%</div>
+						<div class="actionButt action_buttons">							
+							<div class="report_action_tip"></div>										
+							<a href="/advertiser/settings/alerts/" class="rsEditBtn report_btns">Edit</a>					
+							<a href="" id="/advertiser/settings/alerts/delete/{{alert.id}}" class="rsDeleteBtn report_btns deleteAjax" name="Alert">Delete</a>						
+						</div>						
+						</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<br />
+	<div class="staticWidget">
+		<div class="widget_headerCtn">
+			<div class="widget_header">Inquiries</div>
+			<a href='' class='widget_collapse'></a>
+			<div class="actionButt action_buttons">	
+				<div class="report_action_tip"></div>
+				<a href="/advertiser/messages/inquiries/" class="rsAddBtn report_btns" style="margin:0px;">Inquiries</a>
+			</div>
+		</div>
+		<div class="widget_content">
+			<div class="right_side_box">
+				<table class="right_side_table" cellpadding="0" cellspacing="0">
+					<tr><th>Date Inquired:</th>
+						<th>Inquiry from:</th>
+						<th>Amount:</th><th>New Message</th></tr>
+					{% for i in right_side_inquiries %}
+					{% if i %}
+					<tr{% if forloop.last %} class="bot"{% endif %}>
+						<td><a href="/advertiser/messages/inquiries/?inquiry_load_id={{i.id}}" style="color:blue; text-decoration:underline;">{{ i.date_created|date:"m/d/Y" }}</a></td>
+						<td>{{ i.publisher.company_name }}</td>
+						<td>
+						{% if i.is_transaction_inquiry %}
+							{{ i.transaction_amount }}
+						{% else %}
+							{{ i.amount_due }}
+						{% endif %}
+						</td>
+						{% if i.advNew %}<td style="background: white url('/images/mail.png') no-repeat;background-position:center center;"></td>{% else%}<td></td>{% endif %}
+					</tr>
+					{%endif%}
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="staticWidget">
+	{% endifequal %}
+{% endifequal %}
+	<div class="widget_headerCtn">
+		<div class="widget_header">Status Updates</div>
+		<a href='' class='widget_collapse'></a>
+	</div>
+	<div class="widget_content">
+		<div class="right_side_box">
+			<table class="right_side_table" cellpadding="0" cellspacing="0">
+				<tr><th>Profile:</th>
+					<th>Status:</th>
+					<th>Date:</th></tr>
+				{% for status in right_side_status %}
+				{% if status %}
+				<tr{% if forloop.last %} class="bot"{% endif %}>
+					<td>{{ status.organization.ticker }}</td>
+					<td>{{ status.message }}</td>
+					<td class="date">{{ status.created|date:"m/d/Y g:i A"}}</td>
+				</tr>
+				{%endif%}
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+	
+</div>
+<br />
+{% ifequal current_tab 'Dashboard' %}
+<div class="staticWidget">
+	<div class="widget_headerCtn">
+		<div class="widget_header">Event</div>
+		<a href='' class='widget_collapse'></a>
+	</div>
+	<div class="widget_content">
+		<div class="right_side_box">
+			{% for event in right_side_events %}
+			{% if event %}
+			<table class="right_side_table">
+				<tr><th>When:</th><td>{{ event.events_date|date:"m/d/Y" }}</td>
+					<th>What:</th><td>{{ event.events_name }}</td>
+				</tr>
+				<tr><th>Where:</th><td>{{ event.location }}</td>
+					<th>How:</th><td><a href="{{ event.registration }}" style="color:blue;">{{ event.registration }}</a></td>
+				</tr>
+				<tr><th>More:</th><td colspan="3">{{ event.data }}</td></tr>
+			</table>
+			{%endif%}
+			{% if not forloop.last %}<hr>{% endif %}{% endfor %}
+		</div>
+	</div>
+</div><br />
+<div class="staticWidget">
+	<div class="widget_headerCtn">
+		<div class="widget_header">News</div>
+		<a href='' class='widget_collapse'></a>
+	</div>
+	<div class="widget_content">
+		<div class="right_side_box">
+			{% for new in right_side_news%}
+			{% if new %}
+			<p><strong>{{ new.created|date:"m/d/Y" }}</strong><br>{{new.data}}</p>{% if not forloop.last %}<hr>{% endif %}
+		    {%endif%}
+			{% endfor %}
+		</div>
+	</div>
+</div><br />
+
+{% endifequal %}

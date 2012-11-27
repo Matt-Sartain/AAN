@@ -1,0 +1,13 @@
+<div class="special_terms_header">Join Advertiser</div>
+<div class="special_terms_blurb">To join this <span>Advertisers' program</span> you must first read and accept the terms of the program listed below.</div>
+<div class="special_terms_container">
+    {%for term in terms%}
+    <div>
+        <a href="" id="show_terms" class="tnc_link" style="color:#993300;">{{term.organization.company_name}}</a>
+        <p><input type="checkbox" name="accept_terms" id="accept_terms_{{term.organization.id}}" class="accept_terms" value="{{ term.organization.id }}" disabled>Yes I have read and accepted the terms</p>
+    </div>
+    <div style="clear:both;"></div>
+    {%endfor%}
+    <a href="/publisher/advertisers/apply/?terms_accepted=1" class="nextBtn" id="lb_continue"></a>
+    <div style="clear:both;"></div>
+</div>

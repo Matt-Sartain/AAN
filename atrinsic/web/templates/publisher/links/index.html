@@ -1,0 +1,64 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+{% load thumbnail_tag %}
+
+{% block css %}
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Publisher_Links.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_DataTable_SearchResults.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/publisher.links.js"></script>
+
+{% endblock %}
+
+
+{% block document_ready %}
+    initPublisherLinks();
+    initAjaxLightBox();
+    initGetLinks();
+{% endblock %}
+
+{% block pageContent %}
+
+{% if link_type %}
+<div class="pageContentHdr">Manage Link - {{link_type|title}}</div>
+<div class="contentCtn profileView">
+    <div class="ajaxLoading"></div>
+    <div class="primaryDisplayTableHdr">Search</div>
+    <div id="dynamicSearchForm">
+        <div class="srchFiltersCtn">
+            <select class="FindBy" id="selectbox_vertical">
+                <option value="-9999">Click to Select Vertical</option>
+            </select>
+            Find by Vertical
+            <div class="clearfix"></div>            
+        </div>
+        <div class="srchFiltersCtn">
+            <select class="FindBy" id="selectbox_promotion">
+                <option value="-9999">Click to Select Promotion</option>
+            </select>
+            Find by Promotion
+            <div class="clearfix"></div>            
+        </div>
+        
+    </div>
+    <div id="srchByVertical"></div>
+    <div id="srchByPromotion"></div>
+    <div class="clearfix"></div>    
+    <div class="hideForm">
+        <form id="pubLinksSearchForm" action="{% url publisher_links link_type %}" method="post">
+            {{ form }}
+        </form>
+    
+    </div>
+</div>
+<div id="dynamicResults"></div>
+<div id="ajaxLightbox"></div>
+{% endif %}
+
+{% endblock %}
+

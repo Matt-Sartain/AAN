@@ -1,0 +1,132 @@
+.total td{
+ 	font-weight: bold;
+}
+table.report_type_helper{
+	border:1px solid black;
+	color:#516800;
+	font:11px/14px Verdana, Arial, Helvetica, sans-serif;
+	margin:1px;
+	padding:1px;
+}
+table.report_type_helper td,table.report_type_helper td {border:0;margin:2px;padding:2px;text-align:left;white-space: nowrap;}
+.input_val li { 
+	float:left; 
+	cursor: pointer;
+	padding:0;
+	margin-right:16px;
+	border:1px solid #ccc;
+	padding:3px;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+}
+
+.input_val li:hover { 
+    background-color:#999;
+    color:#FFF;
+    font-weight:bold;
+}
+ul{	list-style-type:none; }
+.radioToButton{
+	margin-top:6px;
+	width:160px;
+	display:block; 
+	background-color:#8CC400;
+	border:1px solid #c2c2c2;
+	color:#FFFFFF;
+	font:11px/14px Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-decoration:none;
+	min-width:95px;
+	text-align:center;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+select
+{
+	margin-left:0px;
+}
+.runReportingBy
+{
+	margin: 5px 0px 0px 40px;
+}
+.report_delete_btn{
+	background-image:url('/images/delBtn.png');
+	background-repeat:no-repeat;
+	display:block;
+	float:right;
+	width:19px;
+	height:18px;
+	text-indent:-2000px;
+	margin:0 2px;
+}
+.report_edit_btn{
+	background-image:url('/images/editGear.png');
+	background-repeat:no-repeat;
+	display:block;
+	float:right;
+	width:19px;
+	height:18px;
+	text-indent:-2000px;
+	margin:0 2px;
+}
+
+#id_advertiser_category
+{
+	height:90px;
+}
+label{
+	float:left; 
+	padding:0;
+	color:#5b5b5b;
+	font-weight:bold;
+}
+.input_val{
+	float:left;
+}
+.input_val ul {
+	float:left;
+	width:auto;
+	height:auto;
+	margin:-3px 0 0 0px;
+	padding:0
+}
+.ReportDetailsBox{
+	width:38%;
+	height:200px;
+	float:left;
+	margin-top:14px;
+	border:5px solid #ccc;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.report_details_holders{
+	border-bottom:1px dotted #ccc;
+	padding:4px 0px;
+	width:85%;
+	margin:10px auto;	
+}
+.report_details_holders{clear:both; display:none;}
+.reportbutton{
+	float:right;
+	margin-right:25px;
+}
+input[type="radio"]{ 
+    padding:0;
+    margin:0;
+    position:absolute;
+    width:0; 
+    opacity:0;filter:alpha(opacity=0) 
+}
+input[type="text"]{ 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border:1px solid #ababab;
+	font-size: 12px;
+	padding:2px 5px;
+}
+.report_details_actions{width:65px; float:right}
+.report_holder{float:left;}
+
+#Vertical{display:none;}
+#Advertiser{display:none;}

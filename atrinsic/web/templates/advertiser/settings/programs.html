@@ -1,0 +1,83 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.settings.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+{% endblock %}
+
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Program Settings</div>
+    <div class="contentCtn whiteBG">  
+        <div class="ajaxLoading"></div>
+        <table class="primaryDisplayTable primaryDisplayTableHdrsLeft" cellspacing="0">
+            <tr>
+                <th>Name</th>
+                <th>Created</th>
+                <th>Status</td>
+                <th>Enrolled</td>
+                <th>Action</th>
+            </tr>
+            {% for o in object_list %}
+                <tr class="rowSpacer"><td colspan="5"></td></tr>
+        	    <tr class="highlightRow">
+        	        <td>{{ o.name }}</td>
+                    <td>{{ o.date_created }}</td>
+                    <td>{% if o.is_archived %}
+                            <i>archived</i>
+                        {% else %}
+                            {% if o.is_default %}
+                                <strong>default</strong>
+                            {% else %}
+                                active
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+            	       {{ o.number_enrolled }}
+                    </td>
+                    
+                    <td>
+            			<a href="#" id="{% url advertiser_settings_programs_edit o.id %}" class="AjaxLightBox dSmallWide" name="Program: {{o.name}}">Edit</a>
+            			<a href="#" id="{% url advertiser_settings_programs_clone  o.id%}" class="AjaxLightBox dSmallWide" name="Program: {{o.name}}">Clone</a>
+                		{% if o.is_archived %}
+                			<a href="{% url advertiser_settings_programs_unarchive o.id %}" class="">Unarchive</a>
+            			{% else %}
+            				{% ifequal o.number_enrolled 0 %}
+            					{% if not o.is_default %}
+            						<a href="{% url advertiser_settings_programs_archive o.id %}" class="">Archive</a>
+            					{% endif %}
+            				{% endifequal %}
+            			{% endif %}
+            			{% if not o.is_default %}
+            				{% if not o.is_archived %}
+            					<a href="{% url advertiser_settings_programs_default o.id %}" class="">Make Default</a>
+            				{% endif %}
+            			{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}  
+        </table>
+         <a href="" class="addProgramBtn AjaxLightBox dSmallWide" id ="{% url advertiser_settings_programs_add %}" name="Add Program"></a>
+        {% ifequal request.path "/advertiser/settings/programs/" %}
+            <a href="{% url advertiser_settings_programs_view_archived %}" class="viewArchivedBtn" name="View Archived"></a>
+        {% endifequal %}
+        {% ifequal request.path "/advertiser/settings/programs/viewarchived/" %}
+            <a href="{% url advertiser_settings_programs %}" class="viewActiveBtn" name="View Active"></a>
+        {% endifequal %}
+        <div class="clearfix"></div>
+    </div>      
+<div id="ajaxLightbox"></div>
+<div id="AjaxLightBoxFromLightbox"></div>
+{% endblock %}

@@ -1,0 +1,86 @@
+.userSettingsCtn 
+{ 
+
+	height: auto;
+	margin: 10px 0 40px 25px; 
+	padding: 10px 0 0 0px;
+	width:96%;  
+	
+}		
+.userHdr 
+{ 
+	border-bottom:1px solid #CDCDCD;
+	color:#0c467e; 
+	float:left;
+	font-size:14px;
+	font-weight:normal;
+	height:20px;
+	padding:5px 0 0 0;
+	margin-left:5px;
+	width:22%;	
+}
+.userRowElem { background-color:#F0F0F0;float:left;font-size:12px;margin-left:5px;height:35px;max-height:35px;width:22%;}
+.goWhite { background-color: #FFF; }
+.rowVSpacer { clear:both;height:10px; }	
+.rowHSpacer { display:block;float:left;height:25px;width:1%;}
+.bottomHr { background-color:#CDCDCD;height:1px;width:94%; }
+.addUserCtn { height:35px;padding:10px 0 0 0;text-align:right;width:100%; }
+.addUser {clear:both;height:30px;float:right;text-align:left; margin-right:3%;margin-top:10px;padding:6px 0px 5px 0px;}
+.addUser img { vertical-align:middle; text-align:right; }
+.actionSpecific {height:50px;padding:0;width:22%;}
+
+a.rmvUserBtn{ 
+	background-image: url('/images/btnRmvUser.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+	display:block;
+	float:left;
+	height:19px;
+	margin: 0;
+	width:35px; 	
+}
+a.editUserBtn{ 
+	background-image: url('/images/btnEditUser.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+	display:block;
+	float:left;
+	height:19px;
+	margin: 0;
+	width:35px; 	
+}
+a.makeAdminBtn{ 
+	background-image: url('/images/btnSetAdmin.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+	display:block;
+	float:left;
+	height:19px;
+	margin: 0;
+	width:35px; 	
+}
+a.addUserBtn{ 
+	background-image: url('/images/addUser.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+	display:block;
+	float:left;
+	height:27px;
+	width:30px; 	
+}
+
+.greenPlay /* same style repeated for buttons not in forms no float */
+	{
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background: white url('/images/green_play.gif') no-repeat left; 
+	border:2px solid #8ad9f8;
+	color:#515151;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	margin: 5px 25px 10px 5px;
+	padding:4px 6px 4px 28px;
+	text-align:center;
+	text-decoration:none;
+	}
+	

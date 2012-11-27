@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+    $("#id_receiver").attr("readonly","readonly")
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form name="myform" action="{% url publisher_messages_compose %}" method="post" id="send_msg_form" enctype="multipart/form-data" class="MooseHead">
+		<input type="Hidden" id="MessageOrStatus" name="MessageOrStatus" value="Msg">
+		{{ form }}
+	    {% for id in advertiser_id %}
+	    <input type="hidden" name="advertiser_id" value="{{ id }}"/>
+	    {% endfor %}
+        <div style="width:300px;margin-left:190px;">
+            {% ifnotequal form.receiver None %}<input type="submit" class="submitPlusWBGBtn" value="" /><br/>{% endifnotequal %}
+        </div>
+        <div class="clearfix"></div>
+    </form>
+</div>
+    
+
+
+<script>	
+	{% ifnotequal composeTo None %}
+		var selectedid = {{ composeTo }}
+		$options = $("#id_receiver option");
+		
+		$options.each(function(){
+			if ( this.value == selectedid ){
+				$(this).attr("selected","selected");
+			}			
+		});
+
+	{% endifnotequal %}
+</script>

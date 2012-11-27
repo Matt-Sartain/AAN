@@ -1,0 +1,157 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load get_program_terms_display %}
+{% load thumbnail_tag %}
+{% block css %}
+    <link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+	<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_DataTable_SearchResults.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Publisher_Advertisers.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Publisher_Advertiser_Apply.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Publisher_Links.css" rel="stylesheet" type="text/css" media="all">
+   
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/publisher.advertiser.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initSearchFormManipulation(); 
+    {% ifequal view 'find' %}  
+        initRecruitAdvertisers();
+    {% else %}
+        initMyAdvertisers();
+    {% endifequal %}
+    
+    {% ifequal view 'expired' %}
+        initRecruitAdvertisers();
+        initConfirmationBox("Are you sure you want to expire this Advertiser?"); 
+    {% endifequal %}
+    
+    {% if object_list %}
+         {% ifequal view 'expired' %}DataTableResultsExpired();
+         {% else %}DataTableResults();
+         {% endifequal %}
+    {% endif %}
+    
+    initAjaxLightBox();
+    
+	
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">{{ view|title }} Advertisers</div>
+<div class="contentCtn">    
+	<form action="" method="get" class="MooseHead">
+        {{form}}
+        <input type="submit" class="filterBtn" value="" border="0"/></div>
+    </form>	
+</div>
+<br/>
+
+
+{% if display_results %}
+    <div class="contentCtn">
+        <div class="ajaxLoading"></div>
+        <form action="{% url publisher_advertisers_apply %}" method="POST" id="checkbox_form">
+            <div id="All_ad_ID" style="display:none;"></div>
+    		<table class="dataTableSearchResults" cellspacing="0">
+        		<thead>
+        		<tr>
+        		    <th>&nbsp;</th>
+        		    <th class="alignLeft">&nbsp;&nbsp;&nbsp;Company Name</th>
+        		    <th>Contact</th>
+            		{% ifequal view 'my' %}
+            		    <th>Term</th>
+            		{% endifequal %}
+            		{% ifequal view 'find' %}
+            		    <th>Term</th>
+            		{% endifequal %}
+            		{% ifequal view 'expired' %}
+            		    <th>Date Expired</th>
+            		{% endifequal %}
+            		    <th>7 Day EPC</th>
+            		    <th>3 Month EPC</th>
+            		    <th>Action</th>
+        		</tr>
+        		</thead>
+        		<tbody>
+        		{% for o in object_list %}
+        		<tr class="highlightRow">
+        		    <td><input class="checkbox" type="checkbox" name="advertiser_id" value="{{ o.id }}" id="o_{{ o.id }}" /></td>
+        		    <td class="alignLeft">{%ifequal o.ticker_symbol ''%}{%else%}<img src="{{o.ticker_symbol|thumbnail}}" alt="{{o.name}}" border="0"><br>
+        				{%endifequal%}
+        				<a href="" id="{% url publisher_advertisers_view o.id %}" class="AjaxLightBox" name="{{ o.name }} - Profile">{{ o.name }}</a></td>
+        		    <td class="alignLeft">{{ o.organizationcontacts_set.all.0.firstname }} {{o.organizationcontacts_set.all.0.lastname }}</td>
+            	    {% ifequal view 'my' %}
+            	    <td>{{o.get_advertiser_relationship.program_term.display_term}}</td>
+            	    {% endifequal %}
+            	    {% ifequal view 'find' %}
+            	    <td>{{o.get_default_program_term.display_term}}</td>
+            	    {% endifequal %}
+            	    {% ifequal view 'expired' %}
+            	    <td>{{ o.get_advertiser_relationship.expires }}</td>
+            	    {% endifequal %}
+
+                    <td>{{o.get_seven_day_epc_display}}</td>
+                    <td>{{o.get_three_month_epc_display}}</td>
+        		    <td id="action_{{ o.id }}"> 
+                        {% ifequal view 'my' %}
+                            <a href="" id="{% url publisher_advertisers_expire o.id %}" class="confirmExpire" name="Expire {{ o.name }}">Expire</a>
+                            <a href="" id="{% url publisher_links "all" %}?advertiser_id={{ o.id }}&view=all" class="AjaxLightBox" name="Get Links">Get Links</a>
+                        {% endifequal %}
+                        
+                        {% ifequal view 'find' %}
+                        <a href="" id="{% url publisher_advertisers_apply %}ajax/?advertiser_id={{o.id}}" class="applyToAdvertiser" name="Special Terms and Conditions">Apply</a>
+                        {% endifequal %}
+                        
+                        {% ifequal view 'expired' %}
+                        <a href="{% url publisher_advertisers_apply %}?advertiser_id={{ o.id }}">Reapply</a>
+                        {% endifequal %}
+                        
+                        <a href="" id="{% url publisher_messages_compose %}?rid={{ o.id }}" class="AjaxLightBox" name="Contact">Contact</a>
+        		    </td>
+        		</tr>
+        		{% endfor %}
+                </tbody>
+        		{% if not object_list %}
+        		<tr>
+        		    <td colspan="10">
+        		        No matches to your query.
+        		    </td>
+        		</tr>
+        		{% endif %}
+        		<tfoot>
+        		<tr>
+        		    <td class="footer" colspan="10">
+        		        <input type="hidden" name="redir" value="{% url publisher_advertisers %}?sort={% ifequal sort "ticker" %}{{ sort_next }}{% else %}ticker{% endifequal %}{% if q %}&q={{ q }}{% endif %}"/>
+        				
+        			        <a href="" class="dataTableSelectAll"></a>
+            		        {% ifequal view 'find' %}   
+            				    <a href="" class="applyToSelected" id="{% url publisher_advertisers_apply %}" name="Special Terms and Conditions"></a>
+            				{%endifequal%}
+            				{% ifequal view 'expired' %}   
+            				    <a href="" class="applyToSelected" id="{% url publisher_advertisers_apply %}" name="Special Terms and Conditions"></a>
+            				{%endifequal%}
+            		        {% ifequal view 'my' %}   
+        				        <a href="" class="expireSelected"></a>
+            				{%endifequal%}
+        			    
+        				        		
+        		    </td>
+        		</tr>
+        	    </tfoot>
+    		</table>
+    	</form>    
+    </div>		
+{% endif %}
+
+<div id="ajaxLightbox"></div>
+{% endblock %}

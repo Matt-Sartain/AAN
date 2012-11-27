@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<title>Atrinsic Affiliate Network</title>
+		<link href="/css/AAN_Site_Template.css" rel="stylesheet" type="text/css" media="all"/>
+		<link href="/css/AAN_widgets.css" rel="stylesheet" type="text/css" />
+		<!--[if IE]>
+    		<link href="/css/AAN_ie.css" rel="stylesheet" type="text/css" />
+        <![endif]-->
+		{% block css %}{% endblock %}
+		<link rel="shortcut icon" href="/images/aan.ico">
+		<link rel="icon" type="image/ico" href="/images/aan.ico">
+
+        <script language="javascript" type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+        {% if JQ17 %}
+            <script language="javascript" type="text/javascript" src="/js/jquery-ui-1.7.1.custom.min.js"></script>
+        {% else %}
+            <script language="javascript" type="text/javascript" src="/js/jquery-ui-1.8.1.custom.min.js"></script>
+        {% endif %}
+        <script language="javascript" type="text/javascript" src="/js/AAN.js"></script>
+        <script language="javascript" type="text/javascript" src="/js/publisher.advertiser.apply.js"></script>
+        {% block javascript %}{% endblock %}
+        <script language="javascript" type="text/javascript">
+           $(document).ready(function () {
+           		init_notifications(); 
+	            {% block document_ready %}{% endblock %}
+            });
+        </script>
+	</head>
+	<body style="margin:0;padding:0;">
+		<div id="main">
+            {% include 'base/widget_toolbar.html' %}
+            {% block header %}
+                {% include 'base/AAN_Header.html' %}
+            {% endblock %}
+            
+			<h1 class="logo"><a href="#">Atrinsic Affiliate Network-2</a></h1>					
+			<div class="realTimeStats">
+			    <div class="displayStats">
+			    	<div class="statsMain">
+    			    	<div class="statsType">{{ score_board.var1_name}} </div>
+    			        <div class="statsValueCtn">
+    			            <div id="statsValue"><b>{{ score_board.number_of_var1 }}</b></div>
+    			        </div>
+			    	    <h2>Real-time: {% now "P" %}</h2>
+    			    </div>
+			        <div class="statsDetails">			            
+			            <ul><li><span>Yesterday:</span><em>{{ score_board.yesterday }}</em></li>			                
+			                <li><span>Month High:</span><em>{{ score_board.month_high }}</em></li>
+			                <li><span>Month Low:</span><em>{{ score_board.month_low }}</em></li>
+			                <li><span>Total MTD:</span><em>{{ score_board.total_mtd }}</em></li>
+			            </ul>
+			            <ul><li><span>Total YTD:</span><em>{{ score_board.total_ytd }}</em></li>
+			                <li><span>YTD High:</span><em>{{ score_board.ytd_high }}</em></li>
+			                <li><span>YTD Low:</span><em>{{ score_board.ytd_low }}</em></li>
+			                <li><span>Daily Avg:</span><em>{{ score_board.daily_avg }}</em></li>
+			            </ul>
+			            <ul>
+			                <li><span>AOV:</span><em>{{ score_board.aov }}</em></li>
+			                <li><span>EPC:</span><em>{{ score_board.epc }}</em></li>
+			                <li><span>CPC:</span><em>{{ score_board.cpc }}</em></li>
+			                <li><span>CPM:</span><em>{{ score_board.cpm }}</em></li>
+			            </ul>
+			            <div class="realTimeSettings"><a href="" id="/{{org_live_type}}/settings/dashboard/" class="dashboardSettings">Settings</a></div>
+			        </div>
+			    </div>
+			</div>
+			<div class="clearfix"></div>
+
+			<div id="siteContentsCtn">
+                {% block add_widget %}{% endblock %}
+                <div class="siteContents">
+					<div class="rightSideContentCtn">
+						{% include 'base/AAN_Rightside.html' %}
+				    </div>
+					<div class="mainContentCtn">
+						<div class="mainContent">
+							{% block dynamicWidgets %}{% endblock %}
+							{% block pageContent %}{% endblock %}														
+						</div>
+
+					</div>
+				</div>				
+			</div>
+		   
+
+		</div>
+        
+        <div style="height:45px;clear:both;width:100%;"></div>
+        {% block footer %}
+        {% include 'base/AAN_Footer.html' %}
+        {% endblock %}
+        <div id="dashBoardSettingsDlg"></div>
+	</body>
+</html>

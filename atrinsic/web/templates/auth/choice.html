@@ -1,0 +1,11 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<ul>
+{% if user.get_profile.admin_level %}<li><a href="{% url auth_choice "0"%}">Network Admin</a></li>{% endif %}
+
+{% for o in organization_options %}
+<li><a href="{% url auth_choice o.id %}">{{o}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

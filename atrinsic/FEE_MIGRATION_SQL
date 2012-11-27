@@ -1,0 +1,8 @@
+alter table base_action add column `advertiser_payout_type` integer UNSIGNED NOT NULL;
+alter table base_action add column `advertiser_payout_amount` numeric(10, 2) NOT NULL;
+alter table base_action add column `transaction_fee_type` integer UNSIGNED NOT NULL;
+alter table base_action add column `transaction_fee_amount` numeric(10, 2) NOT NULL;
+
+alter table base_conversion change `network_fee` `transaction_fee` numeric(10, 2) NOT NULL;
+alter table base_conversion change `publisher_commission` `publisher_payout` numeric(10, 2) NOT NULL;
+alter table base_conversion add column `advertiser_payout` numeric(10, 2) NOT NULL;

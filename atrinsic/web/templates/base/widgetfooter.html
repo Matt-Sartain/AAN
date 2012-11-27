@@ -1,0 +1,65 @@
+{% if queries %}
+<div style="display: none">
+{% for query in queries %}
+{{query|safe}}
+{% endfor %}
+</div>
+{% endif %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="widget-footer">
+	<div style="background-color:white;height:2px;"></div>
+	<div class="blueBar action_buttons">
+		<div class="report_action_tip">
+			<div class="report_action_tip_arrow roger">
+				<div class="report_action_tip_text">&nbsp;</div>
+			</div>
+		</div>
+		{%comment%}<div id="chat_container" style="display:none;">{% include 'base/chat.html' %}</div>
+		<a href="" id="chat_bouton" class="Chat report_btns right">Chat</a>{%endcomment%}
+		<div id="notifications" style="display:none;position:absolute; right:0px; border:1px solid black; bottom:45px; float:left; background-color:#e4e4e4; width:400px;">
+			<div style="margin:0; padding:4px; background-color:#526ea6; color:#FFF;height:12px;">
+				<div style="float:left">Notifications</div>
+				<div style="float:right"><a href="" id="notification_close">__</a></div>
+			</div>
+
+		{%if notification_list%}
+			<!-- If anything is to be added to the notifications widget, please keep in mind that
+				 JQuery relies on element positioning. So if anything is added, it might throw
+				 the positioning off. Look at the init_notifications() function within Atrinsic.js  -->
+			<ul style="list-style:none; margin:2px; padding:2px; width:100%; height:auto;">
+			    {%for notification in notification_list%}
+			    <li style="margin:2px; padding:2px; width:100%; height:25px;">
+			    	<div style="float:left;width:90%">
+				    	<span style="float:left;" id="date">{{notification.1|safe}} - </span>
+				    	<span style="float:left;" id="notification_type">{{notification.3|safe}}</span>
+				    	<span style="float:left;">&nbsp;-&nbsp;</span>
+				    	<span style="float:left;width:55%;">{{notification.2|safe}} </span>
+				    </div>
+				    
+			    	<div style="float:right;">
+			    		<a href="" class="notification_delete report_btns" id="notification_delete" alt="{{notification.0}}">X</a>
+		    		</div>
+		    		<div class="clearfix"></div>
+	    		</li>
+			    {%endfor%}
+			</ul>
+		{%else%}
+			<p style="padding-left:8px;">No new notifications</p>
+		{%endif%}
+		</div>
+		
+		<a href="" class="Notifications report_btns right" id='notifications_btn'>Notifications</a>
+		<img src="/images/divider.gif" width="3" height="23" alt="" style="float:right;margin-top:1px;">
+		{% if user.is_authenticated %}{% if user.get_profile.admin_level %}{% if organization %}<div style="float:right;font-size:14px;margin-top:3px;">Impersonating {{organization}} <a href="{% url auth_unimpersonate %}" style="color:red;font-weight:bold;">(stop)</a></div>{% endif %}{% endif %}{% endif %}
+		<a href="/{{org_live_type}}/settings/" class="settings report_btns">Settings</a>
+		<a href="/{{org_live_type}}/links/" class="Links report_btns">{%ifequal org_live_type "advertiser"%}Manage{%else%}Get{%endifequal%} Links</a>
+		<img src="/images/divider.gif" width="3" height="23" alt="" style="float:left;margin-top:1px;">
+	</div>
+	<div style="background-color:white;height:1px;"></div>
+	<div style="background-color:#c6c6c6;height:1px;"></div>
+	<div style="background-color:white;padding:3px 0 0 10px;">&copy; 2010 Atrinsic. All Rights Reserved</div>
+</div>

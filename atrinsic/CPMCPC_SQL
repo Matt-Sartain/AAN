@@ -1,0 +1,4 @@
+alter table base_programterm add column `cpm` numeric(10, 2) NOT NULL;
+alter table base_programterm add column `cpc` numeric(10, 2) NOT NULL;
+
+alter table base_impression add column  `amount` numeric(10, 10) NOT NULL;

@@ -1,0 +1,19 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+    $("#id_content").parent().parent().prepend("<div class='pixelDesc'></div>");
+    var pbpixel= "Please enter your Kenshoo token id:\ne.g.: e73b9a9a-d144-4748-beb7-8b484c8e1174";
+    $(".pixelDesc").text(pbpixel);
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url publisher_settings_kenshoo_edit pixel.id %}" method="POST" class="MooseHead">
+        <div style="margin-left:100px;font-size:14px;">
+            <strong>{{ pixel.advertiser }}</strong>
+        </div>
+        <input type="hidden" id="advertiser" name="advertiser" value="{{ pixel.advertiser.id }}" />
+    	{{ form }}
+    	<div class="clearfix"></div>
+        <input type="submit" class="saveBtn" value=""/>
+    </form>
+</div>

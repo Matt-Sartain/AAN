@@ -1,0 +1,108 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+{% load forex %}
+{% block css %}
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/css/AAN_Advertiser_Publishers.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.advertiser.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+
+{% endblock %}
+
+{% block document_ready %}
+    initAjaxLightBox();
+    initPendingOffers();
+    $(".retractSelBtn").click(function(event) {
+        event.preventDefault();
+        $("#frmOfferStatus").attr("action", "/advertiser/publishers/offers/retract/");
+        $("#frmOfferStatus").submit();
+    });
+    $(".removeSelBtn").click(function(event) {
+        event.preventDefault();
+        $("#frmOfferStatus").attr("action", "/advertiser/publishers/offers/remove_history/");
+        $("#frmOfferStatus").submit();
+    });
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Offers Status</div>
+
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>  
+    <table class="primaryDisplayTable" cellspacing="0">
+        <tr>
+            <th></th>
+            <th>Company Name</a></th>
+            <th>Email Address</th>
+            <th>Program Term</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        <form action="" method="POST" id="frmOfferStatus">
+        {% for o in object_list %}
+            
+            <tr class="rowSpacer"><td colspan="10"></td></tr>
+            <tr class="highlightRow">
+                <td><input type="checkbox" name="o_id" value="{{ o.publisher.id }}"></td>
+                <td>
+                    <a href="" id="{% url advertiser_publishers_view o.publisher.id %}" class="AjaxLightBox" name="{{ o.name }} - Profile">{{ o.publisher.name }}</a>
+                </td>
+                <td><a href="mailto:{{ o.publisher.organizationcontacts_set.all.0.email }}">{{ o.publisher.organizationcontacts_set.all.0.email }}</a></td>
+                <td>{{o.program_term.name}}</td>
+                <td>{%ifequal o.status 1%}Pending{%endifequal%}
+                    {%ifequal o.status 3%}Accepted{%endifequal%}
+                    {%ifequal o.status 4%}Declined{%endifequal%}
+                    {%ifequal o.status 7%}Retracted{%endifequal%}
+                </td>
+                <td>{{ o.date_initiated|date:"m/d/Y" }}</td>
+                <td id="action_{{ o.publisher.id }}">
+                    
+                    {%ifequal o.status 1%}
+            			<a href="{% url advertisers_publisher_applications_retract o.publisher.id %}">Retract</a>
+            			<a href="#" id="{% url advertiser_messages_compose %}?rid={{ o.publisher.id }}" class="AjaxLightBox" name="Compose">Contact</a>{%endifequal%}
+                    {%ifequal o.status 3%}                    
+                        <a href="#" id="{% url advertiser_publishers_groups_addto %}?publisher_id={{ o.publisher.id }}&redir=/advertiser/publishers/offers/" class="AjaxLightBox dXtraSm" name="Group">Add To Group</a>
+                        <a href="#" id="{% url advertiser_messages_compose %}?rid={{ o.publisher.id }}" class="AjaxLightBox" name="Compose">Contact</a>   
+            			<a href="{% url advertisers_publisher_applications_remove_history o.publisher.id %}">Remove</a>{%endifequal%}
+                    {%ifequal o.status 4%}
+                        <a href="#" id="{% url advertiser_publishers_recruit o.publisher.id %}??redir=/advertiser/publishers/offers/" class="AjaxLightBox dXtraSm" name="Offer">Make Offer</a>
+            			<a href="#" id="{% url advertiser_messages_compose %}?rid={{ o.publisher.id }}" class="AjaxLightBox" name="Compose">Contact</a>
+            			<a href="{% url advertisers_publisher_applications_remove_history o.publisher.id %}">Remove</a>{%endifequal%}
+                    {%ifequal o.status 7%}                    
+                        <a href="#" id="{% url advertiser_publishers_recruit o.publisher.id %}?redir=/advertiser/publishers/offers/" class="AjaxLightBox dXtraSm" name="Offer">Make Offer</a>
+            			<a href="#" id="{% url advertiser_messages_compose %}?rid={{ o.publisher.id }}" class="AjaxLightBox" name="Compose">Contact</a>
+            			<a href="{% url advertisers_publisher_applications_remove_history o.publisher.id %}">Remove</a>{%endifequal%}
+            </tr>
+        {% endfor %}
+
+        {% if not object_list %}
+            <tr>
+                <td colspan="10">
+                    No matches to your query.
+                </td>
+            </tr>
+        {% endif %}    
+        <tr><td colspan="10"><span class="pages">{% paginate %}</span></td></tr>
+        {% ifnotequal total_results 0 %}
+    		<tr>
+    		    <td class="footer" colspan="10">
+    			    <a href="" class="retractSelBtn"></a>
+    			    <a href="#" id="{% url advertiser_publishers_recruit %}?redir=/advertiser/publishers/offers/" class="AjaxLightBox dXtraSm makeNewOfferBtn" name="Offer"></a>
+    			    <a href="#" id="{% url advertiser_publishers_groups_addto %}?redir=/advertiser/publishers/offers/" class="AjaxLightBox dXtraSm addToGroupBtn2" name="Group"></a>
+    			    <a href="" class="removeSelBtn"></a>
+    		    </td>
+    		</tr>
+        {% endifnotequal %}    
+        </form>
+    </table>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block pageContent %}
+<div class="informationHdr"></div>
+<div class="bBoundingBox">
+    <div class="aanSignupLeft">
+        <div class="aanMessage">
+            <p>Thank you for your interest in the Atrinsic Affiliate Network!</p>
+            
+            <p>Prior to launching as an advertiser, our sales team must evaluate your business'<br> compatibility
+            with our network. <strong>If you have already spoken with a member of<br> our sales team about your site, please </strong><a href="{% url signup_advertiser_step1 %}">click here to signup now.</a></p>
+                
+            <p>If you have not spoken with a member of our sales team, please contact a<br> member of the team today at sales@atrinsic.com.</p>
+        </div>
+        <div class="wave"></div>
+    </div>
+    <div class="howToKnow">
+        <p><strong>How To Know If You're An Advertiser Or Publisher.</strong></p>
+        <p class="medHdr">What is an advertiser?</p>
+        <p>An advertiser, also know as a merchant or 
+            retailer, is a Web site or company that sells a 
+            product or service online, accepts payments
+            and fulfills orders. Advertisers partner with
+            publishers to help promote their products and
+            services.
+        </p>
+        <p class="medHdr">What is an publisher?</p>
+        <p>A publisher, also known as an affiliate or 
+            reseller, is an independant party that
+            promotes products and services of an 
+            advertiser in exchange for a commission on leads
+            or sales. A publisher displays an advertiser's 
+            ads, text links, or product link on their Web
+            site, in e-mail campaigns, or in search listings.
+            Signing up as a publisher is a free service.
+        </p>
+        <p>If you are a <b>publisher</b>, and would like to
+            become a part of our network, please
+            <a href="{% url signup_publisher %}">click here.</a>
+    <div>    
+</div>
+{% endblock %}

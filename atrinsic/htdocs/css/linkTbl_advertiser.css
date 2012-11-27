@@ -1,0 +1,106 @@
+
+input.advtiser_planet
+{
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background: white url('/images/icon_planet.gif') no-repeat;
+	background-position:5px;
+	border:1px solid #8ad9f8;
+	color:#515151;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	margin: 5px 25px 10px 5px;
+	padding:4px 2px 4px 24px;
+	text-align:center;
+	text-decoration:none;
+	float:right;
+}
+
+.advtiser th{
+	text-align:right;
+}
+.advtiser input[type=text], .advtiser textarea{
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border:1px solid #ababab;
+	font-size: 12px;
+	margin-left:5px;
+	padding:2px 5px;
+}
+.advtiser select{
+	border:1px solid #ababab;
+	margin-left:5px;
+	padding:2px 5px;
+}
+.advtiser .Shrink input{
+	width:70px;
+	float:left;
+}
+.advtiser .Shrink img{
+	float:left;
+}
+
+.widget_edit_style fieldset {
+	background-color:white;
+	border:0;
+	margin:2em 0;
+	padding:0;
+}
+
+.widget_edit_style fieldset legend{
+	color:#83a101;
+	font-weight:bold;
+}
+
+.widget_edit_style .field {
+	padding:10px;
+	float:left;
+}
+.widget_edit_style label{
+	color:#5b5b5b;
+	display:block;
+	float:left;
+	font-weight:bold;
+	margin-top:2px;
+	text-align:right;
+	width:40%;
+}
+.widget_edit_style div.input{
+	/*border:1px solid blue;*/
+	display:block;
+	float:left;
+	text-align:left;
+}
+.widget_edit_style div.input select{
+	/*-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;*/
+	border:1px solid #ababab;
+	font-size: 12px;
+	margin-left:5px;
+}
+
+.widget_edit_style ul { list-style: none; height:20px; padding:0px; margin:0px; }
+.widget_edit_style ul input { vertical-align:text-bottom; }
+.widget_edit_style li { float:left; min-width:90px; max-width:140px;text-align:left;white-space:nowrap;}
+.widget_edit_style ul img { vertical-align:middle; }
+
+
+.action_buttons a.view_list{
+	background:url(/images/AQvs3Ico_ViewList.png) no-repeat;
+	height:20px;
+	width:25px;
+}
+
+.action_buttons a.compose{
+	background:url(/images/AQvs3Ico_MessagesLetter.png) no-repeat;
+	height:20px;
+	width:25px;
+}
+
+.action_buttons a.export{
+	background:url(/images/AQvs3Ico_Export.png) no-repeat;
+	height:20px;
+	width:25px;
+}
+#CtnShowList{display:none;}

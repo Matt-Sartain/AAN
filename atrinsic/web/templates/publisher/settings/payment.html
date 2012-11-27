@@ -1,0 +1,35 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Publisher_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+	initAjaxLightBox();
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Settings - Payment Info</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <table class="DisplayTableAsForm OrganizationSettings" cellpadding="0" cellspacing="0">
+    	<tr><th>Currency</td>
+    		<td>{{ org.organizationpaymentinfo_set.all.0.currency  }}</th></tr>
+    	<tr><th>Payment Method</td>
+    		<td>{{ org.organizationpaymentinfo_set.all.0.get_payment_method_display }}</th></tr>
+    	<tr><th>Tax ID</td>
+    		<td>{{ org.organizationpaymentinfo_set.all.0.tax_id }}</th></tr>
+    	<tr><th>Tax Classification</td>
+    		<td>{{ org.organizationpaymentinfo_set.all.0.get_tax_classification_display }}</th></tr>
+    </table>
+    <a href="#" id="{% url publisher_settings_payment_edit %}" class="editSettingsBtn AjaxLightBox" name="Edit Settings"></a>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}

@@ -1,0 +1,215 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+
+{% block css %}
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_DataTable_SearchResults.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all">
+	<link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/date.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_widgets.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/dataTables.currencySort.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/dataTables.currencyTypeDetect.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaSort.js"></script>    
+    <script language="javascript" type="text/javascript" src="/js/dataTables.numericCommaTypeDetect.js"></script> 
+    <script language="javascript" type="text/javascript" src="/js/advertiser.reports.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initRunRptFormManipulation(); 
+    
+    {% if widget %}
+        DataTableResults();
+        initAjaxLightBox(); 
+    {% endif %}
+    
+    // DRILLDOWN LINKS FORMATTING ON DATA REFRESHES (advertiser.report.js):
+    function DrillDownLinks() {
+        // Get report type:
+        var selReportType = $('#id_report_type :selected').val();
+        switch(selReportType){
+            // Sales and Activity Report:
+            case '0':
+                $('.widget_table tbody tr').each( function() {
+                    var nTds = $('td', this);
+                    var pubDate     = $(nTds[0]).text(); // Publisher Date is 1nd Column.
+                    var pubNumber   = $(nTds[1]).text(); // Publisher Total is 2nd Column, which is where we want our link.
+                    var pubLead     = $(nTds[4]).text(); // Publisher Leads is 5th Column, which is where we want our link.
+                    var pubOrder    = $(nTds[5]).text(); // Publisher Total is 6th Column, which is where we want our link.
+                    
+                    //if (pubNumber.substring(0,1) != "<") {
+                    //    $(nTds[1]).html('<a href="/advertiser/reports/?target=&start_date='+pubDate+'&end_date='+pubDate+'&group_by=0&run_reporting_by=0&report_type=1" id=""  name="Publisher - Drilldown">'+pubNumber+'</a>');        
+                    //}
+                    //if (pubLead.substring(0,1) != "<") {
+                    //    $(nTds[4]).html('<a href="/advertiser/reports/?target=&start_date='+pubDate+'&end_date='+pubDate+'&group_by=0&run_reporting_by=0&report_type=7" id=""  name="Publisher - Drilldown">'+pubLead+'</a>');        
+                    //} 
+                    //if (pubOrder.substring(0,1) != "<") {
+                    //    $(nTds[5]).html('<a href="/advertiser/reports/?target=&start_date='+pubDate+'&end_date='+pubDate+'&group_by=0&run_reporting_by=0&report_type=7" id=""  name="Publisher - Drilldown">'+pubOrder+'</a>');        
+                    //}                  
+                });                
+                break;
+            // Sales and Activity Report by Publisher:
+            case '1':
+                $('.widget_table tbody tr').each( function() {
+                    var nTds = $('td', this);
+                    var dtStartDate = $('#id_start_date').val();
+                    var dtEndDate = $('#id_end_date').val();
+                    var pubId   = $(nTds[0]).text(); // Publisher Id is the 1st Column
+                    var pubName = $(nTds[1]).text(); // Publisher name is 2nd Column, which is where we want our link.
+                    var pubLead = $(nTds[4]).text(); // Publisher Leads is 5th Column, which is where we want our link.
+                    var pubOrder = $(nTds[5]).text(); // Publisher Total is 6th Column, which is where we want our link.
+                          
+                    if (pubName.substring(0,1) != "<") {
+                        $(nTds[1]).html('<a href="" id="/advertiser/publishers/view/'+pubId+'/" class="AjaxLightBox" name="'+pubName+' - Profile">'+pubName+'</a>')        
+                    }   
+                    //if (pubLead.substring(0,1) != "<") {
+                    //    $(nTds[4]).html('<a href="/advertiser/reports/?target=&start_date='+dtStartDate+'&end_date='+dtEndDate+'&group_by=0&run_reporting_by=3&report_type=7&run_reporting_by_publisher=p_'+pubId+'" id=""  name="Publisher - Drilldown">'+pubLead+'</a>');        
+                    //} 
+                    //if (pubOrder.substring(0,1) != "<") {
+                    //    $(nTds[5]).html('<a href="/advertiser/reports/?target=&start_date='+dtStartDate+'&end_date='+dtEndDate+'&group_by=0&run_reporting_by=3&report_type=7&run_reporting_by_publisher=p_'+pubId+'" id=""  name="Publisher - Drilldown">'+pubOrder+'</a>');        
+                    //}              
+                }); 
+                break;
+            // Revenue Report:
+            case '2':
+                $('.widget_table tbody tr').each( function() {
+                    var nTds = $('td', this);
+                    var pubDate     = $(nTds[0]).text(); // Publisher Date is 1nd Column.
+                    var pubNumber   = $(nTds[1]).text(); // Publisher Total is 2nd Column, which is where we want our link.
+                    var pubOrder    = $(nTds[2]).text(); // Publisher Total is 3th Column, which is where we want our link.
+                    
+                    //if (pubNumber.substring(0,1) != "<") {
+                    //    $(nTds[1]).html('<a href="/advertiser/reports/?target=&start_date='+pubDate+'&end_date='+pubDate+'&group_by=0&run_reporting_by=0&report_type=1" id=""  name="Publisher - Drilldown">'+pubNumber+'</a>');        
+                    //}
+                    //if (pubOrder.substring(0,1) != "<") {
+                    //    $(nTds[2]).html('<a href="/advertiser/reports/?target=&start_date='+pubDate+'&end_date='+pubDate+'&group_by=0&run_reporting_by=0&report_type=7" id=""  name="Publisher - Drilldown">'+pubOrder+'</a>');        
+                    //}              
+                });              
+                break;
+            // Revenue Report by Publisher:
+            case '3': 
+                $('.widget_table tbody tr').each( function() {
+                    var nTds = $('td', this);
+                    var dtStartDate = $('#id_start_date').val();
+                    var dtEndDate = $('#id_end_date').val();
+                    var pubId   = $(nTds[0]).text(); // Publisher Id is the 1st Column
+                    var pubName = $(nTds[1]).text(); // Publisher name is 2nd Column, which is where we want our link.
+                    var pubOrder = $(nTds[2]).text(); // Publisher Total is 6th Column, which is where we want our link.
+                          
+                    if (pubName.substring(0,1) != "<") {
+                        $(nTds[1]).html('<a href="" id="/advertiser/publishers/view/'+pubId+'/" class="AjaxLightBox" name="'+pubName+' - Profile">'+pubName+'</a>')        
+                    }   
+                    //if (pubOrder.substring(0,1) != "<") {
+                    //    $(nTds[2]).html('<a href="/advertiser/reports/?target=&start_date='+dtStartDate+'&end_date='+dtEndDate+'&group_by=0&run_reporting_by=3&report_type=7&run_reporting_by_publisher=p_'+pubId+'" id=""  name="Publisher - Drilldown">'+pubOrder+'</a>');        
+                    //}
+                });                 
+                break;
+            // Link Report:
+            case '4': break;
+            // Link Report by Promo Type:
+            case '5': break;
+            // Product Detail Report
+            case '6': break;
+            // Order Detail Report
+            case '7': break;
+            // Accounting Report
+            case '8': break;
+        }
+    }
+    DrillDownLinks();
+    
+    $(".customNextPage").click(function(event) { DrillDownLinks(); });
+    $(".customPrevPage").click(function(event) { DrillDownLinks(); });
+    $(".widget_table th").click(function(event) { DrillDownLinks(); });
+    
+    $('#id_run_reporting_by_vertical').parent().parent().attr("id", "Vertical")
+    $("#Vertical").addClass("dialogPop");
+    $("#Vertical").hide();
+    
+    $('#id_run_reporting_by_group').parent().parent().attr("id", "Group")
+    $("#Group").addClass("dialogPop");
+    $("#Group").hide();
+    
+    $('#id_run_reporting_by_publisher').parent().parent().attr("id", "Publishers")
+    $("#Publishers").addClass("dialogPop");
+    $("#Publishers").hide();
+    
+	$(".dwnldDynamicWidget").click(function(event) {
+	    event.preventDefault();
+		$('#download_types').dialog({width:325, 
+		                             height:225,
+		                             modal: true,
+		                             draggable: false,
+		                             resizable: false,		                             
+        			                 open: function(event, ui) { 			                   
+        			                     $("#ui-dialog-title-dashBoardSettingsDlg").text("Dashboard Settings");
+        			                     $(".ui-dialog-titlebar").addClass("ui-widget-header-forDialog");
+        			                     $(".ui-dialog-titlebar-close span").remove();
+        			                     $(".ui-dialog-titlebar-close").addClass("newDialogCloseBtn");
+        			                     $(".ui-dialog-titlebar-close").text("Close");			                   
+        		                     }         		                     
+         });
+    	$('#download_types').bind('dialogclose', function(event, ui) {
+    	    $("#target").val("");
+    		$('#download_types').dialog("destroy");
+    	});	
+    });
+    $(".downloadCSV").live("click",function(event) {
+    		event.preventDefault();
+    		$("#target").val("0");
+    		$('#download_types').dialog("destroy");
+    		$("#report_form").submit();
+    		$("#target").val("");
+        });
+
+    $(".downloadXLS").live("click",function(event) {
+		event.preventDefault();
+		$("#target").val("2");
+		$('#download_types').dialog("destroy");
+		$("#report_form").submit();
+		$("#target").val("");
+    });
+    $(".downloadTAB").live("click",function(event) {
+		event.preventDefault();
+		$("#target").val("1");
+		$('#download_types').dialog("destroy");
+		$("#report_form").submit();
+		$("#target").val("");
+    });
+{% endblock %}
+
+{% block pageContent %}
+    <div class="pageContentHdr">Run Report</div>
+    <div class="contentCtn">    
+    	<form action="" method="get" id="report_form" class="MooseHead">
+    	    <input type="hidden" value="" id="target" name="target">
+            {{form}}
+            <input type="submit" class="filterBtn" value="" border="0"/></div>
+            <div class="clearfix"></div>
+        </form>	
+        <br/>
+        <div class="clearfix"></div>
+    </div>
+	{%if widget%}	
+        <div class="contentCtn whiteBG noBorder">
+            <div class="ajaxLoading"></div>
+        	<ul style="list-style:none; margin:0; padding:0;">
+        	    {%include 'base/AAN_Widget_Template.html'%}									
+        	</ul>
+        </div>
+	{%endif%}
+
+	<div id="download_types" style="display:none;">
+		<ul>
+			<li><a href="" class="downloadTAB">Text file</a></li>
+			<li><a href="" class="downloadCSV">CSV file</a></li>
+			<li><a href="" class="downloadXLS">Excel file</a></li>
+		</ul>
+	</div>
+	<div id="ajaxLightbox"></div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% load pagination_tags %}
+{% load thumbnail_tag %}
+
+    <div class="contentCtn profileView" id="textResults">
+	<div class="ajaxLoading"></div>        <div class="primaryDisplayTableHdr">Results</div>
+    	<table class="dataTableSearchResults publisherLinksResults" cellspacing="0">
+    		<tr>
+    		    <th>Advertiser</th>
+    		    <th>Vertical</th>
+    		    <th>Link Name</th>
+    		    <th>Action</th>
+    		</tr>
+    		{% for o in object_list %}
+                <tr class="rowSpacer"><td colspan="4"></td></tr>
+            	<tr class="highlightRow">
+            	    <td>{{ o.advertiser.name }}</td>
+            	    <td>{{ o.advertiser.vertical }}</td>
+            	    <td class="alignLeft">{{ o.name }}</td>
+            	    <td>
+            	        {% if o.suppression_list %}
+            				<a href="" id="{% url publisher_links_view o.id %}" class="getLink" name="Get Link">Get Link</a>
+            				<a href= "" onclick="window.location = '{% url publisher_links_download_suppression o.id %}'; $('#links_{{ o.id }}').show(); return false;">Download suppression list</a>
+            			{% else %}
+            				<a href="" id="{% url publisher_links_view o.id %}" class="getLink" name="Get Link">Get Link</a>
+            			{% endif %}
+            	    </td>
+                </tr>
+            {% endfor %}    
+        </table>
+    </div>

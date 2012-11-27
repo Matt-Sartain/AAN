@@ -1,0 +1,54 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/css/advertiser_reports.css" rel="stylesheet" type="text/css" media="all"/>
+{%endblock%}
+
+{% block javascript %} 
+<script language="javascript" type="text/javascript" src="/js/zones.js"></script>
+{% endblock %}
+
+{% block document_ready %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Sites</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <table cellpadding="0" cellspacing="0" class="linkTbl" style="margin:1em auto;width:30%">
+        <tr><td colspan=3 style="text-align:left;height:45px;">
+            <div style="color:#0C467E;font-size:14px;width:100%;margin:0 auto;"> Sites Configured under this Account:</div>
+        </td></tr>
+        {% if sites_configured %}
+            {% for site in sites_configured %}
+                <tr><td>&nbsp;</td>
+                    <td colspan="2" style="text-align:left;">{{ site.name }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}                
+            <tr><td>&nbsp;</td>
+                    <td colspan="2" style="text-align:left;">
+                        No sites have been configured.
+                    </td>
+            </tr>            
+        {% endif %}       
+        <tr><td colspan=3 style="text-align:left;height:45px;">
+            <div style="color:#0C467E;font-size:14px;width:100%;margin:0 auto;"> Sites detected:</div>
+        </td></tr>    
+        {% if sites_fromGA %}
+            {% for ga_site in sites_fromGA %}
+                <tr><td>&nbsp;</td>
+                    <td colspan="2" style="text-align:left;">
+                        <div style="float:left;">
+                            <a href="{%url publisher_ga_user_site_add ga_user.id ga_site.profile_id %}" class="ButtAdd"></a>
+                        </div>
+                        <div style="float:left;">&nbsp;&nbsp;{{ ga_site.title }}</div>                     
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

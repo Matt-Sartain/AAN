@@ -1,0 +1,54 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.settings.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+    initConfirmationBox("Are you sure you want to delete this Filter?");
+{% endblock %}
+
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Filters</div>
+<div class="filterDesc">The Application Filter allows you to pre-screen your Publisher applications. Publishers who match the below filter settings will be automatically declined for your program. Please note that applications to your program are filtered based on the information the Publisher submits when registering for the network.</div>
+<div class="clearfix"></div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <table class="primaryDisplayTable primaryDisplayTableHdrsLeft" cellspacing="0">
+        <tr>                
+            <th>Filter</th>
+            <th>Value</th>
+            <th>Action</th>
+        </tr>
+        {% for o in object_list %}            
+            <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	    <tr class="highlightRow">
+    	        <td>{{ o.get_field_display }}</td>
+    	        <td>{{ o.get_display_value }}</td>
+    	        <td><a href="#" id="{% url advertiser_settings_filters_edit o.id %}" class="AjaxLightBox dXtraSm" name="Edit Filter">Edit</a>
+        			<a href="#" id="{% url advertiser_settings_filters_delete o.id %}" class="confirmDelete" name="Delete Alert">Delete</a>
+				</td>
+            </tr>
+    	{% endfor %}
+        {% if not object_list %}
+            <tr class="rowSpacer"><td colspan="3"></td></tr>
+    	    <tr class="highlightRow">
+                <td class="noResults" colspan="3">You have no Filters.</td>
+            </tr>
+        {% endif %}
+    </table>   
+    <a href="#" id="{% url advertiser_settings_filters_add %}" class="addFilterBtn AjaxLightBox dXtraSm" name="Add Filter"></a>
+</div>
+<div id="ajaxLightbox"></div>        	
+{% endblock %}

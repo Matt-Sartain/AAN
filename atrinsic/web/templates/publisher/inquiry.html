@@ -1,0 +1,16 @@
+{% extends 'base/main.html' %}
+{% block document_ready %}
+$(".inquiry_submit").click(function(event){
+	event.preventDefault();
+	$("#inquiry").submit();
+});
+{%endblock%}
+{% block content %}
+<form id="inquiry" action="/publisher/inquiry/add/{{inquiry_type}}/" method="post">
+    {{form}}
+    <p><a href="" class="checkmark" style="float:left;">SUBMIT INQUIRY</a></p>
+    <div style="width:100%; clear:both;"><div>
+</form>
+<div style="width:100%; clear:both;"><div>
+<p style="margin-left:20px;"><a href="/publisher/inquiries/" style="clear:both;">BACK TO INQUIRIES</a></p>
+{% endblock %}

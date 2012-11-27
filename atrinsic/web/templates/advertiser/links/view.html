@@ -1,0 +1,114 @@
+<script type="text/javascript">    
+    initConfirmationBox("Are you sure you want to expire this link?"); 
+</script>
+
+{% load thumbnail_tag %}
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <table class="primaryDisplayTable" cellspacing="0">  
+        
+        <tr><td class="optionBtns" colspan="6">      
+            {% if add_new %}      
+        	    <a href="" id="{% ifequal view "keyword" %}
+                    		        {% url advertiser_links_add_keywordlink %}
+                    		    {% endifequal %}
+                    		    {% ifequal view "banner" %}
+                    		        {% url advertiser_links_add_bannerlink %}
+                    		    {% endifequal %}
+                    		    {% ifequal view "text" %}
+                    		        {% url advertiser_links_add_textlink %}
+                    		    {% endifequal %}
+                    			{% ifequal view "flash" %}
+                    		        {% url advertiser_links_add_flashlink %}
+                    		    {% endifequal %}
+                    			{% ifequal view "email" %}
+                    		        {% url advertiser_links_add_emaillink %}
+                    		    {% endifequal %}
+                    		    {% ifequal view "html" %}
+                    		        {% url advertiser_links_add_htmllink %}
+                    		    {% endifequal %}
+                    		    {% ifequal view "rss" %}
+                    		        {% url advertiser_links_add_rsslink %}
+                    		    {% endifequal %}" class="addLinksBtn" name="Add {{view|title}} Link"></a>	    
+           {% endif %} 
+            <a href="/advertiser/links/download_banners/{{linkType}}/" class="downloadLinksBtn"></a>
+            </td>
+	    </tr>
+	
+    {% ifequal view "banner" %}
+    	<tr>
+    		<th class="imageCol">Image</th>
+    		<th class="urlId">URL ID</th>
+    		<th class="name">name</th>
+    		<th class="sizeCol">Size</th>
+    		<th class="assignedCol">Assigned</th>
+    		<th class="actionCol">Action</th>
+    	</tr>
+    	{% for o in object_list %}            	
+            <tr class="rowSpacer"><td colspan="6"></td></tr>
+        	<tr class="highlightRow">
+        		<td>{% if o.banner %}
+        				<img src="{{ o.banner.image|thumbnail }}">
+                    {% else %}
+        				<img src="{{ o.get_banner_url }}" >
+                	{% endif %}    
+            	</td>
+                <td>{{ o.ape_url_id }}</td>
+        		<td>{{ o.name }}</td>
+                <td>{{ o.banner.size}}<br>{{ o.get_link_type_display }}</td>
+        		<td>{{ o.assignment }}</td>
+        		<td class="Actions">
+    				<a href="#" id="{% url advertiser_links_edit o.link_id %}" class="AjaxLightBoxFromLightbox" name="Edit Banner">Edit</a>
+    				<a href="" id="{% url advertiser_links_delete o.link_id %}" class="confirmExpire" name="Delete Link">Delete</a>                 
+        		</td>
+        	</tr>
+    	{% endfor %}	
+		{% if not object_list %}
+            <tr class="rowSpacer"><td colspan="6"></td></tr>
+		    <tr class="highlightRow"><td colspan="6" class="noResults">There are no {{ view|title }} links.</td></tr>
+	    {% endif %}
+        <tr><td colspan="6" class="Bottom">
+                {{ total_results }} results
+                {%comment%}<span class="pages">{% paginate %}</span>{%endcomment%}
+            </td>
+        </tr>
+    	</table>
+    {% else %}
+        <tr>
+            <th>Url ID</th>
+            <th>Name</th>
+            {% ifnotequal view "text" %}
+            <th>Size</th>
+            {% endifnotequal %}
+            <th>Assigned To</th>
+            <th>Action</th>
+        </tr>
+        {% for o in object_list %}
+        <tr class="rowSpacer"><td colspan="5"></td></tr>
+    	<tr class="highlightRow">
+            <td>{{ o.ape_url_id }}</td>
+            <td>
+                {% ifequal view "banner" %}<img height="200" src="{{ o.get_banner_url }}"><br>{% endifequal %}{{ o.name }}
+            </td>
+                {% ifnotequal view "text" %}
+                	<td>{{ o.get_link_type_display }}</td>
+                {% endifnotequal %}
+            <td>{{ o.assignment }}</td> 
+            <td class="Actions">
+	            <a href="" id="{% url advertiser_links_edit o.link_id %}" class="AjaxLightBoxFromLightbox" name="Edit {{ view|title }} Links">Edit</a>
+	            <a href="" id="{% url advertiser_links_delete o.link_id %}" class="confirmExpire" name="Delete Link">Delete</a>      
+            </td>
+        </tr>
+        {% endfor %}
+		{% if not object_list %}
+            <tr class="rowSpacer"><td colspan="5"></td></tr>
+		    <tr class="highlightRow"><td colspan="5" class="noResults">There are no {{ view|title }} links.</td></tr>
+	    {% endif %}
+        <tr><td colspan="5" class="Bottom">
+                {{ total_results }} results
+                {%comment%}<span class="pages">{% paginate %}</span>{%endcomment%}
+            </td>
+        </tr>
+    </table>
+    {% endifequal %}
+</div>

@@ -1,0 +1,141 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+    <link href="/css/redmond/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/AAN_Site_Template.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/AAN_widgets.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/AAN_Network_Report.css" rel="stylesheet" type="text/css" media="screen">
+{% endblock %}
+
+{% block document_ready %}
+ 	//$("#results").dataTable({'bFilter':false,
+    //                       'bLengthChange':false,
+    //                       'iDisplayLength':100});
+    // DATEPICKER SETUP:
+    $("#id_start_date, #id_end_date").datepicker({showOn: 'both', buttonImage: '/images/calendar.gif', buttonImageOnly: true, dateFormat: 'mm/dd/yy'});
+    
+    // FORM FORMATTING:
+    //$("#id_start_date").parent().parent().css({'float':'left','display':'inline'});
+    //$("#id_end_date").parent().parent().css({'float':'right','display':'inline'});
+    //$("#id_end_date").parent().parent().insertAfter($("#id_start_date").parent().parent());
+        
+    $("#dl_target").val('');
+    
+    // FORM MANIPULATION:
+    $("#id_run_reporting_by").change(function(){
+    	switch($(this).val()) {
+    		case "0":
+    			$("#id_publisher_vertical").parent().parent().hide();
+    			$("#id_specific_publisher").parent().parent().hide();
+    			break;
+    		case "1":
+    			$("#id_publisher_vertical").parent().parent().hide();
+    			$("#id_specific_publisher").parent().parent().show();
+    			break;
+    		case "2":
+    			$("#id_publisher_vertical").parent().parent().show();
+    			$("#id_specific_publisher").parent().parent().hide();
+    			break;
+    		default:
+    			$("#id_publisher_vertical").parent().parent().show();
+    			$("#id_specific_publisher").parent().parent().show();
+    	}    	
+    });
+	$("#id_run_reporting_by").change();
+    
+    $("#DownloadXLS").click(function(){ $("#dl_target").val("xls"); $('form').submit(); $("#dl_target").val(""); });
+    $("#DownloadCSV").click(function(){ $("#dl_target").val("csv"); $('form').submit(); $("#dl_target").val(""); });
+    $("#DownloadTAB").click(function(){ $("#dl_target").val("tab"); $('form').submit(); $("#dl_target").val(""); });
+    
+    // DATATABLE MANIPULATION:
+	function DataTableResults() {
+	    $('#results').dataTable({'bFilter':false,
+		                       'bJQueryUI': true,
+	                       'bLengthChange':false,
+	                       'iDisplayLength':25,        
+	                       'bAutoWidth': false});
+	    
+		var selReportType = $('#id_report_type :selected').val()	
+		// If report type "Sales and Activity Report By Publisher"(1) or "Revenue Report by Publisher"(3)
+	    if(selReportType == 1 || selReportType == 3){ 
+	        $('.widget_table tbody tr').each( function() {
+	            var nTds = $('td', this);
+	            var pubId = $(nTds[0]).text(); // Publisher Id is the 1st Column
+	            var pubName = $(nTds[1]).text(); // Publisher name is 2nd Column, which is where we want our link.
+	                        
+	            // Check if the link has already been created.
+	            if (pubName.substring(0,2) != "<a") {
+	                $(nTds[1]).html('<a href="" id="/advertiser/publishers/view/'+pubId+'/" class="AjaxLightBox" name="'+pubName+' - Profile">'+pubName+'</a>')        
+	            }
+	                
+	        });
+	    }
+	    
+	    var selGroupBy = $("input[@name='group_by']:checked").val()
+		// If report type "Sales and Activity Report"(0) or "Revenue Report"(2)
+	    if(selReportType == 0 || selReportType == 2){ 
+	        $('.widget_table tbody tr').each( function() {
+	            var nTds = $('td', this);
+	            var colDate = $(nTds[0]).text(); // Date column
+	            
+	            // Now we must format according to group by selection. 0 = Day, 1 = Week, 2 = Month, 3 = Quarter
+	            if(selGroupBy == 2) // Month
+	            {
+	                Date.format = 'mmm yyyy';
+	                var dtm = new Date($(nTds[0]).text());
+	                $(nTds[0]).text(dtm.asString());
+	            }
+	        });
+	    }
+	}
+	DataTableResults();
+{% endblock %}
+
+{% block content %}
+    <div class="pageContentHdr">Run Report</div>
+    <div class="contentCtn">    
+        <form method="POST">
+            <input type="hidden" name="target" value="" id="dl_target">
+            {{ form }}
+            <input id="RunReport" type="submit" value="Run Report" class="AddProgram2"/>
+            <input id="DownloadXLS" type="button" value="Download XLS" class="AddProgram2"/>
+            <input id="DownloadCSV" type="button" value="Download CSV" class="AddProgram2"/>
+            <input id="DownloadTAB" type="button" value="Download TAB" class="AddProgram2"/>
+        </form>
+        <div class="clearfix"></div>
+        <br>
+    </div>
+    <br> 
+    {% if report %}
+    <div class="dynamicWidgetHdrCtn">
+        <div class="dynamicWidgetHdr">{{ reportTitle }}</div>
+    </div>
+    
+    <table id="results" class="widget_table" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                {% for field in report.RenderHeader %}
+                <th>{{field.0}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in report.RenderContents %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                {%for col in  row%}
+                <td>{{col}}</td>
+                {%endfor%}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="total">
+                {% for col in report.RenderFooter %}
+                <td><strong>{{col.1|safe}}</strong></td>
+                {% endfor %}
+            </tr>
+        </tfoot>
+    </table>
+    {% endif %}
+{% endblock %}

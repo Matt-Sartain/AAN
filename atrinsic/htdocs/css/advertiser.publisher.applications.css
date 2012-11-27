@@ -1,0 +1,74 @@
+.pendingAppsCtn {border: 1px solid #878D59;border-bottom:none; width:1273px;margin: 20px 0 0 5px;}
+.hdrCtn {height: 30px; background-color: #91C1E7;border-bottom: 1px solid #A3AC8D;}
+.hdrCommonStyles{ 
+	height:25px;
+	font-size:14px;
+	font-weight:bold;
+	padding:5px 0 0 0;
+	color:#FFF;
+	border-right:1px solid #D0E1E9;
+	background-image: url('/images/arrowSort.png');
+	background-position:center bottom;
+	background-repeat:no-repeat; 
+
+}
+.hdrCommonStyles a { font-size:14px;color:#FFF;height:30px; }
+.hdrNoBorder { border:none;float:left;}
+.rowCtn { width:1271px; height:50px;margin:0; padding:0;border-bottom: 1px solid #A3AC8D;}
+.select { width: 60px;float:left;text-align:center; }
+.ticker { width: 90px;float:left;text-align:center; }
+.compname { width: 150px;float:left;text-align:center; }
+.vertical { width: 110px;float:left;text-align:center; }
+.state {  width: 70px;float:left;text-align:center; }
+.groups {  width: 80px;float:left;text-align:center; }
+.country {  width: 90px;float:left;text-align:center; }
+.url {  width: 225px;float:left;text-align:center; }
+.contact {  width: 115px;float:left;text-align:center; }
+.rating {  width: 80px;float:left;text-align:center; }
+.force {  width: 80px;float:left;text-align:center; }
+.action {  width: 110px;float:left;text-align:center; }
+.rowElements { height:40px; padding-top: 10px;border-right: 1px solid #A3AC8D;}
+.lastRowNoBorder {  height:25px; padding: 15px 0 0 25px;text-align:center; width:85px; }
+.blueBG { background:#dbe5f1; }
+.noMatches { border-bottom: 1px solid #A3AC8D;font-size:14px; padding: 5px 0 5px 0;text-align:center; }
+
+a.greenCheck
+{
+	 background-image: url('/images/btnApprove.png');
+	 display:block;
+	 width:19px;
+	 height:19px;
+}
+a.redX
+{
+	 background-image: url('/images/btnDecline.png');
+	 display:block;
+	 float:left;
+	 width:19px;
+	 height:19px;
+}
+a.applic_select_all{
+	background-image: url('/images/AQ_ManagePublishers_PendingApplications_IconSelectAll.gif');
+	display:block;
+	float:left;
+	width:28px;height:28px;
+}
+a.approveSelected{
+	background-image: url('/images/AQ_ManagePublishers_PendingApplications_IconApprove.gif');
+	display:block;
+	float:left;
+	width:28px;height:28px;
+}
+a.declineSelected{
+	background-image: url('/images/AQ_ManagePublishers_PendingApplications_IconDecline.gif');
+	display:block;
+	float:left;
+	width:28px;height:28px;
+}
+a.deny_application:hover { background-image:url('/images/bttn_decline_over.png'); }
+.bottomActionsCtn { width:1025px;margin:15px 0 0 5px; }
+.selectAll { float:left; width: 140px; }
+.approveSelected { float:left; width: 175px; }
+.declineSelected { float:left; width: 130px; }
+.selectAll, .approveSelected, .declineSelected img	{ cursor: pointer; }
+form { margin: 0px; }

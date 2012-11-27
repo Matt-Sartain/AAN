@@ -1,0 +1,53 @@
+{% extends 'base/AAN_Signup_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/publisher.signup.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+{% endblock %}
+
+{% block pageContent %}
+
+<div class="steps">
+    <div class="stepSignup"></div>                 
+</div>
+<div class="clearfix"></div>
+<div class="pubSignupStepHdrSmall"></div>
+    
+    <div class="bBoundingBox">
+        <div class="thankYouTxt">
+{% if advertiser %}
+ <br>
+
+
+<h2>Advertiser: {{ advertiser.name }}</h2>
+
+<div>
+    {% if advertiser.branded_signup_page_header_url %}
+    <img src="{{ advertiser.branded_signup_page_header_url.url }}"/>
+    <br/>
+    {% endif %}
+    Branded Signup Copy:
+    {{ advertiser.branded_signup_page_copy }}
+</div>
+{% endif %}
+
+<br/>
+
+Thank you for submitting your email for verification and taking the first step to joining the Atrinsic Affiliate Network.<br>
+<br>
+We have sent an e-mail to the address that you provided with a link to the application. Please check your inbox for our message; if you do not find an e-mail there, look in your spam or junk mail folder. <br>
+<br>
+Once you click the link in the e-mail, an application will open in a new window.  Please complete all the questions and submit for further review. <br>
+<br>
+Once your application has been received, an Atrinsic Affiliate Network Publisher Team Member will be in touch to confirm your application details and welcome you to our network.<br>
+<br>
+We look forward to working with you!
+	</div>
+
+{% endblock %}

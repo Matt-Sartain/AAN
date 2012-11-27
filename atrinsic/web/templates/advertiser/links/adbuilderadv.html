@@ -1,0 +1,21 @@
+{% extends 'base/widgetui.html' %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block document_ready %}
+
+{% endblock %}
+{% block content %}
+<div id="adbuilder" class="adbuilder">
+	<h3>AdBuilder Advanced</h3>
+	<div align="center" style="height:900px">
+	<embed src="{{path}}adbuilder.swf?t={{template}}&org={{org}}" quality="high" scale="noscale" width="800" height="600" name="adbuilder" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+	</div>
+	
+</div>        
+{% endblock %}

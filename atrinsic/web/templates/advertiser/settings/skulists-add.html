@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_settings_skulists_add %}" method="POST" class="MooseHead">
+        {{ form }}
+    	<div class="clearfix"></div>
+    	<div class="detailText">
+    	    * Please upload a text, tab delimited file. Do not include empty lines between SKUs <br>
+    	    or leave any trailing tabs. Click <a href="sample/">here</a> to download a sample file.
+	    </div>
+        <input type="submit" class="saveBtn" value=""/>
+    </form>
+</div>

@@ -1,0 +1,32 @@
+{% load thumbnail_tag %}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("input:radio").click(function(event) {
+        $("#id_ad_image_id").val($(this).val());  
+    });
+});
+</script>
+
+<br>
+<table cellspacing="0" cellpadding="2" style="width:60%;text-align:center;margin-left:25px">
+    <tr>
+        <th>Select</th>
+        <th>Image</th>
+        <th>Size</th>
+    </tr>
+    {% if banners %}
+    	{% for banner in banners %}
+        <tr valign="middle" {% cycle '' ' style="background-color:#DDD"' %}>
+            <td valign="middle"><input type="radio" name="bid" value="{{ banner.id }}"></td>
+            <td valign="middle"><img src="{{ banner.image|thumbnail }}"></td>
+            <td valign="middle">{{ banner.size }}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+    <tr valign="middle" {% cycle '' ' style="background-color:#DDD"' %}>
+        <td valign="middle" colspan="3">Sorry, no banners match the current banner size</td>
+    </tr>
+    {% endif %}      
+</table>
+

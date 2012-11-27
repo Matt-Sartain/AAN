@@ -1,0 +1,12 @@
+{% extends 'base/widgetui.html' %}
+{% block css %}
+	<link href="/css/linkTbl.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+    
+{% block content %}
+    <h2 class="linkTbl">ADD SKU List</h2>
+    <form action="{% url advertiser_settings_skulists_item_add skulist.id %}" method="post">
+        {{ form }}
+        <input type="submit" value="Add SKU List Item"/>
+    </form>
+{% endblock %}

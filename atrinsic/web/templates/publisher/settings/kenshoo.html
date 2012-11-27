@@ -1,0 +1,53 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Publisher_Settings.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+    initConfirmationBox("Are you sure you want to delete this integration?");
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Kenshoo Integration</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+    <table class="primaryDisplayTable" cellspacing="0">
+    	<tr>
+    		<th>Advertiser</th>
+    		<th>Kenshoo ID</th>
+    		<th>Action</th>
+    	</tr>
+    	<tr class="graybar"><td colspan="4"><hr size="1"></td></tr>
+    	{% for o in object_list %}
+    	<tr{% cycle ' class="odd"' '' %}>
+    		<td>{{ o.advertiser.name}}</a></td>
+    		<td>{{ o.content }} </td>
+    		<td><div class="actionButt action_buttons">
+    			<div class="report_action_tip"></div>
+    			<a href="" id="{% url publisher_settings_kenshoo_edit o.id %}" class="AjaxLightBox dSmallWide" name="Edit">Edit</a>
+    			<a href="" id="{% url publisher_settings_kenshoo_delete o.id %}" class="confirmDelete" name="Delete">Delete</a>
+    		</div></td>
+    	</tr>
+    	{% endfor %}
+        {% if not object_list %}
+            <tr class="rowSpacer"><td colspan="5"></td></tr>
+    	    <tr class="highlightRow">
+                <td class="noResults" colspan="5">You have no Kenshoo Integration.</td>
+            </tr>
+        {% endif %}
+    </table>
+    <a href="" id="{% url publisher_settings_kenshoo_add %}" class="addIntegrationBtn AjaxLightBox dSmallWide" name="Integrate"></a>
+</div>    
+      
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

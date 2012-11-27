@@ -1,0 +1,13 @@
+<div class="field {{ class }}">
+    {{ label }}
+    {{ help_text }}
+    <div class="input{% if errors %} errorlarge{% endif %}">
+        {{ bf }}
+    {% if errors %}
+    <span class="error">
+        <ul class="errorlist"><li>{{ errors }}</li></ul>
+    </span>
+    {% endif %}
+    </div>
+</div>
+<div class="clearfix"></div>

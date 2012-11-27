@@ -1,0 +1,26 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<table>
+<tr>
+    <th>Organisation</th>
+    <th>Type</th>
+    <th>Action</th>
+</tr>
+{% for o in features %}
+<tr>
+    <td>{{ o.organization.company_name }}</td>
+    <td>{% if o.organization.is_advertiser %}Advertiser{% else %}Publisher{% endif %}</td>
+    <td>
+    	 
+        <a href="{% url network_dashboard_feature_delete o.id %}" onclick="return confirm('Are you sure you want to delete this feature?')" class="NetworkAdminButton">Remove</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="4" class="bottom">
+        <a href="{% url network_dashboard_feature_add %}" class="NetworkAdminButton">Add a feature</a>
+        {{ total_results }} results
+    </td>
+</table>
+{% endblock %}

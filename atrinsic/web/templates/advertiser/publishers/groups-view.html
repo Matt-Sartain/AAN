@@ -1,0 +1,85 @@
+<script type="text/javascript">
+    $("#select_all").click(function(event) {
+        event.preventDefault();
+        $("input[name=publisher_id]").attr('checked','checked');
+        $("#toggle_select").attr('checked','checked');
+    });
+    
+    $("#toggle_select").click(function(event) {
+        var checked = this.checked;
+        $("input[name=publisher_id]").attr('checked',checked);
+    });
+    
+    $("#deselect_all").click(function(event) {                                                                    
+        event.preventDefault();                                                                                   
+        $("input[name=publisher_id]").removeAttr('checked');                                                      
+        $("#toggle_select").removeAttr('checked');                                                                
+    });                                                                                                           
+    
+    $("#assign_selected").click(function(event) {
+        event.preventDefault();
+        $("#checkbox_form").attr('action', '{% url advertiser_publishers_groups_addto %}');
+        $("#checkbox_form").submit();
+    });
+    
+    $("#extend_selected").click(function(event) {
+        event.preventDefault();
+        $("#checkbox_form").attr('action', '{% url advertiser_publishers_recruit %}');
+        $("#checkbox_form").submit();
+    });
+    
+    $("#contact_selected").click(function(event) {
+        event.preventDefault();
+        $("#checkbox_form").attr('action', '{% url advertiser_messages_compose %}');
+        $("#checkbox_form").submit();
+    });		
+</script>
+
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_publishers_groups_view group.id %}" method="post" id="checkbox_form">
+        <input type="hidden" value="" id="target" name="target">
+        <table class="primaryDisplayTable" cellspacing="0">
+            <tr>
+                <th>Ticker</th>
+                <th>Company Name</a></th>
+                <th>Vertical</th>
+                <th>State</th>
+                <th>URL</th>
+                <th>Rating</th>
+                <th>Force</th>
+                <th>Action</th>
+            </tr>
+            {% for p in group.publishers.all %}        
+            <tr class="rowSpacer"><td colspan="3"></td></tr>
+            <tr class="highlightRow">
+                <td>{{ p.ticker }}</td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.vertical }}</td>
+                <td>{{ p.state }}</td>
+                <td>{{ p.website_set.all.0 }}</td>
+                <td>{{ p.get_network_rating }}</td>
+                <td>{{ p.force }}</td>
+                <td>
+                    <a href="" id="{% url advertiser_publishers_recruit p.id %}" class="AjaxLightBoxFromLightbox dXtraSm"  name="Extend Program Term">Extend Program Term</a>
+                    <a href="" id="{% url advertiser_messages_compose %}?rid={{ p.id }}&secondtier=1" class="AjaxLightBoxFromLightbox" name="Name">Contact</a>
+                    <a href="{% url advertiser_publishers_groups_removefrom group.id p.id %}">Delete</a>
+            		</div>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td class="bottom" colspan="8">
+                    {% if not group.publishers.all %}
+                        No members of this group
+                    {% else %}
+                        {{ group.publishers.all|length }} results
+                    {% endif %}
+                        <input type="hidden" name="redir" value="{% url advertiser_publishers_groups_view group.id %}"/>
+                        
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="AjaxLightBoxFromLightbox"></div>

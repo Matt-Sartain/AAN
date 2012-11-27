@@ -1,0 +1,7 @@
+Ticker	Company Name	Vertical	State	URL   Rating	Force
+{% for p in groups.publishers.all %}	
+{{ p.ticker }}	{{ p.name }}	{{ p.vertical }}	{{ p.state }}	{{ p.website_set.all.0 }}	{{ p.get_network_rating }}	{{ p.force }}
+{% endfor %}
+{% if not groups.publishers.all %}No members of this group
+{% else %}{{ groups.publishers.all|length }} results
+{% endif %}

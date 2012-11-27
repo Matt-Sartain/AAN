@@ -1,0 +1,43 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<br>
+{% ifequal buttons 'settings' %}
+	<a href="{% url network_advertiser_add %}" class="AddProgram2" style="margin:2em 0 0 1em;">Create New Advertiser</a>
+{% endifequal %}
+
+<table>
+<thead>
+<tr>
+    <th>#</th>
+    <th>Advertiser</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for o in user.get_profile.admin_assigned_advertisers %}
+<tr>
+    <td>{{ o.id }}.</td>
+    <td>{{ o.name }}</td>
+    <td><strong>{{ o.get_orgstatus_display }}</strong></td>
+    <td>
+    {% ifequal buttons 'settings' %}
+        <a href="{% url network_advertiser_account_contact o.id %}" class="AddProgram2">Assign Network Contact</a>
+        <a href="{% url network_advertiser_edit o.id %}" class="AddProgram2">Edit Advertiser</a>
+        <a href="{% url network_advertiser_status o.id %}" class="AddProgram2">Update Status</a>
+        <a href="{% url auth_impersonate o.id "advertiser/" %}" class="AddProgram2">Work as this Advertiser</a>
+        <a href="{% url network_advertiser_violations o.id %}" class="AddProgram2">Edit Trademark and Keywork Rules</a>
+    {% endifequal %}
+    {% ifequal buttons 'tracking' %}
+        <a href="{% url network_advertiser_tracking o.id %}" class="AddProgram2">Edit Tracking</a>
+    {% endifequal %}
+    {% ifequal buttons 'datafeed' %}
+        <a href="{% url network_advertiser_datafeed o.id %}" class="AddProgram2">Edit Data Feed</a>
+    {% endifequal %}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

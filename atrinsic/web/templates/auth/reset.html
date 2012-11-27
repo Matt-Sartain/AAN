@@ -1,0 +1,13 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    {% if form %}
+	<form action="{% url auth_reset_password %}" method="post">
+		{{ form }}
+        <input type="hidden" name="reset_auth" value="{{ reset_auth }}"/>
+		<input type="submit" name="submit" value="Reset Password"/>
+	</form>
+    {% else %}
+    A link to reset your password has been emailed to the e-mail address you registered with.
+    {% endif %}
+{% endblock %}

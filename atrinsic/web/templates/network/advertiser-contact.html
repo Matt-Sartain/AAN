@@ -1,0 +1,15 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_advertiser_account_settings %}';
+    });
+{% endblock %}
+
+{% block content %}
+<form action="{% url network_advertiser_account_contact advertiser.id %}" method="post">
+{{ form }}
+<input type="submit" value="Update Contact"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

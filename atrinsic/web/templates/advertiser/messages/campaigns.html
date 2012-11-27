@@ -1,0 +1,48 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+{% block css %}
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Campaigns</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+     <table class="primaryDisplayTable primaryDisplayTableCenter" cellspacing="0">
+    	<tr>  
+    	    <th>Name</th>
+            <th>Created</th>
+            <th>Status</th>
+            <th>Send Date</th>
+            <th>Subject</th>
+            <th>Action</th>
+        </tr>
+        {% for o in object_list %}
+            <tr class="rowSpacer"><td colspan="7"></td></tr>
+        	<tr class="highlightRow">
+                <td class="Name"><strong>{{ o.name }}</strong></td>
+                <td>{{ o.date_created }}</td>
+                <td>{% if o.is_active %}<strong>active</strong>{% else %}inactive{% endif %}</td>
+                <td>
+                    {{ o.date_send }}
+                </td>
+                <td>
+                    {{ o.subject}}
+                </td>
+                <td>
+                    <a href="{% url advertiser_messages_campaigns_view o.id %}">Manage</a>
+                    {% if o.is_active %}
+                        <a href="{% url advertiser_messages_campaigns_deactivate o.id %}">De-Activate</a>
+                    {% else %}
+                        <a href="{% url advertiser_messages_campaigns_activate o.id %}">Activate</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        <div class="outsideTableFooter">
+    		<a href="{% url advertiser_messages_campaigns_add %}" id="{% url advertiser_messages_campaigns_add %}" class="addCampaignBtn" name="Add Campaign"></a>
+        </div>
+</div>    
+{% endblock %}

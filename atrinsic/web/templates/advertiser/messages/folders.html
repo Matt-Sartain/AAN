@@ -1,0 +1,6 @@
+<div class="mailbox_submenu">
+	<a href="{% url advertiser_messages %}" class="inbox{% ifequal folder 'inbox' %}_selected{% endifequal %}">Inbox ({{ inbox.count }})</a>
+	<a href="{% url advertiser_messages "sent" %}" class="sent{% ifequal folder 'sent' %}_selected{% endifequal %}">Sent ({{ sent.count }})</a> 
+	<a href="{% url advertiser_messages "trash" %}" class="trash{% ifequal folder 'trash' %}_selected{% endifequal %}">Trash ({{ trash.count }})</a>
+</div>
+<div style="clear:both;"></div>

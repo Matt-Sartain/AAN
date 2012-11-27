@@ -1,0 +1,107 @@
+{% load thumbnail_tag %}
+<div id="CtnShowSqrs" style="margin:20px;text-align:center">
+    <table style="width:80%;" class="dataTableSearchResults ">
+        <thead>
+            <tr>
+                <th>Advertiser</th>
+                <th>Commission</th>
+                <th>Return Days</th>
+                <th>Actions</th>
+            </tr>
+        </thead>    
+            <tbody>
+                
+                       
+		{% for o in acc_object_list %}
+		<tr class="highlightRow">
+		    <td>
+			    <div class="advertiserSqrsB">
+    				{%ifequal o.ticker_symbol ''%}
+    				<div class="txt cProfile" id="{% url publisher_advertisers_view o.id %}"><a href="#" onclick="return false">{{ o.name }}</a></div>
+    				{%else%}
+    				<div class="txt cProfile" style="overflow:visible" id="{% url publisher_advertisers_view o.id %}">
+    				    <a href="#" onclick="return false"><img src="{{o.ticker_symbol|thumbnail}}" alt="{{o.name}}" title="{{o.name}}" border="0"></a>
+    			    </div>
+    				{%endifequal%}
+				</div>
+			</td>
+			<td class="advCommission">
+            {% for pa in o.get_default_program_term.programtermaction_set.all %}
+			    {% if pa.is_fixed_commission %}Fixed: ${{ pa.commission }}{% else %}{{ pa.commission }}%{% endif %}
+			        {{pa.action.name}}
+			    <br>			    
+			{% endfor %}			
+		    </td>
+			<td>
+            {% for pa in o.get_default_program_term.programtermaction_set.all %}			    
+			        {{pa.action_referral_period}}
+			    <br>			    
+			{% endfor %}			
+		    </td>
+
+			<td>	
+				<div class="action_buttons">
+					<a href="" id="{% url publisher_advertisers_view o.id %}" class="AjaxLightBox" name="Profile">Profile</a>
+					<a href="" id="{% url publisher_messages_compose %}?rid={{ o.id }}" class="AjaxLightBox" name="Contact">Contact</a>
+					<a href="" id="{% url publisher_links "all" %}?advertiser_id={{ o.id }}&link_type=all" class="AjaxLightBox" name="Get Links">Get Links</a>
+				</div>
+			</td>
+		</tr>		
+		{% endfor %}
+		
+		{% for x in norel_object_list %}
+		<tr class="highlightRow">
+		    <td>
+			    <div class="advertiserSqrs">
+    				{%ifequal x.ticker_symbol ''%}
+    				<div class="" id="{% url publisher_advertisers_view x.id %}"><a href="#" onclick="return false">{{ x.name }}</a></div>
+    				{%else%}
+    				<div class="" style="overflow:visible" id="{% url publisher_advertisers_view x.id %}">
+    				    <a href="#" onclick="return false"><img src="{{x.ticker_symbol|thumbnail}}" alt="{{x.name}}" title="{{x.name}}" border="0"></a>
+    			    </div>
+    				{%endifequal%}
+				</div>
+			</td>
+			<td>
+            {% for pa in x.get_default_program_term.programtermaction_set.all %}
+			    {% if pa.is_fixed_commission %}Fixed: ${{ pa.commission }}{% else %}{{ pa.commission }}%{% endif %}
+			        {{pa.action.name}}
+			    <br>			    
+			{% endfor %}			
+		    </td>
+			<td>
+            {% for pa in x.get_default_program_term.programtermaction_set.all %}			    
+			        {{pa.action_referral_period}}
+			    <br>			    
+			{% endfor %}			
+		    </td>
+			<td>	
+				<div class="action_buttons">
+					<a href="" id="{% url publisher_messages_compose %}?rid={{x.id}}" class="AjaxLightBox" name="Contact">Contact</a>
+					<a href="" id="{% url publisher_advertisers_apply %}ajax/?advertiser_id={{x.id}}" class="applyToAdvertiser" value="{{ x.id }}">Apply</a>
+				</div>
+			</td>	
+        </tr>
+		{% endfor %}
+		{% if not norel_object_list %}{% if not acc_object_list %}
+        		<tr>
+        		    <td colspan="4">
+        		        No matches to your query.
+        		    </td>
+        		</tr>
+		{% endif %}{% endif %}
+    </tbody>
+    </table>
+</div>
+<!--
+<div style="clear:both;"></div>
+<div style="border-top:2px solid #DFDFDF;height:30px;width:100%">
+	<div style="float:left;margin:7px 0px 0px 15px;width:60%">
+		<div style="border:3px solid #039D00;width:10px;height:10px;float:left;"></div>
+		<div style="float:left;">&nbsp;Similar Advertisers</div>
+		<div style="float:left;width:20px;">&nbsp;</div>
+		<div style="border:3px solid #7AB6F2;width:10px;height:10px;float:left;"></div>
+		<div style="float:left;">&nbsp;Existing Advertisers</div>
+	</div>
+</div>
+-->

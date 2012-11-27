@@ -1,0 +1,18 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_account_publisher_applications  %}';
+    });
+{% endblock %}
+
+{% block content %}
+<h2>Publisher: {{ publisher.name }}</h2>
+<br/>
+
+<form action="{% url network_account_publisher_applications_approve publisher.id %}" method="post">
+{{ form }}
+<input type="submit" value="Save Ticker"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

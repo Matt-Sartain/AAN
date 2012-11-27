@@ -1,0 +1,14 @@
+
+<script type="text/javascript">
+    initAjaxFormPost();
+    initAssignedTo();
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="{% url advertiser_links_add_keywordlink %}" method="post" name="form" enctype="multipart/form-data" class="MooseHead noMargin">
+        {{ form }}
+        <input type="submit" class="submitPlusWBGBtn pushRight" value="">
+        <div class="clearfix"></div>
+    </form>
+</div>
+

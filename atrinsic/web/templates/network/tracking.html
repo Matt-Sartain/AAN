@@ -1,0 +1,40 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<h2>Tracking For {{ advertiser.name }}</h2>
+<table>
+<tr>
+    <th>Action</th>
+    <th>Status</th>
+    <th>Advertiser Payout Type</th>
+    <th>Advertiser Payout Amount</th>
+    <th>Transaction Fee Type</th>
+    <th>Transaction Fee Amount</th>
+    <th>Tracking Id</th>
+    <th>Action</th>
+</tr>
+{% for o in advertiser.action_set.all%}
+<tr>
+    <td>{{ o.name }}</td>
+    <td><strong>{{ o.get_status_display }}</strong></td>
+    <td>{{ o.get_advertiser_payout_type_display }}</td>
+    <td>{{ o.advertiser_payout_amount }}</td>
+    <td>{{ o.get_transaction_fee_type_display }}</td>
+    <td>{{ o.transaction_fee_amount }}</td>
+    <td>{{ o.invite_id }}</td>
+    <td>
+        <a href="{% url network_advertiser_tracking_edit advertiser.id o.id %}" class="AddProgram2">Edit</a>
+        <a href="{% url network_advertiser_tracking_delete advertiser.id o.id %}" class="AddProgram2">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+<tr>
+    <td colspan="5" class="bottom">
+        {{ advertiser.action_set.all|length }} results
+        <span class="pages">
+            <a href="{% url network_advertiser_tracking_add advertiser.id %}" class="AddProgram2">Add Action</a>
+        </span>
+    </td>
+</table>
+{% endblock %}

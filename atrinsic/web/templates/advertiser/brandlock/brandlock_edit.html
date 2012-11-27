@@ -1,0 +1,475 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+<link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+    <style>
+        
+        a.saveBtn{
+        	background-image:url('/images/1blues_save.gif');
+            background-repeat:no-repeat;
+            float:left;
+            height:33px;
+            margin:5px 0 0 5px;
+            padding:0 4px;
+            width:81px;
+        }
+         a.saveBtn:hover { background-image: url('/images/1blues_save_mo.gif'); text-decoration:none; }
+         a.delBtn{
+        	background-image:url('/images/1blues_delete.gif');
+            background-repeat:no-repeat;
+            float:left;
+            height:33px;
+            margin:5px 0 0 5px;
+            padding:0 4px;
+            width:81px;
+        }
+         a.delBtn:hover { background-image: url('/images/1blues_delete_mo.gif'); text-decoration:none; }
+         a.cancelBtn{
+        	background-image:url('/images/btn_blue_cancel2.gif');
+            background-repeat:no-repeat;
+            float:left;
+            height:33px;
+            margin:5px 0 0 5px;
+            padding:0 4px;
+            width:81px;
+        }
+         a.cancelBtn:hover { background-image: url('/images/btn_blue_cancel_mo2.gif'); text-decoration:none; }
+
+        .bgblue{background-color:#CEDFF3;}
+        .r{color:red;}
+        .g{color:green;}
+        
+        .results th  {
+            background-color:#D9DEF0;
+            text-align:center;
+        }
+        .results thead  {
+            color:#2F528A;
+            font-size:13px;
+        }
+        
+        a.newCampBtn {
+            background-image:url('/images/btn_blues_newcampaign.gif');
+            background-repeat:no-repeat;
+            float:left;
+            height:33px;
+            margin:5px 0 0 5px;
+            padding:0 4px;
+            width:151px;
+        }
+        a.newCampBtn:hover { background-image: url('/images/btn_blues_newcampaign_mo.gif'); text-decoration:none; }
+        a.newCompBtn {
+            background-image:url('/images/btn_blues_newcompetitor.gif');
+            background-repeat:no-repeat;
+            float:left;
+            height:33px;
+            margin:5px 0 0 5px;
+            padding:0 4px;
+            width:151px;
+        }
+        a.newCompBtn:hover { background-image: url('/images/btn_blues_newcompetitor_mo.gif'); text-decoration:none; }
+        
+        a.nkwgBtn {
+            background-image:url('/images/btn_blues_NKG.gif');
+            background-repeat:no-repeat;
+            float:left;
+            height:33px;
+            margin:5px 0 0 5px;
+            padding:0 4px;
+            width:151px;
+        }
+        a.nkwgBtn:hover { background-image: url('/images/btn_blues_NKG_mo.gif'); text-decoration:none; }
+    </style>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="/js/brandlock.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+
+$('#id_campaigns').change(function () {campaignChange();});
+
+$('#savegi').click(function () {
+        $("#action").val('0');
+        $("#name").val($("#id_campaigns option:selected").text());
+        $("#form").submit();
+    });
+
+	//Competitors table function
+	$("#resTable tr").live("mouseover", function() {
+	    $(this).addClass('bgblue');
+    });
+    $("#resTable tr").live("mouseout", function() {
+	    $(this).removeClass('bgblue');
+    });
+	$("#resTable tr").live("click", function() {
+		var count = 1;
+		var compId = 0;
+		
+		compId = $(this).attr("id");
+		if(compId > 0){
+			$("#compId").val(compId);
+			$(this).children("td").each(function(){
+			
+				if(count == 1){
+					$("#compUrl").val($(this).html());
+				}else{
+					$("#compName").val($(this).html());
+				}
+				
+				count++;
+			});
+
+			$("#delete").show();
+		   	$("#editComp").dialog('option', 'title', 'Create Competitor')	
+			$("#editComp").dialog('open')
+		}
+		
+  });
+
+	//KWG tables function
+	$("#kwgTable tr").mouseover(function() {
+	    $(this).addClass('bgblue');
+    });
+    $("#kwgTable tr").mouseout(function() {
+	    $(this).removeClass('bgblue');
+    });
+	$("#kwgTable tr").live("click",function() {
+		var count = 1;
+		var kwgId = 0;
+		
+		kwgId = $(this).attr("id");
+		if(kwgId > 0){
+			$("#kwgId").val(kwgId);
+			$(this).children("td").each(function(){
+			
+				if(count == 1){
+					$("#gName").val($(this).html());
+				}
+				
+				count++;
+			});
+			
+			campid = $("#id_campaigns").val();
+			url = 'keywords/'+campid+'/'+kwgId+'/';
+			$("#terms").val("Retrieving Keyword Terms...");
+			$.get(url, function(data) {
+		  		$("#terms").val(data);
+			});
+			
+		   	$("#editKwg").dialog('option', 'title', 'Edit Keyword Group')	
+			$("#editKwg").dialog('open')
+		}
+		
+  });
+ 
+   
+$("#editComp").dialog({autoOpen: false })
+$("#editKwg").dialog({autoOpen: false }) 
+$("#newCamp").dialog({title: 'New Campaign', autoOpen: false, width: 390 }) 
+
+$("#newCampBtn").click(function() {
+    $("#campResults").html("");
+    $("#cName").val("");
+    $("#sproviders").val("");
+    $("#websites").val("");
+    $("#domains").val("");
+    $("#trademarks").val("");
+    $("#newCamp").dialog('open');
+});
+
+//CANCEL BTNS
+$("#cancel").click(function() {
+    $("#editComp").dialog('close')
+});
+$("#cancelKwg").click(function() {
+    $("#editKwg").dialog('close')
+});
+$("#cancelnc").click(function() {
+    $("#newCamp").dialog('close')
+});
+
+//SAVE COMPETITOR
+$("#save").click(function() {
+	
+	campid = $("#id_campaigns").val();
+	var edit = 0;
+	
+	if($("#compId").val() == ""){
+		url = 'competitors/create/'+campid+'/';
+		data= {"url":$("#compUrl").val(),"name":$("#compName").val()}
+	}else{
+		url = 'competitors/update/'+campid+'/';
+		data= {"id":$("#compId").val(),"url":$("#compUrl").val(),"name":$("#compName").val()}
+		edit = 1;
+	}
+		
+	var result = ajaxPost(url,data);
+	var jsonObject = eval( "(" + result + ")" );
+	
+	if(edit == 0){
+		if(jsonObject.success == true){
+			$('#resTable tr:last').after('<tr id="'+jsonObject.msg+'"><td>'+$("#compUrl").val()+'</td><td>'+$("#compName").val()+'</td></tr>');
+		}else{
+			alert("invalid information supplied");
+		}		
+	}
+	
+	$("#editComp").dialog('close');
+	
+	
+});
+
+//DELETE
+$("#delete").click(function() {
+	var result = "";
+	campid = $("#id_campaigns").val();
+	compid = $("#compId").val();
+	url = 'competitors/delete/'+campid+'/'+$("#compId").val();
+	
+	$.get(url, function(data) {
+  		result = data; 
+	});
+	
+	$("#" + compid).remove();
+	$("#editComp").dialog('close');
+});
+
+//CREATE Competitor
+$("#createComp").click(function() {
+    $("#compId").val("");	
+    $("#compUrl").val("");
+    $("#compName").val("");	
+    $("#delete").hide();
+    $("#editComp").dialog('option', 'title', 'Create Competitor');	
+    $("#editComp").dialog('open');
+});
+//CREATE KWG
+$("#createKwg").click(function() {
+    $("#gName").val("");
+    $("#terms").val("");
+    $("#kwgId").val("");
+
+    $("#editKwg").dialog('option', 'title', 'Create Keyword Group');	
+    $("#editKwg").dialog('open');
+});
+
+
+$("#saveKwg").click(function() {
+	campid = $("#id_campaigns").val();
+	kwgId = $("#kwgId").val();
+	
+	if(kwgId == ""){
+	    url = 'keywords/create/'+campid+'/';
+	}else{
+	    url = 'keywords/update/'+campid+'/'+kwgId+'/'; 
+	}
+	
+	
+	data = {"name":$("#gName").val(),"terms":$("#terms").val()};
+	
+	var result = ajaxPost(url,data);
+	
+});
+
+
+$("#savenc").click(function() {
+     url = 'campaign/create/';
+     data = {"name":$("#cName").val(),"websites":$("#websites").val(),"domains":$("#domains").val(),"trademarks":$("#trademarks").val(),"sproviders":$("#sproviders").val()};
+     
+     var result = ajaxPost(url,data);
+     
+     //ERROR HANDLING
+      var jsonObject = eval( "(" + result + ")" );
+      var errors = jsonObject['errors'];
+      
+      if(jsonObject['success'] == false){
+              msg = "Errors: <ul>";
+              $.each( errors, function(i, l){
+                    e = l
+                   msg += ( "<li>" + e['id'] + " : " + e['msg'] + "</li>" ) ;
+              });
+              msg+="</ul>";
+              $("#campResults").addClass('r');
+        }else{
+            msg = "Campaign was saved";
+            $("#campResults").addClass('g');  
+        };
+      
+    
+      $("#campResults").html(msg);
+
+});
+
+
+function campaignChange(){
+    $("#action").val('1');
+    $("#form").submit();
+}
+	  
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Edit Campaign</div>
+<div class="contentCtn">
+    <!--
+        th  {
+background-color:#D9DEF0;
+text-align:center;
+}
+        thead  {
+color:#2F528A;
+font-size:13px;
+}
+    -->    
+<form id="form" method="post" action="{% url advertiser_brandlock_edit %}" style="margin:30px 0 0 10px;color:#2A74BD;">
+<div>
+	<div >
+		<h3>{{ form.campaigns.label }}</h3>
+		<span>{{ form.campaigns }}</span>
+	</div>
+    <div class="add"><a id="newCampBtn" class="newCampBtn"></a></div>
+</div>
+<br/><br/>
+<h3>General Information</h3>
+	<table style='border:0px solid;background-color:#CEDFF3;'>
+	    <tr>
+	        <td>
+	            <div style=''>
+            		{{ form.active.label }}
+            		{{ form.active }}
+            	</div>
+	        </td>    
+	        <td colspan='2'>
+        	    <div >
+            		<div>{{ form.searchp.label }}</div>
+            		<span>{{ form.searchp }}</span>
+            	</div>
+        	</td>
+	    </tr>
+	    <tr>
+	        <td>
+	            <div >
+            		<div>{{ form.websites.label }}</div>
+            		<span>{{ form.websites }}</span>
+            	</div>
+	        </td>    
+      
+
+	        <td>
+	            <div >
+            		<div>{{ form.domains.label }}</div>
+            		<span>{{ form.domains }}</span>
+            	</div>
+	        </td>    
+
+
+	        <td>
+    	        <div >
+            		<div>{{ form.trademarks.label }}</div>
+            		<span>{{ form.trademarks }}</span>
+            	</div>
+	        </td>    
+        </tr>
+        <tr><td colspan='3'>
+            <button id="savegi" type="button" class='btn saveGi'>Save</button>
+        </td>
+            </tr>
+	</table>
+	<input type="hidden" id="action" name="action" value="0" />
+	<input type="hidden" id="name" name="name" value="" />
+	</form>
+<div style="margin:30px 0 0 10px;color:#2A74BD;">
+	<h3>Competitors</h3>
+	<div class="add"><a id="createComp" class="newCompBtn" ></a></div>
+	<div style="clear:both;" />
+	<div id="compDiv" style="height:100px;width:350px;overflow:auto;">
+		<table id="resTable" class="results" style="width:100%;text-align:left;">
+			<thead>
+				<tr><th>URL</th><th>Name</th></tr>
+			</thead>
+			<tbody style="color:#000000;">	
+				{% for r in comps %}
+					<tr id="{{r.0}}"><td>{{r.1}}</td><td>{{r.2}}</td></tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	click row to edit
+</div>
+<div style="margin-top:30px;">
+	<h3>Keywords</h3>
+	<div class="add"><a id="createKwg" class="nkwgBtn"></a></div>
+	<div style="clear:both;" />
+	<div style="height:100px;width:350px;overflow:auto;">
+		<table id="kwgTable" class="results" style="width:100%;text-align:left;">
+			<thead>
+				<tr><th>Group Name</th><th>Terms in Group</th></tr>
+			</thead>
+			<tbody style="color:#000000;">	
+				{% for r in kwg %}
+				    <tr id="{{r.0}}"><td>{{r.1}}</td><td>{{r.2}}</td></tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="editComp">
+    <table>
+        <tr>
+            <td>URL:</td>
+            <td><input type="text" id="compUrl" name="compUrl"/></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" id="compName" name="compName"/></td>
+        </tr>     
+    </table>
+    <br />
+    <a id="cancel" class="cancelBtn" /></a>
+    <a id="save"  class="saveBtn" /></a>
+    <a id="delete" class="delBtn" /></a>
+	<input id="compId" type="hidden" value=""/>
+</div>
+<div id="editKwg" style="margin:5px;">
+	Group Name: <input type="text" id="gName" name="compUrl"/>
+	<br />
+	Search Terms:<textarea id="terms" rows="10" cols="31"></textarea>
+	<br />
+	<a id="cancelKwg"  class="cancelBtn"></a>
+	<a id="saveKwg"  class="saveBtn"></a>
+	<input id="kwgId" type="hidden" value="" />
+</div>
+<div id="newCamp">
+    <table>       
+    	<tr>
+    	    <td>
+    	        Campaign Name:<br />
+    	        <input type="text" id="cName" name="cName"/><br /><br />
+    	    Search Providers:<br />
+        	<select id="sproviders" name="sproviders" MULTIPLE style="width:140px">
+                <option value="1">Google</option>
+                <option value="2">Microsoft</option>
+                <option value="3">Yahoo</option>
+            </select>
+        	</td>
+        	<td>
+        	    Your Website Urls:<br /><textarea id="websites" rows="5" cols="20"></textarea>
+        	</td>
+        </tr>
+        <tr>
+            <td>
+              Destination Domains:<br /><textarea id="domains" rows="5" cols="20"></textarea>  
+            </td>
+            <td>
+                Your Trademarks:<br /><textarea id="trademarks" rows="5" cols="20"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div id="campResults" style="font-size:x-small;"></div>
+	<a id="cancelnc" class="cancelBtn"></a>
+	<a id="savenc" class="saveBtn"></a>
+</div>
+
+</div>
+{% endblock %}

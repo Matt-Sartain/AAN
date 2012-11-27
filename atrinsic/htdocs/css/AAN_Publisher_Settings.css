@@ -1,0 +1,76 @@
+@import url("jquery-ui-theme.css");
+.marginsNoFieldset { margin:1em !important; }
+a.editSettingsBtn {
+    background-image:url('/images/btn_blue_editinfo.gif');
+    background-repeat:no-repeat;
+    display:block;
+    height:42px;
+    margin:20px auto;
+    padding:0 4px;
+    text-align:center;
+    width:117px;
+}a.editSettingsBtn:hover { background-image: url('/images/btn_blue_editinfo_mo.gif'); }
+a.addWebsiteBtn {
+    background-image:url('/images/btn_blues_addwebsite.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}a.addWebsiteBtn:hover { background-image: url('/images/btn_blues_addwebsite_mo.gif'); }
+a.addDataFeedBtn {
+    background-image:url('/images/btn_blues_adddatafeed.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:151px;
+}a.addDataFeedBtn:hover { background-image: url('/images/btn_blues_adddatafeed_mo.gif'); }
+a.addPixelBtn {
+    background-image:url('/images/btn_blues_pixel.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}
+a.addPixelBtn:hover { background-image: url('/images/btn_blues_pixel_mo.gif'); }
+a.addIntegrationBtn {
+    background-image:url('/images/btn_blues_integration.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:117px;
+}
+a.addIntegrationBtn:hover { background-image: url('/images/btn_blues_integration_mo.gif'); }
+.sidbtn {
+    background-image:url('/images/1blues_SID.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:275px;
+    background-color:#ffffff;
+}.sidbtn:hover { background-image: url('/images/1blues_SID_mo.gif'); }
+.rdtbtn {
+    background-image:url('/images/1blues_RDT.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:160px;
+    background-color:#ffffff;
+}.rdtbtn:hover { background-image: url('/images/1blues_RDT_mo.gif'); }
+
+.pixelDesc {
+    display:block;
+    margin-left:190px;
+    color:red;
+}

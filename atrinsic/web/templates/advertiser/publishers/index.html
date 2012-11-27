@@ -1,0 +1,149 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load get_program_terms_display %}
+
+{% block css %}
+    <link href="/css/jquery-ui-theme.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_DataTable_SearchResults.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/AAN_Advertiser_Publishers.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.dataTables.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.publisher.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initSearchFormManipulation();
+    {% ifequal view 'find' %}  
+        initRecruitPublishers();
+    {% else %}
+        initMyPublishers();
+    {% endifequal %}
+   
+    {% if object_list %}
+        DataTableResults();
+        initAjaxLightBox();
+        initAjaxFormPost();
+    {% endif %}
+
+    $('form').unbind("submit");
+    $('.clearBtn').click(function(event) {
+        event.preventDefault();
+        $(this).parents('form').find('input').val('');
+        //.children('input')
+        
+        //alert(.attr('method'));
+    });
+    
+$("#updatePerformance").live('click', function(event){
+    event.preventDefault();
+
+    range = $("#date_range option:selected").val();
+    
+    $.post($(this).attr('href'), { date_range:range  },function(data){
+            $("#ajaxLightbox").html(data);
+     });
+
+});   
+    
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">{% ifequal view 'find' %}Recruit  {%else%}My {% endifequal %}Publishers</div>
+
+<div class="contentCtn">    
+	<form action="./" method="GET" class="MooseHead">
+        {{form}}
+        
+        <input type="submit" class="filterBtn" value="" border="0"/>
+        <input type="submit" class="clearBtn" value="" border="0"/>
+    </div>
+    </form>	
+</div>
+<br/>
+
+{% if display_results %}
+    <div class="contentCtn">
+        <div class="ajaxLoading"></div>
+        <form action="{% url publisher_advertisers_apply %}" method="POST" id="checkbox_form">
+            <div id="All_pub_ID" style="display:none;">
+                
+            </div>
+    		<table class="dataTableSearchResults" cellspacing="0">
+        		<thead>
+        		<tr>
+        		    <th>&nbsp;</th>
+        		    <th class="alignLeft">Company Name</th>
+        		    <th>URL</th>
+        		    <th>Contact</th>
+        		    <th>7 Day EPC</th>
+        		    <th>3 Month EPC</th>
+        		    <th>Action</th>
+        		</tr>
+        		</thead>
+        		<tbody>
+        		{% for o in object_list %}
+        		<tr class="highlightRow">
+        		    <td><input class="checkbox" type="checkbox" name="publisher_id" value="{{ o.id }}" id="o_{{ o.id }}" /></td>
+        		    <td class="alignLeft"><a href="" id="{% url advertiser_publishers_view o.id %}" class="AjaxLightBox" name="{{ o.name }} - Profile">{{ o.name }}</a></td>
+        		    <td class="alignLeft"><a href="{{ o.website_set.all.0 }}" target="_blank">{{ o.website_set.all.0 }}</a></td>
+        		    <td>{{o.organizationcontacts_set.all.0.firstname}} {{ o.organizationcontacts_set.all.0.lastname }}</td>
+                    <td>{{o.get_seven_day_epc_display}}</td>
+                    <td>{{o.get_three_month_epc_display}}</td>
+        		    <td id="action_{{ o.id }}"> 
+        		        {% ifequal view 'find' %}        		  
+            				<a href="" id="{% url advertiser_publishers_recruit o.id %}?view={{view}}" class="report_btns AjaxLightBox dXtraSm" name="Recruit" value="{{ o.id }}">Recruit</a>&nbsp;&nbsp;
+        		        {%else%}   
+                            <a href="#" id="{% url advertiser_publishers_recruit o.id %}?redir=/advertiser/publishers/my/" class="AjaxLightBox dXtraSm" name="Offer">Offer</a>
+                            <a href="#" id="{% url advertiser_publishers_expire o.id %}" class="expirePublisher">Expire</a>
+                            <a href="#" id="{% url advertiser_publishers_groups_addto %}?publisher_id={{ o.id }}" class="AjaxLightBox dXtraSm" name="Group">Group</a>
+            		    {%endifequal%}
+        		        <a href="#" id="{% url advertiser_messages_compose %}?rid={{ o.id }}" class="AjaxLightBox" name="Compose">Email</a>   
+        		    </td>
+        		</tr>
+        		{% endfor %}
+                </tbody>
+        		{% if not object_list %}
+        		<tr>
+        		    <td colspan="7">
+        		        No matches to your query.
+        		    </td>
+        		</tr>
+        		{% endif %}
+        		<tfoot>
+        		<tr>
+        		    <td class="footer" colspan="7">
+        			    <a href="" class="dataTableSelectAll"></a>
+        		        <input type="hidden" name="redir" value="{% url publisher_advertisers %}?sort={% ifequal sort "ticker" %}{{ sort_next }}{% else %}ticker{% endifequal %}{% if q %}&q={{ q }}{% endif %}"/>
+        		        {% ifequal view 'find' %}   
+        				    <a href="" class="recruitSelected AjaxLightBox dXtraSm" id="{% url advertiser_publishers_recruit %}" name="Recruit Selected"></a>
+        				{%else%}
+        				    <a href="" class="expireSelected"></a>
+        				{%endifequal%}
+				        {% ifequal view 'my' %}
+			                <a href="?download=1" name="Download" class="dwnldDynamicWidget" /></a>
+			            {% endifequal %}
+        		    </td>
+        		</tr>
+        	    </tfoot>
+    		</table>
+    	</form>    
+    </div>		
+{% endif %}
+
+<div id="confirmLightBox">
+    <div class="contentCtn">
+        <div class="confirmMessage">Are you sure you want to expire this Publisher?</div>
+        <div class="confirmActions">
+            <a href="" class="noBtnBlueBG"></a>
+            <a href="" class="yesBtnBlueBG"></a>
+        </div>
+    </div>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}
+

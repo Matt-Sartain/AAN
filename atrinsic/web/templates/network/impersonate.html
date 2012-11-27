@@ -1,0 +1,30 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block content %}
+{{ name }}
+<table><tr>
+    <th>#</th>
+    <th>Advertiser</th>
+    <th>Action</th>
+</tr>
+{% for o in object_list %}
+<tr>
+    <td>{{ forloop.counter }}.</td>
+    <td>{{ o.name }}</td>
+    <td>
+	    <a href="{% url auth_impersonate o.id url %}" class="AddProgram2">{{button_name}}</a>
+    </td>
+</tr>
+
+{% endfor %}
+<tr>
+    <td colspan="5" class="bottom">
+        {{ total_results }} results
+        <span class="pages">
+            {% paginate %}
+        </span>
+    </td>
+</table>
+{% endblock %}

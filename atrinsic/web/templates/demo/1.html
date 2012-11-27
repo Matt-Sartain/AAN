@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+  </head>
+
+  <body>
+    <h1>    {{website.publisher.name}} - {{website.url}}</h1>
+    {% for link in links %}
+    <ul>
+    {% ifequal link.get_link_type_display "Banner" %}
+	<li>
+	<img src="http://tracker.invitemedia.com/track_imp?igCode=IG-{{website.publisher.invite_id}}&partnerID=35&crID={{link.invite_id}}&campID={{link.advertiser.invite_campid}}&auctionID={{link.advertiser.invite_campid}}-{{website.invite_id}}&width=100&height=100"/>
+
+	<a href="http://tracker.invitemedia.com/track_click?igCode=IG-{{website.publisher.invite_id}}&partnerID=35&crID={{link.invite_id}}&campID={{link.advertiser.invite_campid}}&auctionID={{link.advertiser.invite_campid}}-{{website.invite_id}}&width=100&height=100"><img src="{{link.banner.image.url}}"/></a>
+	</li>
+    {% endifequal %}
+    </ul>
+    {% endfor %}
+
+    <hr>
+  </body>
+</html>

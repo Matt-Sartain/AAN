@@ -1,0 +1,109 @@
+<style>
+	.orderHdr { font-size:14px;font-weight:bold;padding:0px 0px 4px 6px; }
+	.orderItemInfo { clear:both;font-weight:100;font-size:10px;padding:0 0 4px 6px }
+	.orderItemError { height:20px;clear:both;font-weight:100;font-size:10px;padding:0 0 4px 6px;color:red; }
+	.orderSpacer { height:20px;clear:both;}
+	.customOrderFees { display:none; margin:0px 0px 0px 10px;}
+	#createOrderForm ul {
+		list-style-image:none;
+		list-style-position:outside;
+		list-style-type:none;
+		margin:0;
+		padding:0;
+		text-align:left;
+	}
+	input.baseClass
+	{
+	    font-family:Verdana, Arial, Helvetica, sans-serif;
+    	border:none;    	
+    	font-size:12px;
+    	font-weight:bold;
+    	margin: 5px 25px 10px 5px;
+    	padding:4px 2px 4px 24px;
+    	text-align:center;
+    	text-decoration:none;
+    	float:right;
+	}
+	
+	input.btnCancel
+    {
+    	background: transparent url('/images/AAN_Cancel.png') no-repeat left; 
+    	width:51px;
+    	height:16px;
+    }
+	input.btnCreate
+    {
+    	background: transparent url('/images/AAN_CreateOrder.png') no-repeat left; 
+    	width:83px;
+    	height:17px;
+    }
+    #createOrderForm{
+        float:right;
+        width: 98%;
+    }
+</style>
+
+<script>
+$('#id_orderfees_0').attr("checked", "true");
+$('input[name=orderfees]').click(function(event){
+	if($(this).val() == 1){
+		$(".customOrderFees").show("slow");
+	}else{
+		$(".customOrderFees").hide("slow");
+	}
+});
+
+function showCreateOrderResponse(responseText, statusText)  {
+    errCount = responseText.split(/errorlist/g).length - 1;
+	if(errCount > 1){
+		$("#createOrderFormCtn").html(responseText);
+		return false;
+	}else{			
+		window.location = "";			
+		return true;
+	}
+} 
+var optsOrderForm = {
+	success:       showCreateOrderResponse  // post-submit callback
+};
+$("#createOrderForm").bind('submit', function() {
+	$(this).ajaxSubmit(optsOrderForm);
+	return false; // <-- important!
+});	
+
+</script>
+<div id="createOrderFormCtn">
+<form id="createOrderForm"  action="create/" method="POST">
+	<h3 style="font-weight:bold;font-size:18px;">Create An Order</h3>
+	
+	<div class="orderHdr">{{formCreate.publisherid.label}}</div>
+	<div>{{formCreate.publisherid}}</div>
+	<div class="orderItemInfo">Enter the short or long ID of the Publisher top whom this order is associated.</div>
+	<div class="orderItemError">{{formCreate.publisherid.errors}}</div>
+	<div class="orderHdr">{{formCreate.orderid.label}}</div>
+	<div>{{formCreate.orderid}}</div>
+	<div class="orderItemInfo">This must be a unique value. Valid characters include numbers, letters, underscore(_) and dash(-). Other special characters or spaces are not permitted.</div>
+	<div class="orderItemError">{{formCreate.orderid.errors}}</div>
+	
+	<div class="orderHdr">{{formCreate.orderamt.label}}</div>
+	<div>$&nbsp;{{formCreate.orderamt}}</div>
+	<div class="orderItemError">{{formCreate.orderamt.errors}}</div>
+	
+	<div class="orderHdr">{{formCreate.orderfees.label}}</div>
+	<div>{{formCreate.orderfees}}</div>
+	<div class="customOrderFees">
+		<div class="orderSpacer"></div>
+		<div class="orderHdr">{{formCreate.publisherfee.label}}</div>
+		<div>$&nbsp;{{formCreate.publisherfee}}</div>
+		<div class="orderHdr">{{formCreate.networkfee.label}}</div>		
+		<div>$&nbsp;{{formCreate.networkfee}}</div>
+	</div>	
+	<div class="orderSpacer"></div>
+	<div class="orderHdr">{{formCreate.order_date.label}}</div>
+	<div>{{formCreate.order_date}}</div>
+	<div class="orderItemError">{{formCreate.order_date.errors}}</div>
+	<input type="submit" value="" class="baseClass btnCreate" style="float:none" />
+	<input type="button" class="baseClass btnCancel" style="float:none" id="cancelOrderCreate"/>
+</form>
+
+</div>

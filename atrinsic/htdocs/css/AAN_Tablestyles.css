@@ -1,0 +1,68 @@
+table.primaryDisplayTable {
+	margin: 0 auto 10px;
+	padding: 0;
+	width:100%;
+}
+.shrinkWidth { background-color:#FFFFFF; width:95% !important; }
+.wBorder { border:1px solid #D5D7DE; }
+table.primaryDisplayTable th {
+	background:#D9DEF0;
+	border:0px;
+	color:#000000;
+	font-weight:bold;
+	font-size:14px;
+	height:30px;
+	padding:0;
+}
+table.primaryDisplayTable th a { color:#000000; font-size:14px; font-weight:bold; text-decoration:none; }
+table.primaryDisplayTableAddons th { font-weight:bold; }
+table.primaryDisplayTable th.graybar td { padding:0px;	margin:0px; }
+
+table.primaryDisplayTable tr.highlightRow { height:30px; }
+table.primaryDisplayTable tr.highlightRow:hover { background-color:#EEF1FE; }
+table.primaryDisplayTable tr.rowSpacer { margin:10px 0 0 0; }
+table.primaryDisplayTable tr.graybar td hr { color: #cdcdcd; }
+
+table.primaryDisplayTable td{
+	border:0px;
+	padding: 3px;
+	font-size:13px;
+	font:Verdana, Arial, Helvetica, sans-serif;
+	text-align:center;
+}
+table.primaryDisplayTable td span {	display:inline;	padding:0px; }
+table.primaryDisplayTable td.footer { padding: 30px 0 0 10px;}
+
+table.DisplayTableAsForm { font-size:14px; margin: 1em auto 10px; padding: 0; width:100%; }
+table.DisplayTableAsForm th { font-size:14px; min-width:150px; text-align:right; }
+table.DisplayTableAsForm tr { height:25px; }
+table.DisplayTableAsForm tr.vAlignTop { vertical-align:top; }
+table.DisplayTableAsForm td { vertical-align:middle; }
+table.DisplayTableAsForm ul { list-style:none; }
+table.addactionView { width:50%; }
+table.campaignView { float:left;width:50%; }
+table.campaignCriteria { margin:20px 10% 20px 5%;width:80%;}
+table.campaignCriteria th { text-align:center;  }
+table.campaignCriteria td { text-align:center;  }
+
+table.OrganizationSettings { margin-right:30%; width:53%; }
+table.OrganizationSettings tr:hover { background-color:#EEF1FE; }
+table.OrganizationSettings td { padding:0px 0px 0px 10px; }
+
+table.inquiryDetails { margin-right:30%; }
+table.inquiryDetails tr:hover { background-color:#EEF1FE; }
+table.inquiryDetails td { padding:0px 0px 0px 10px; }
+
+table.OrganizationView th { width: 165px; }
+table.OrganizationView td { padding:0px 0px 0px 10px; }
+table.OrganizationView td a { color:#000000; }
+.hideMe { display:none; }
+
+/********** Custom row styles **********/
+table.primaryDisplayTable td.imgDisplay { width: 60%; }
+table.primaryDisplayTable td.noResults { padding:4px 0 0 25px !important; text-align:left; }
+table.primaryDisplayTable td.Actions a { color:blue !important; }
+/********** END Custom row styles **********/
+
+/********** If table is being displayed within a JQuery Lightbox, override UI-Theme Styles **********/
+.ui-widget-content a { color:blue; }

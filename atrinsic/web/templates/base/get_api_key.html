@@ -1,0 +1,38 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% block pageContent %}
+
+<div style="font-size:12px;font-weight:bold;margin:20px 0px 0px 20px;">
+    <h3 style="color:#5B5B5B">Welcome to the reporting API section:</h3>
+    <div style="margin:0px 0px 0px 20px;">
+        your unique key is <input type="text" value="{{API_KEY}}" size=50 readonly="readonly"><br><br>
+        your organization id is <input type="text" value="{{request.organization.pk}}" size=5  readonly="readonly"><br><br>
+        
+        there are multiple reports and parameters that can be passed<br>
+        
+        <br>Example URL:<br>
+        {{SITE_URL}}/api/get_report/[[report_type]]/[[return_format]]/?organization={{request.organization.pk}}&auth_key={{API_KEY}}&date_range=02/01/2010,03/01/2010<br><br>
+        
+        Report types:<br>
+        <ul>
+            <li>sales</li>
+            <li>pub-sales</li>
+            <li>revenue</li>
+            <li>pub-revenue</li>
+            <li>creative</li>
+            <li>creative-promo</li>
+            <li>product</li>
+            <li>orders</li>
+            <li>accounting</li>
+            <li>adv-sales</li>
+            <li>adv-revenue</li>
+        </ul>
+        
+        Report formats:<br>
+        <ul>
+            <li>json</li>
+            <li>json-array</li>
+            <li>xml</li>
+        </ul>
+    </div>
+</div>
+{%endblock%}

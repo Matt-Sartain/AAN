@@ -1,0 +1,6 @@
+&importid=5
+&listid=4
+ITEM NAME A	SKU A	
+ITEM NAME B	SKU B
+ITEM NAME C	SKU C
+ITEM NAME D	SKU D

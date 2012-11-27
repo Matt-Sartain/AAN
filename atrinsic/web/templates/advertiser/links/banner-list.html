@@ -1,0 +1,13 @@
+
+{% load thumbnail_tag %}
+
+    
+    <h2>Banner List</h2>
+    <form action="" method="post" name="form" onsubmit="return false;">
+    	{% for banner in banners %}
+        <!-- banner -->
+	    <input type="radio" name="bid" value="{{ banner.id }}"><img src="{{ banner.image|thumbnail }}"><br><br>
+	    {% endfor %}
+        <input type="button" value="Choose Banner" class="selectBanner"/>
+    </form>
+

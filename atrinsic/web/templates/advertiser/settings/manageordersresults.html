@@ -1,0 +1,147 @@
+
+<style>
+	.orderResultsTbl{
+		border:1px solid #d5d5d5;
+		border-bottom:0px;
+		border-right:0px;
+		width:100%;
+		font-size:14px;
+	}
+	.orderResultsTbl th{
+		background-color:#eaeaea;
+		
+		border-top:0px;
+		border-left:0px;
+		color:#7a7a7a;
+		padding:6px 8px;
+		text-align:left;
+		margin-left:10px;
+		font-weight:bold;
+	}
+	.orderResultsTbl td{
+		
+		border-top:0px;
+		border-left:0px;
+		padding:6px 8px;
+	}
+	.orderResultsTbl tr.odd{
+		background-color:#F0F0F0;
+	}
+	.orderResultsTbl tr.tdselected{
+		background-color:#fbffce;
+	}
+	.orderResultsTbl td.tdCenter
+	{
+		text-align:center;
+	}
+	.editBtns { display:none; }
+	.editActions { display:none; }
+	.editOrderAmount { width:90px; height:50px; }
+	.updateOrderForm { display:none; }
+	.editOrder { color: #5281b3; }
+	.cancelOrder { color: #5281b3; }
+	.resultsBtmOpts { margin:0px 0px 0px 10px; }
+	.resultsBtmOpts a{ color:#5281b3;text-decoration:underline; }
+</style>
+<form id="bulkOrders" action="{% url manage_orders_bulk_cancel %}" method="post">
+<table class="orderResultsTbl" border="0" cellpadding="3" cellspacing="0">
+	<tr>
+		<th></th>
+		<th style="width:175px;height:50px;">Actions</th>
+		<th>Activity Date</th>
+		<th>Publisher Name</th>
+		<th>Order ID</th>
+		<th>Amount</th>
+		<th>Network Fee</th>
+	</tr>
+	{% for m in object_list %}
+	<tr{% cycle '' ' class="odd"' %}>
+		<td><input type="checkbox" name="order_id" value="{{ m.order_id }}"></td>
+		<td style="width:175px;height:50px;"><a href="" class="editOrder">edit</a><br><a href="" class="cancelOrder">cancel order</a></td>
+		<td>{{ m.report_date }}</td>
+		<td>{{ m.publisher_name }}</td>
+		<td class="orderInfo">{{ m.order_id }}<input type="hidden" value="{{m.order_id}}"></td>
+		<td class="editOrderAmount">{{ m.amount|floatformat:2 }}</td>
+		<td>{{ m.network_fee|floatformat:2 }}</td>
+	</tr>	
+	{% endfor %}
+	{% if not object_list %}
+	<tr><td colspan="6">There are no orders matching your criteria.</td></tr>
+    {% endif %}
+
+    <tr><td colspan="6">
+        <div class="resultsBtmOpts">
+            <a href="" class="orderSelAll">Check All</a>
+            <a href="" class="orderCancelChecked">Cancel Checked   </a>
+        </div>
+    </td></tr>
+</table>
+</form>
+<div class="editBtns">
+	<input type="button" name="cancel" value="Cancel" id="cancelAction" class="AddProgram2">
+	<input type="button" name="submit" value="Submit" class="submitOrderChange AddProgram2">
+</div>
+<div class="editActions">
+	<a href="" class="editOrder">edit</a><br><a href="" class="cancelOrder">cancel order</a>
+</div>
+
+<form id="updateOrderForm" action="{% url manage_orders_results_update %}" method="POST">
+    <input type="hidden" name="orderid" value="">
+    <input type="hidden" name="neworderamount" value="">
+    <input type="hidden" name="cancelorder" value="0">
+</form>
+
+<script>
+$('.editOrder').live('click', function() {		
+	var orderAmount = $(this).parent().siblings(".editOrderAmount").text()
+	$(this).parent().siblings(".editOrderAmount").html("<input type='text' size='5' value='" + orderAmount + "'")
+	
+	$(this).parent().parent().addClass("tdselected");
+	$(this).parent().html($(".editBtns").html());
+	return false;
+});
+
+$('#cancelAction').live('click', function() {
+	var orderAmount = $(this).parent().siblings(".editOrderAmount").children("input[type=text]").val();
+	$(this).parent().siblings(".editOrderAmount").text(orderAmount);
+	
+	$(this).parent().parent().removeClass("tdselected");
+	$(this).parent().html($(".editActions").html());
+	return false;
+});
+
+$('.submitOrderChange').live('click', function() {
+	var updateID = $(this).parent().siblings(".orderInfo").children("input[type=hidden]").val();
+	$("#updateOrderForm").children("input[name=orderid]").val(updateID);
+	
+	var newOrderAmount = $(this).parent().siblings(".editOrderAmount").children("input[type=text]").val();
+	$("#updateOrderForm").children("input[name=neworderamount]").val(newOrderAmount);
+	
+	$("#updateOrderForm").submit();
+	return false;
+});
+
+$('.cancelOrder').live('click', function() {
+	var updateID = $(this).parent().siblings(".orderInfo").children("input[type=hidden]").val();
+	$("#updateOrderForm").children("input[name=orderid]").val(updateID);
+	$("#updateOrderForm").children("input[name=cancelorder]").val(1);	
+	$("#updateOrderForm").submit();
+	return false;
+});
+
+$('.orderCancelChecked').live('click', function() {
+	$("#bulkOrders").submit();
+	return false;
+});
+$('.orderSelAll').click( function() {
+    this.checked = !this.checked;
+    $('input:checkbox[name=m_id]').each( function() {
+        this.checked = !this.checked;
+    });
+    return false;
+});
+
+
+</script>
+
+

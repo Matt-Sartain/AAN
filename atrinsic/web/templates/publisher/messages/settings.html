@@ -1,0 +1,66 @@
+{% extends 'base/AAN_Site_Template.html' %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascript %}
+	<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/AAN_Confirmationbox.js"></script>
+{% endblock %}
+
+{% block document_ready %} 
+    initAjaxLightBox();
+    initConfirmationBox("Are you sure you want to delete this email?");
+{% endblock %}
+
+
+{% block pageContent %}
+<div class="pageContentHdr">Web Sites</div>
+<div class="contentCtn whiteBG">  
+    <div class="ajaxLoading"></div>
+
+	<form action="" method="post">
+    	<table class="primaryDisplayTable primaryDisplayTableHdrsLeft primaryDisplayTableCenter" cellspacing="0">
+        	<tr>
+        		<th>Recipient</th>
+        		<th>Network Announcement</th>
+        		<th>Legal Announcement</th>
+        		<th>Advertiser Newsletters</th>
+        		<th>Advertiser Emails</th>
+        		<th>Network Newsletter</th>
+        		<th>Promotional Offers</th>
+        	</tr>
+        	{% for u, rform in rforms %}
+        	<tr class="rowSpacer"><td colspan="7"></td></tr>
+	        <tr class="highlightRow">
+        		<td>{{ u.user.email }}</td>
+        		<td>{{ rform.recv_network }}</td>
+        		<td class="tdCenter">{{ rform.recv_legal }}</td>
+        		<td class="tdCenter">{{ rform.recv_newsletter }}</td>
+        		<td class="tdCenter">{{ rform.recv_adv_emails }}</td>
+        		<td class="tdCenter">{{ rform.recv_net_newsletter }}</td>
+        		<td class="tdCenter">{{ rform.recv_promo_offers }}</td>
+        	</tr>
+        	{% endfor %}
+    	</table>
+    	<div class="contactEmailsCtn">
+		    <div class="contactEmailCtn">
+			    <div class="contactEmailType">Publisher Contact Email</div>
+			    <div class="contactEmailDesc">
+				Specify a preferred email for your Publishers to contact you</div>
+    			<br>
+    			<div class="clearfix"></div>
+			    <div>{{ form }}</div>
+			</div>
+            <div style="clear:both;">
+            <input type="submit" class="saveBtn" value="">
+            <div style="clear:both;">
+    	    
+    	</div>
+	</form>
+</div>
+<div id="ajaxLightbox"></div>
+{% endblock %}

@@ -1,0 +1,16 @@
+
+<script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+<script type="text/javascript">
+    initAjaxFormPost();
+</script>
+
+<div id="AjaxContent">
+
+    <div class="ajaxLoading"></div>
+    <form action="{% url update_status %}" method="post" class="MooseHead MooseHeadSm">
+        {{ form }}
+        <input type="submit" class="submitPlusWBGBtn pushRight" value="">
+        <div class="clearfix"></div>
+    </form>
+</div>
+    

@@ -1,0 +1,218 @@
+@import url("jquery-ui-theme.css");
+a.msgInboxBtn {
+    background-image:url('/images/btn_blue_inbox.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:112px;
+    text-decoration:none;
+}a.msgInboxBtn:hover { background-image: url('/images/btn_blue_inbox_mo.gif'); text-decoration:none; }
+a.msgSentBtn {
+    background-image:url('/images/btn_blue_sent.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:112px;
+    text-decoration:none;
+}a.msgSentBtn:hover { background-image: url('/images/btn_blue_sent_mo.gif'); text-decoration:none; }
+a.msgTrashBtn {
+    background-image:url('/images/btn_blue_trash.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:112px;
+    text-decoration:none;
+}a.msgTrashBtn:hover { background-image: url('/images/btn_blue_trash_mo.gif'); text-decoration:none; }
+a.msgComposeBtn {
+    background-image:url('/images/btn_blue_compose.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:81px;
+}a.msgComposeBtn:hover { background-image: url('/images/btn_blue_compose_mo.gif'); }
+
+a.msgInboxBtn div, a.msgSentBtn div, a.msgTrashBtn div{
+    color:#FFFFFF;
+    font-size:14px;
+    font-weight:bold;
+    height: 42px;
+    margin: 3px 0 0 72px;
+    text-decoration:none;
+}
+a.primaryDisplayTableSelectAll, a.deleteAllMsgs {
+    float:left;
+    font-size:14px;
+    margin:0px 0px 12px 20px;    
+}
+.outsideTableFooter { height:45px; margin:10px 0; width:100%; }
+
+/********** Table "Overrides" **********/
+table.primaryDisplayTable td { text-align:left; }
+table.primaryDisplayTableCenter td { text-align:center; }
+table.primaryDisplayTableHdrsLeft th { padding:0px 0px 0px 3px; text-align:left; }
+table.primaryDisplayTable td.Select { text-align:center;width:13%; }
+table.primaryDisplayTable td.From, table.primaryDisplayTable td.To { overflow:hidden; width:32%; }
+table.primaryDisplayTable td.FromTrash { overflow:hidden; width:22%; }
+table.primaryDisplayTable td.Subject { overflow:hidden; width:26%; }
+table.primaryDisplayTable td.Action { text-align:center;width:15%; }
+/********** END Table "Overrides" **********/
+
+
+/********** Campaigns **********/
+.embed-boxes{float:left;width:240px;margin-left:25px;}
+.embedBox {
+    background:#FFFFFF none repeat scroll 0 0;
+    border:1px solid #666666;
+    float:left;
+    height:285px;
+    margin:0;
+    overflow:auto;
+    padding:0 10px;
+    width:40%;
+}
+.embed-tag-box ul, .embed-banner-box ul { height:auto !important; }
+.embed-tag-box li, .embed-banner-box li { float:none !important; }
+.embedTags{clear:both;margin:0px;}
+.embedTags h4{margin:0px;}
+a.addCampaignBtn {
+    background-image:url('/images/btn_blue_addcamp.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    padding:0 4px;
+    width:151px;
+}a.addCampaignBtn:hover { background-image: url('/images/btn_blue_addcamp_mo.gif'); }
+
+a.addFilterToList {
+    background-image:url('/images/btn_grey_add.gif');
+    background-repeat:no-repeat;
+    display:block;
+    height:28px;
+    padding:0 4px;
+    width:93px;
+}a.addFilterToList:hover { background-image: url('/images/btn_grey_add_mo.gif'); }
+a.remFilterFromList {
+    background-image:url('/images/btn_grey_remove.gif');
+    background-repeat:no-repeat;
+    display:block;
+    height:28px;
+    padding:0 4px;
+    width:93px;
+}a.remFilterFromList:hover { background-image: url('/images/btn_grey_remove_mo.gif'); }
+
+a.showAddCriteria {
+    background-image:url('/images/btn_blues_add.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    margin:20px 0 0 0;
+    padding:0 4px;
+    width:81px;
+}a.showAddCriteria:hover { background-image: url('/images/btn_blues_add_mo.gif'); }
+a.saveCampaign {
+    background-image:url('/images/1blues_save.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    margin:20px 0 0 0;
+    padding:0 4px;
+    width:81px;
+}a.saveCampaign:hover { background-image: url('/images/1blues_save_mo.gif'); }
+/********** Inquiries **********/
+table.primaryDisplayTable td.newmsg { width:6%;background: url('/images/mail.png') no-repeat scroll center center; }
+a.unresolvedBtn {
+    background-image:url('/images/btn_blues_unresolved.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:133px;
+}a.unresolvedBtn:hover { background-image: url('/images/btn_blues_unresolved_mo.gif'); text-decoration:none; }
+a.resolvedBtn {
+    background-image:url('/images/btn_blues_resolved.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:133px;
+}a.resolvedBtn:hover { background-image: url('/images/btn_blues_resolved_mo.gif'); text-decoration:none; }
+
+a.archivedBtn {
+    background-image:url('/images/btn_blues_archived.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:42px;
+    padding:0 4px;
+    width:133px;
+}a.archivedBtn:hover { background-image: url('/images/btn_blues_archived_mo.gif'); text-decoration:none; }
+
+a.unresolvedBtn div, a.resolvedBtn div, a.archivedBtn div {
+    color:#FFFFFF;
+    font-size:14px;
+    font-weight:bold;
+    height:42px;
+    text-decoration:none;
+}	
+a.unresolvedBtn div { margin:3px 0 0 100px; } 
+a.resolvedBtn div,a.archivedBtn div { margin:3px 0 0 95px; } 
+
+
+a.sendOrderInqBtn {
+    background-image:url('/images/btn_blues_sendorderinquiry.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:33px;
+    padding:0 4px;
+    width:160px;
+}a.sendOrderInqBtn:hover { background-image: url('/images/btn_blues_sendorderinquiry_mo.gif'); text-decoration:none; }
+a.sendPaymentInqBtn {
+    background-image:url('/images/btn_blues_paymentinq.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    height:33px;
+    padding:0 4px;
+    width:172px;
+}a.sendPaymentInqBtn:hover { background-image: url('/images/btn_blues_paymentinq_mo.gif'); text-decoration:none; }
+/********** Settings **********/
+table.primaryDisplayTable td.Recipient { text-align:left; }
+.contactEmailsCtn { width:90%; }
+.contactEmailCtn { background-color:#EEF1FE; border:1px solid #D5D7DE; float:left; margin-left:5%; padding: 5px; width:43%;}
+.contactEmailType { height:25px;font-size:14px;font-weight:bold;text-align:left; }
+.contactEmailDesc { font-size:14px;height:25px;text-align:left; }
+
+/********** Welcome Email **********/
+.welcomeHdrCtn { border-bottom: 1px solid #B5B1B0;height:40px;margin:20px 0 0 50px;width:915px; }
+.welcomeECtn { margin:20px 0 0 25px; }
+.welcomeCtn { border:1px solid #CCCCCC;height:450px;float:left;padding:10px 10px;width:400px;margin-right:20px; }
+.welcomeHdrs { font-size:13px;font-weight:bold;margin:0 0 0 5px; }
+.midSpacer { float:left;height:10px;width:70px; }
+
+
+input.btn_CreateCampaign {
+    background-image:url('/images/btn_blue_next.gif');
+    background-repeat:no-repeat;
+    display:block;
+    float:right;
+    height:33px;
+    margin-top:10px;
+    padding:0px;
+    border:0px;
+    width:90px;
+}
+input.btn_CreateCampaign:hover { background-image: url('/images/btn_blue_next_mo.gif'); }

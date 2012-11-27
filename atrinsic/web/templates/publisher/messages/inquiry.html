@@ -1,0 +1,71 @@
+{% extends 'base/AAN_Site_Template.html' %}
+{% load pagination_tags %}
+
+{% block css %}
+	<link href="/css/AAN_Forms.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Tablestyles.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Advertiser_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/AAN_Publisher_Messages.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}	
+
+{% block javascript %}
+    <script language="javascript" type="text/javascript" src="/js/jquery.form.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/advertiser.messages.js"></script>
+{% endblock %}
+
+{% block document_ready %}
+    initMessages();
+    initAjaxLightBox();
+{% endblock %}
+
+{% block pageContent %}
+<div class="pageContentHdr">Inquiries - {{ folder|title }}</div>
+    <a href="{% url publisher_messages_inquiries %}" class="unresolvedBtn"><div>({{ unresolved.count }})</div></a>
+    <a href="{% url publisher_messages_inquiries "resolved" %}" class="resolvedBtn"><div>({{ resolved.count }})</div></a>
+    <a href="{% url publisher_messages_inquiries "closed" %}" class="archivedBtn"><div>({{ archived.count }})</div></a>
+<div class="clearfix"></div>
+<div class="contentCtn whiteBG"> 
+    <div class="ajaxLoading"></div>
+    <table class="primaryDisplayTable" cellspacing="0">
+        <tr>
+            <th></th>
+            <th>Transaction Date</th>
+            <th>Advertiser</th>
+            <th>Order ID</th>
+            <th>Transaction Amount</th>
+        </tr>
+        {% for m in object_list %}
+        <tr class="rowSpacer"><td colspan="6"></td></tr>
+        <tr class="highlightRow"{% if m.pubNew %}style="font-weight:bold;"{% endif %}>
+    		{% if m.pubNew %}<td class="newmsg"></td>{% else%}<td>&nbsp;</td>{% endif %}
+            <td><a href="" id ="{% url publisher_messages_inquiry_view m.id %}" class="AjaxLightBox" name="{{ m.transaction_date|date:"m/d/Y" }} - {{ m.advertiser.name }}">{{ m.transaction_date|date:"m/d/Y" }}</a></td>
+            <td>{{ m.advertiser.name }}</td>
+            <td>{{ m.order_id }}</td>
+            {%ifequal m.is_transaction_inquiry 1 %}
+            <td>${{m.transaction_amount }}</td>
+            {%else%}
+            <td>${{ m.amount_due }}</td>
+            {%endifequal%}
+        </tr>
+        {% endfor %}
+        {% if not object_list %}
+        <tr>
+            <td colspan="5">There are no inquiries in {{ folder|title }}.</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="5" class="bottom">
+                {{ total_results }} results
+                <span class="pages">{% paginate %}</span>
+            </td>
+        </tr>
+    </table>
+
+
+<a href="" id="/publisher/messages/inquiry/new_order_inquiry/" class="AjaxLightBox sendOrderInqBtn" name="Send an order inquiry"></a>
+<a href="" id="/publisher/messages/inquiry/new_payment_inquiry/" class="AjaxLightBox sendPaymentInqBtn" name="Send a payment inquiry"></a>
+
+
+
+<div id="ajaxLightbox"></div>
+{% endblock %}

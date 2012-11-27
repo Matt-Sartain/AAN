@@ -1,0 +1,2 @@
+{% for l in object_list %}
+{{ l.id }},{{ l.name }},{{ l.image.url }}{% endfor %}

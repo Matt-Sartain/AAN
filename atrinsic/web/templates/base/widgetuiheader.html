@@ -1,0 +1,47 @@
+
+<div id="header" class="headerWrapper">
+    <div class="header">
+        <!-- tabs -->
+        <ul class="menu">
+            {% for tab in tabs %}
+	            {% ifequal tab.name 'Brand Protection' %}
+	            	{% ifequal request.organization.brandlock 1 %}
+	            		<li {% ifequal current_tab tab.name %}class="selected"{% endifequal %}><a href="{{tab.url}}"><span>{{tab.name}}</span></a></li>
+	            	{% endifequal %}
+	            {% else %}
+	            	{% ifnotequal tab.name 'Analytics' %}
+	            <li {% ifequal current_tab tab.name %}class="selected"{% endifequal %}><a href="{{tab.url}}"><span>{{tab.name}}</span></a></li>
+	            	{% endifnotequal %}	
+	            {% endifequal %}
+	            
+	            
+            {% endfor %}
+        </ul>
+        <!-- /tabs -->
+
+        <ul class="nav">
+        {% if user.is_authenticated %}
+        	{% ifequal org_live_type 'advertiser' %}
+	            <li class="li_fl"><a id="helplink" href="{% url advertiser_help %}">Help</a></li>
+	        {% else %}
+	            <li class="li_fl"><a id="helplink" href="{% url publisher_help %}">Help</a></li>
+	        {% endifequal %}
+	        {% comment %}
+	        <li><div class="roundedTextbox">
+	        	<input class="searchTextbox" type="text">
+	        </div></li>
+        	{% endcomment %}
+	        	
+	        <li><a href="/{{org_live_type}}/messages/"><img src="/images/ico_messages2c.png" style="vertical-align:top;" border="0"></a>
+	        	<span style="position:relative;top:-5px;left:-3px;font-weight:bold;color:#E4FF00">{{inbox_count}}</span>
+	        </li>
+	        <li><a href="{% url auth_logout %}">logout</a></li>
+        {% else %}
+	        <li><a href="{% url auth_login %}">login</a></li>
+	        <li><a href="/signup/advertiser/">signup advertiser</a></li>
+	        <li><a href="/signup/publisher/">signup publisher</a></li>
+        {% endif %}
+        </ul>
+    </div>
+    <div class="bl"></div><div class="br"></div>
+</div>

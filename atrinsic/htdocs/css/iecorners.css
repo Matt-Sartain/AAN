@@ -1,0 +1,122 @@
+.advertiserSqrs
+{		
+  border:2px solid #DFDFDF;
+  position: relative;
+}
+
+.advertiserSqrs > .tl, .advertiserSqrs > .tr, .advertiserSqrs > .bl, .advertiserSqrs > .br
+{
+  width: 4px;
+  height: 4px;
+  position: absolute;
+}
+
+.advertiserSqrs > .tl
+{
+  background: url(/images/tl.png) top left no-repeat;
+  top: -2px;
+  left: -2px;
+}
+
+.advertiserSqrs > .tr
+{
+  background: url(/images/tr.png) top right no-repeat;
+  top: -2px;
+  right: -2px;
+}
+
+.advertiserSqrs > .bl
+{
+  background: url(/images/bl.png) bottom left no-repeat;
+  bottom: -2px;
+  left: -2px;
+}
+
+.advertiserSqrs > .br
+{
+  background: url(/images/br.png) bottom right no-repeat;
+  bottom: -2px;
+  right: -2px;
+}	
+
+.advertiserSqrsG
+{
+	border:2px solid #039D00;
+	position: relative;
+}
+
+.advertiserSqrsG > .tl, .advertiserSqrsG > .tr, .advertiserSqrsG > .bl, .advertiserSqrsG > .br
+{
+  width: 4px;
+  height: 4px;
+  position: absolute;
+}
+
+.advertiserSqrsG > .tl
+{
+  background: url(/images/tlg.png) top left no-repeat;
+  top: -2px;
+  left: -2px;
+}
+
+.advertiserSqrsG > .tr
+{
+  background: url(/images/trg.png) top right no-repeat;
+  top: -2px;
+  right: -2px;
+}
+
+.advertiserSqrsG > .bl
+{
+  background: url(/images/blg.png) bottom left no-repeat;
+  bottom: -2px;
+  left: -2px;
+}
+
+.advertiserSqrsG > .br
+{
+  background: url(/images/brg.png) bottom right no-repeat;
+  bottom: -2px;
+  right: -2px;
+}
+
+.advertiserSqrsB
+{
+	border:2px solid #7AB6F2;
+  	position: relative;
+}
+
+.advertiserSqrsB > .tl, .advertiserSqrsB > .tr, .advertiserSqrsB > .bl, .advertiserSqrsB > .br
+{
+  width: 4px;
+  height: 4px;
+  position: absolute;
+}
+
+.advertiserSqrsB > .tl
+{
+  background: url(/images/tlb.png) top left no-repeat;
+  top: -2px;
+  left: -2px;
+}
+
+.advertiserSqrsB > .tr
+{
+  background: url(/images/trb.png) top right no-repeat;
+  top: -2px;
+  right: -2px;
+}
+
+.advertiserSqrsB > .bl
+{
+  background: url(/images/blb.png) bottom left no-repeat;
+  bottom: -2px;
+  left: -2px;
+}
+
+.advertiserSqrsB > .br
+{
+  background: url(/images/brb.png) bottom right no-repeat;
+  bottom: -2px;
+  right: -2px;
+}

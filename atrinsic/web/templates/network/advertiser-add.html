@@ -1,0 +1,35 @@
+{% extends 'base/main.html' %}
+
+{% block document_ready %}
+    $('#cancel').click(function(e) {
+        window.location='{% url network_advertiser_account_settings %}';
+    });
+
+    $('#id_state').parent().parent().hide();
+    function state_toggle(dropdown){
+        if($(dropdown).val() == 'US'){
+            $('#id_state').parent().parent().show();
+            $('#id_province').parent().parent().hide();
+        }else if($(dropdown).val() == 'CA'){
+            $('#id_province').parent().parent().show();
+            $('#id_state').parent().parent().hide();
+        }else{
+            $('#id_province').parent().parent().hide();
+            $('#id_state').parent().parent().hide();
+        }
+    }
+    $('#id_country').change(function(){state_toggle('#id_country');});
+    state_toggle('#id_country');
+    
+{% endblock %}
+
+{% block content %}
+
+<form action="{% url network_advertiser_add %}" method="post">
+
+{{ form}}
+
+<input type="submit" value="Create Advertiser"/>
+<input type="reset" value="Cancel" id="cancel"/>
+</form>
+{% endblock %}

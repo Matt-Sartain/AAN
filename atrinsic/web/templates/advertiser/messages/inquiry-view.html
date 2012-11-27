@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    initAjaxFormPost();
+</script>
+<div id="AjaxContent">
+    <div class="ajaxLoading"></div>
+    <form action="/advertiser/messages/inquiry/update/{{inquiry.id}}/" method="POST">
+    <table class="DisplayTableAsForm">
+        <tr><th>Advertiser:</th>
+            <td>{{ inquiry.advertiser.name }}</td></tr>
+        <tr><th>Publisher:</th>
+            <td>{{ inquiry.publisher.name }}</td></tr>
+        <tr><th>Transaction Date:</th>
+            <td>{{ inquiry.transaction_date }}</td></tr>
+        {%if inquiry.is_transaction_inquiry%}
+            <tr><th>Transaction Amount:</th>
+                <td>${{inquiry.transaction_amount }}</td></tr>
+            <tr><th>Member ID:</th>
+                <td>{{ inquiry.member_id }}</td></tr>
+        {%else%}
+            <tr><th>Amount Due:</th>
+                <td>${{ inquiry.amount_due }}</td></tr>
+        {%endif%}
+        <tr><th>Is Partial Order?</th>
+            <td>{% if inquiry.is_partial_order %}Yes{% else %}No{% endif %}</td></tr>
+        <tr><th>{{deny_mini_form.advertiser_reason.label}}</th>
+            <td>{{deny_mini_form.advertiser_reason}}</td></tr>
+        <tr><th>&nbsp;</th>
+            <td>{{deny_mini_form.advertiser_reason.errors}}</td></tr>
+        <tr class="vAlignTop {%ifequal inquiry.advertiser_reason_comment ''%}hideMe{%endifequal%}">
+            <th>Additional Comments:</th>
+            <td>{{deny_mini_form.advertiser_reason_comment}}</td>
+        </tr>
+        <tr><th>&nbsp;</th>
+            <td><input type="submit" class="submitPlusWBGBtn pushRight" value=""></td></tr>
+        {% if msgs %}
+         <tr class="vAlignTop"><th>Message History: </th>
+             <td>
+                 <table>
+                	{% for m in msgs %}
+            		  	<tr class="vAlignTop"><td>
+            		  	{% ifequal m.sentby_publisher 1 %}
+            		  		{{ inquiry.publisher.name }} : 
+            		  	{% else %}
+            		  		{{ inquiry.advertiser.name }} : 
+            		  	{% endifequal %}
+            		  	</td>
+            		  	<td>
+            		  	<textarea rows="2" cols="60" readonly="readonly">{{ m.msg }}</textarea>
+            		  	</td>
+            	  		</td></tr>
+            		{% endfor%}	
+        	    </table>
+            </td></tr>
+        {% endif %}
+    </table>
+    
+    <div class="clearfix"></div>
+    </form>
+</div>
+

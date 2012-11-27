@@ -1,0 +1,4 @@
+.showAllLinks { width: 90% !important; }
+.acceptSelected, .declineSelected, .retractSelected { float:left;padding:0 5px;}
+td.actionTd { width:16%; }
+.inShowAll {margin:15px 145px 0 0 !important;}

@@ -1,0 +1,46 @@
+.special_terms_header{
+    background: white url('/images/terms_arrow.jpg') no-repeat left;
+    font-size: 34px;
+    padding-left:45px;
+    color:#054372;
+    font-family:Trebuchet MS;
+    height:54px;
+    margin:24px 32px;
+}
+.special_terms_footer{
+    width:350px;
+    clear:both;
+    margin:2px auto;
+}
+.special_terms_blurb{
+    color:black;
+    font-weight:bold;
+    clear:both;
+    display:block;
+    width:490px;
+    padding:8px 14px;
+    margin:5px 32px;
+    color:#6a6a6a;
+    font-size:14px;
+}
+.special_terms_blurb span{
+    color:#5c7e05;
+}        
+.special_terms_container{
+    margin:22px 32px;
+    border:2px solid #bfbfbf;
+    padding:8px 14px;
+    width:475px;
+    max-height:600px;
+    overflow:auto;
+}
+.special_terms_container p, .special_terms_container a{
+    margin-left:75px;
+    text-align:left;
+}        
+.tnc_link{
+    font-size:24px;
+    color:#993300;
+    text-decoration:underline;
+    
+}

@@ -1,0 +1,62 @@
+{% extends 'base/main.html' %}
+{% load pagination_tags %}
+{% autopaginate object_list 50 %}
+
+{% block document_ready %}
+$("#deny_selected").click(function(event){
+   event.preventDefault();
+   $("form").submit();
+});
+{% endblock %}
+{% block content %}
+<form method="GET" action="account/publisher/applications/deny/">
+<table>
+<thead>
+<tr>
+    <th>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Location</th>
+    <th>Phone</th>
+    <th>Fax</th>
+    <th>Email</th>
+    <th>Contact</th>
+    <th>Currency</th>
+    <th>Vertical</th>
+    <th>Promotion Method</th>
+    <th>URL</th>
+    <th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for o in qs %}
+
+<tr class="{% cycle "odd" "even" %}">
+    <td><input type="checkbox" name="publisher_id" id="publisher_id" value="{{o.id}}">
+    <td>{{ o.date_created }}</td>
+    <td><a href="{% url network_account_publisher_applications_view o.id %}">{{ o.name }}</a></td>
+    <td>{{ o.address }}</td>
+    <td>{{ o.city }}, {{ o.state }} {{ o.zipcode }} {{ o.country }}</td>
+    <td>{{ o.phone}}</td>
+    <td>{{ o.fax }}</td>
+    <td>{{ o.email }}</td>
+    <td>{{ o.firstname }} {{ o.lastname }}</td>
+    <td>{{ o.currency }}</td>
+    <td>{{ o.publishervertical }}</td>
+    <td>{{ o.promo_method }}</td>
+    <td><a target="blank" href="{{ o.url }}">{{ o.url}}</a></td>
+    <td>
+        <span id="status_{{ o.id }}"></span>
+        <a href="{% url network_account_publisher_applications_view o.id %}" class="AddProgram2" style="display:block;">View</a>
+        <a href="{% url network_account_publisher_applications_approve o.id %}" class="AddProgram2" style="display:block;">Approve</a>
+        <a href="{% url network_account_publisher_applications_deny o.id %}" class="AddProgram2" style="display:block;">Deny</a>
+	    <a href="mailto:{{ o.email}}" class="AddProgram2" style="display:block;">Contact</a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<div style="clear:both; float:right"><a href="#" id="deny_selected" class="AddProgram2">DENY SELECTED</a></div>
+</form>
+{% endblock %}
